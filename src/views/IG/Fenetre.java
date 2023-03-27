@@ -22,9 +22,9 @@ public class Fenetre extends JFrame {
      * @param nom Nom de la fenetre.
      */
     public Fenetre(String nom) {
-	super(nom);
-	this.elements = new JPanel();
-	this.add(elements);
+	    super(nom);
+	    this.elements = new JPanel();
+	    this.add(elements);
     }
 
     /**
@@ -40,9 +40,9 @@ public class Fenetre extends JFrame {
      * Afficher la fenetre.
      */
     public void dessineFenetre() {
-	this.pack();
-	this.setVisible(true);
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.pack();
+	    this.setVisible(true);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }
