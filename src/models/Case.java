@@ -3,20 +3,23 @@ package models;
 public class Case {
 
     public enum Dir {HAUT, BAS, GAUCHE, DROITE};
+    public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE};
 
     //Attributs
     private Plateau plateau;
     private int sable;
     private int x,y;
     private boolean exploree;
+    private TYPE type;
 
     //Constructeur
-    public Case(int x, int y, Plateau p){
+    public Case(int x, int y, Plateau p, TYPE t){
         this.plateau = p;
         this.x = x;
         this.y = y;
         this.sable = 0;
         this.exploree = false;
+        this.type = t;
     }
 
     //Getters
@@ -29,9 +32,14 @@ public class Case {
     }
     public boolean isExploree() { return exploree; }
 
+    public TYPE getType() {
+        return type;
+    }
+
     //Setters
     public void ensabler() { this.sable++; }
     public void dessabler() { this.sable--; }
+    public void setType(TYPE t) { this.type = t; }
 
     //Methode
     public Case voisine(Dir d) {

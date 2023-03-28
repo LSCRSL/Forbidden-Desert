@@ -14,15 +14,25 @@ public class Plateau {
         this.taille = taille;
         this.sable = 0;
         this.niv_tempete = 0;
-        int[] oeil = {taille/2 + 1, taille/2 + 1};
+        int[] oeil = {taille/2, taille/2};
         this.oeil = oeil;
         this.plateau = new Case[taille][taille];
         for (int i=0; i<taille; i++) {
             for (int j=0; j<taille;j++) {
-                Case c = new Case(i,j,this);
-                this.plateau[i][j] = c;
+                if (i != this.oeil[0] || j != this.oeil[1]) {
+                    Case c = new Case(i, j, this, Case.TYPE.NORMALE);
+                    this.plateau[i][j] = c;
+                }else {
+                    Case c = new Case(i, j, this, Case.TYPE.OEIL);
+                    this.plateau[i][j] = c;
+                }
             }
         }
+        int[][] s = {{0,2},{1,1},{1,3},{2,0},{2,4},{3,1},{3,3},{4,2}};
+        for (int[] t : s) {
+            this.getCase(t[0],t[1]).ensabler();
+        }
+        this.setSable(8);
     }
 
     //Getters
