@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
  */
 public abstract class ZoneCliquable extends JPanel implements MouseListener {
 
-    private Texte texte;
+    private IG.Texte texte;
 
     /**
      * Deux constructeurs, incluant ou non la création d'une zone de texte.
@@ -22,7 +22,7 @@ public abstract class ZoneCliquable extends JPanel implements MouseListener {
      */
     public ZoneCliquable(String texte, int x, int y) {
 	this(x, y);
-	this.texte = new Texte(texte);
+	this.texte = new IG.Texte(texte);
 	this.add(this.texte);
     }
 

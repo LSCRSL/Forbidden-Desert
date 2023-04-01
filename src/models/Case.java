@@ -41,6 +41,11 @@ public class Case {
     public void dessabler() { this.sable--; }
     public void setType(TYPE t) { this.type = t; }
 
+    public void setCoord(int cX, int cY){
+        this.x=cX;
+        this.y=cY;
+    }
+
     //Methode
     public Case voisine(Dir d) {
         int x = this.getX();

@@ -6,7 +6,7 @@ public class Plateau {
     private final int taille;
     private Case[][] plateau;
     private int sable;
-    private int niv_tempete;
+    private float niv_tempete;
     private int[] oeil;
 
     //Constructeurs
@@ -38,7 +38,7 @@ public class Plateau {
     //Getters
     public int getSablePlateau() { return sable; }
 
-    public int getNiv_tempete() { return niv_tempete; }
+    public float getNiv_tempete() { return niv_tempete; }
 
     public int getTaille() { return taille; }
 
@@ -49,12 +49,17 @@ public class Plateau {
     }
 
     //Setters
-    public void setNiv_tempete(int niveau) {
+    public void setNiv_tempete(float niveau) {
         this.niv_tempete = niveau;
     }
     public void setSable(int niv_sable) {
         this.sable = niv_sable;
     }
+
+    public void setOeil(int[] oeil) {
+        this.oeil = oeil;
+    }
+
     public void bouge_oeil(Case.Dir d){
         //fct pour oeil car se déplace dans le sens inverse de la tempete
         //creer une fonction qui renvoie la direction opposée
@@ -66,7 +71,60 @@ public class Plateau {
 
     //Methodes
 
-    public void souffler(Case.Dir d, int f) {}
+    public void souffler(Case.Dir d, int f) {
+        int[] tmp=getOeil();
+        int oX = tmp[0];
+        int oY = tmp[1];
+        int cpt=0;
+        switch (d){
+            case HAUT:
+                while (oX+f>=5){
+                    f--;
+                }
+                while (cpt!=f) {
+                    cpt++;
+                    Case t = getCase(oX+cpt,oY);
+                    t.setCoord(oX+cpt-1,oY);
+                    t.ensabler();
+                }
+                this.setOeil(new int[] {oX + f, oY});
+            case BAS:
+                while (oX-f<0){
+                    f--;
+                }
+                while (cpt!=f) {
+                    cpt++;
+                    Case t = getCase(oX-cpt,oY);
+                    t.setCoord(oX-cpt+1,oY);
+                    t.ensabler();
+                }
+                this.setOeil(new int[] {oX - f, oY});
+            case GAUCHE:
+                while (oY+f>=5){
+                    f--;
+                }
+                while (cpt!=f) {
+                    cpt++;
+                    Case t = getCase(oX,oY+cpt);
+                    t.setCoord(oX,oY+cpt-1);
+                    t.ensabler();
+                }
+                this.setOeil(new int[] {oX , oY+ f});
+            case DROITE:
+                while (oY-f<0){
+                    f--;
+                }
+                while (cpt!=f) {
+                    cpt++;
+                    Case t = getCase(oX,oY-cpt);
+                    t.setCoord(oX,oY-cpt+1);
+                    t.ensabler();
+                }
+                this.setOeil(new int[] {oX , oY- f});
+        }
+    }
 
-    public void dechainer() {}
+    public void dechainer() {
+        setNiv_tempete((float) (this.getNiv_tempete()+0.5));
+    }
 }

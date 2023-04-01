@@ -8,10 +8,12 @@ public class ControleCase extends IG.ZoneCliquable {
 
     private models.Case c;
 
+    private models.Plateau p;
+
     public ControleCase(models.Case c) {
         super("",100,100);
         int sable = c.getSable();
-        if (sable > 0) {
+        if (sable >= 0) {
             this.changeTexte(Integer.toString(sable));
         }
         this.c = c;
@@ -25,7 +27,7 @@ public class ControleCase extends IG.ZoneCliquable {
             case CRASH:
                 this.setBackground(new Color(256,0,0)); break;
             case NORMALE:
-                this.setBackground(new Color(128,128,0)); break;
+                this.setBackground(new Color(220,200,0)); break;
             case TUNNEL:
                 this.setBackground(new Color(88,41,0)); break;
             case OASIS:
@@ -51,5 +53,5 @@ public class ControleCase extends IG.ZoneCliquable {
     public void clicGauche() { this.c.ensabler(); this.c.setType(Case.TYPE.OASIS); this.refresh(); }
 
     @Override
-    public void clicDroit() { }
+    public void clicDroit() {}
 }
