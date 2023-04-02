@@ -38,7 +38,7 @@ public class Case {
 
     //Setters
     public void ensabler() { this.sable++; }
-    public void dessabler() { this.sable--; }
+    public void dessabler() { if (sable>=1){ this.sable--; } }
     public void setType(TYPE t) { this.type = t; }
 
     public void setCoord(int cX, int cY){
@@ -64,4 +64,13 @@ public class Case {
         }catch (ArrayIndexOutOfBoundsException e) {}
         return this;
     }
+
+    public void explorer(){
+        if (this.exploree==true){
+            throw new RuntimeException("Case déjà explorée");
+        }else{
+            this.exploree=true;
+        }
+    }
 }
+
