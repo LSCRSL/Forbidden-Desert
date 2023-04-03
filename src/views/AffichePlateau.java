@@ -12,7 +12,7 @@ public class AffichePlateau extends IG.Grille {
     public AffichePlateau (Plateau p) {
         super(p.getTaille(),p.getTaille());
         this.setSize(700,700);
-        this.setBackground(new Color(238,130,238));
+        this.setBackground(new Color(0,0,0));
         this.plateau = p;
         for (int i = 0; i < plateau.getTaille(); i ++) {
             for(int j = 0; j < plateau.getTaille(); j ++) {

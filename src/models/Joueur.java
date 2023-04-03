@@ -4,11 +4,18 @@ public abstract class Joueur {
     private static int id;
     private int niv_eau;
 
+    private static String name;
+
+    private Carte.Personnage perso;
+
     private int x, y;
 
     private String description="";
 
     //Getters
+    public String getName(){
+        return this.name;
+    }
     public int getNiv_eau(){
         return this.niv_eau;
     }
@@ -18,6 +25,11 @@ public abstract class Joueur {
     }
 
     //Setters
+
+    public static void setName(String name) {
+        Joueur.name = name;
+    }
+
     public void setNiv_eau(int niv_eau) {
         this.niv_eau = niv_eau;
     }
@@ -38,7 +50,7 @@ public abstract class Joueur {
         //TODO
     }
 
-    public void desabler(Case c){
+    public void dessabler(Case c){
         c.dessabler();
     }
 
@@ -73,7 +85,7 @@ class archeologue extends Joueur{
     }
 
     @Override
-    public void desabler(Case c){
+    public void dessabler(Case c){
         c.dessabler();
         c.dessabler();
     }
