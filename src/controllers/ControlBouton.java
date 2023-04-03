@@ -36,7 +36,7 @@ public class ControlBouton extends IG.ZoneCliquable{
         this.p.souffler(Case.Dir.DROITE,3);
         this.p.souffler(Case.Dir.GAUCHE,3);
         if (isDefaite(this.p)){
-            System.out.print("fin");
+            System.out.print("fin!");
         }else{
             System.out.print("Not Yet");
         }
