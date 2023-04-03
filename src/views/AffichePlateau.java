@@ -19,7 +19,12 @@ public class AffichePlateau extends IG.Grille {
                 models.Case c = this.plateau.getCase(i,j);
                 controllers.ControleCase cc = new ControleCase(c);
                 this.ajouteElement(cc);
+                c.setCc(cc);
             }
         }
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
     }
 }

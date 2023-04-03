@@ -5,8 +5,8 @@ import models.Case;
 import java.awt.*;
 
 public class ControleCase extends IG.ZoneCliquable {
-    private models.Case c;
 
+    private models.Case c;
     private models.Plateau p;
 
     public ControleCase(models.Case c) {
@@ -70,11 +70,11 @@ public class ControleCase extends IG.ZoneCliquable {
             this.changeTexte(Integer.toString(sable));
         }
         this.c = c;
-        colore(c);
+        this.colore(c);
     }
 
     @Override
-    public void clicGauche() { this.c.explorer(); this.c.ensabler(); this.c.setType(Case.TYPE.OASIS); this.refresh(); }
+    public void clicGauche() {}
 
     @Override
     public void clicDroit() {}

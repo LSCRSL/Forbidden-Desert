@@ -1,5 +1,7 @@
 package models;
 
+import controllers.ControleCase;
+
 public class Case {
 
     public enum Dir {HAUT, BAS, GAUCHE, DROITE};
@@ -11,6 +13,7 @@ public class Case {
     private int x,y;
     private boolean exploree;
     private TYPE type;
+    private ControleCase cc;
 
     //Constructeur
     public Case(int x, int y, Plateau p, TYPE t){
@@ -30,13 +33,13 @@ public class Case {
         int[] array = {this.getX(),this.getY()};
         return array;
     }
-    public boolean isExploree() { return exploree; }
-
+    public ControleCase getCc(){return cc;}
     public TYPE getType() {
         return type;
     }
 
     //Setters
+    public void setCc(ControleCase CC){this.cc = CC;}
     public void ensabler() { this.sable++; }
     public void dessabler() { if (sable>=1){ this.sable--; } }
     public void setType(TYPE t) { this.type = t; }
@@ -47,6 +50,8 @@ public class Case {
     }
 
     //Methode
+    public boolean isExploree() { return exploree; }
+
     public Case voisine(Dir d) {
         int x = this.getX();
         int y= this.getY();
