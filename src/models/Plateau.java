@@ -60,6 +60,10 @@ public class Plateau {
         this.oeil = oeil;
     }
 
+    public void setCase(Case c, int x, int y){
+        this.plateau[x][y]= c;
+    }
+
     public void bouge_oeil(Case.Dir d){
         //fct pour oeil car se déplace dans le sens inverse de la tempete
         //creer une fonction qui renvoie la direction opposée
@@ -75,6 +79,9 @@ public class Plateau {
         int[] tmp=getOeil();
         int oX = tmp[0];
         int oY = tmp[1];
+        Case oeil=this.getCase(oX,oY);
+        System.out.print("x="+oX+"\n");
+        System.out.print("y="+oY+"\n");
         int cpt=0;
         switch (d){
             case HAUT:
@@ -86,8 +93,10 @@ public class Plateau {
                     Case t = getCase(oX+cpt,oY);
                     t.setCoord(oX+cpt-1,oY);
                     t.ensabler();
+                    this.setCase(t,oX+cpt-1,oY );
                 }
                 this.setOeil(new int[] {oX + f, oY});
+                this.setCase(oeil,oX+f,oY);
             case BAS:
                 while (oX-f<0){
                     f--;
@@ -97,8 +106,10 @@ public class Plateau {
                     Case t = getCase(oX-cpt,oY);
                     t.setCoord(oX-cpt+1,oY);
                     t.ensabler();
+                    this.setCase(t, oX-cpt+1,oY);
                 }
                 this.setOeil(new int[] {oX - f, oY});
+                this.setCase(oeil,oX-f,oY);
             case GAUCHE:
                 while (oY+f>=5){
                     f--;
@@ -108,8 +119,10 @@ public class Plateau {
                     Case t = getCase(oX,oY+cpt);
                     t.setCoord(oX,oY+cpt-1);
                     t.ensabler();
+                    this.setCase(t, oX,oY+cpt-1);
                 }
                 this.setOeil(new int[] {oX , oY+ f});
+                this.setCase(oeil,oX,oY+f);
             case DROITE:
                 while (oY-f<0){
                     f--;
@@ -119,8 +132,10 @@ public class Plateau {
                     Case t = getCase(oX,oY-cpt);
                     t.setCoord(oX,oY-cpt+1);
                     t.ensabler();
+                    this.setCase(t, oX,oY-cpt+1);
                 }
-                this.setOeil(new int[] {oX , oY- f});
+                this.setOeil(new int[] {oX , oY-f});
+                this.setCase(oeil,oX,oY-f);
         }
     }
 

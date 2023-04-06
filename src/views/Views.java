@@ -10,21 +10,29 @@ public class Views {
     private JButton bouton;
     private AfficheTempete niv;
 
+    private AfficheFin fin;
+
     public Views(String nom,models.Plateau p) {
         this.fenetre = new IG.Fenetre(nom);
         this.ap = new AffichePlateau(p);
         this.fenetre.setLocationRelativeTo(null);
         this.bouton = new FinDeTour(this.ap.getPlateau(),this);
         this.niv = new AfficheTempete(this.ap.getPlateau());
+        this.fin= new AfficheFin(this.ap.getPlateau());
 
     }
 
     public AfficheTempete getNiv() {return this.niv;}
 
+    public AfficheFin getFin() {
+        return this.fin;
+    }
+
     public void affiche() {
         this.fenetre.ajouteElement(this.ap);
         this.fenetre.ajouteElement(this.bouton);
         this.fenetre.ajouteElement(this.niv);
+        //this.fenetre.ajouteElement(this.fin);
         this.fenetre.dessineFenetre();
     }
 
