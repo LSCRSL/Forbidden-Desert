@@ -64,7 +64,6 @@ public class FinDeTour extends JButton {
                     System.out.print("PERDU\n");
                 }
                 refresh(p);
-
             }
         });
 

@@ -9,15 +9,17 @@ public class Plateau {
     private float niv_tempete;
     private int[] oeil;
 
+    private boolean hRev; //true si l'objet a déjà été révélé
+    private boolean sRev;
+    private boolean bRev;
+    private boolean cRev;
+
     //Constructeurs
     public Plateau(int taille) {
-        int crash=1;
-        int oasis=2;
-        int mirage=1;
-        int engrenage=6;
-        int tunnels=3;
-        int indices=8;
-        int piste=1;
+        this.hRev=false;
+        this.sRev=false;
+        this.bRev=false;
+        this.cRev=false;
         this.taille = taille;
         this.sable = 0;
         this.niv_tempete = 0;
@@ -27,41 +29,6 @@ public class Plateau {
         for (int i=0; i<taille; i++) {
             for (int j=0; j<taille;j++) {
                 if (i != this.oeil[0] || j != this.oeil[1]) {
-                    /*boolean flag=true;
-                    Case c= new Case(i, j, this, Case.TYPE.NORMALE);
-                    while (flag) {
-                        int r = (int) Math.floor(Math.random() * 7);
-                        if (r == 0 && crash > 0) {
-                            flag=false;
-                            crash--;
-                            c = new Case(i, j, this, Case.TYPE.CRASH);
-                        }else if (r==1 && oasis>0){
-                            flag=false;
-                            oasis--;
-                            c = new Case(i, j, this, Case.TYPE.OASIS);
-                        }else if (r==2 && mirage>0){
-                            flag=false;
-                            mirage--;
-                            c = new Case(i, j, this, Case.TYPE.MIRAGE);
-                        }else if (r==3 && engrenage>0){
-                            flag=false;
-                            engrenage--;
-                            c = new Case(i, j, this, Case.TYPE.ENGRENAGE);
-                        }
-                        else if (r==4 && tunnels>0){
-                            flag=false;
-                            tunnels--;
-                            c = new Case(i, j, this, Case.TYPE.TUNNEL);
-                        }else if (r==5 && piste>0){
-                            flag=false;
-                            piste--;
-                            c = new Case(i, j, this, Case.TYPE.DECOLLAGE);
-                        }else if(r==6 && indices>0){
-                            flag=false;
-                            indices--;
-                            c = new Case(i, j, this, Case.TYPE.NORMALE);
-                        }
-                    }*/
                     Case c= new Case(i, j, this, Case.TYPE.NORMALE);
                     this.plateau[i][j] = c;
                 }else {
@@ -75,6 +42,12 @@ public class Plateau {
             this.getCase(t[0],t[1]).ensabler();
         }
         this.setSable(8);
+        int crash=1;
+        int oasis=2;
+        int mirage=1;
+        int engrenage=6;
+        int tunnels=3;
+        int piste=1;
         while (crash>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -121,6 +94,58 @@ public class Plateau {
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 this.setCase((new Case(rX,rY,this, Case.TYPE.DECOLLAGE)), rX, rY);
                 piste --;
+            }
+        }
+        int helice=2;
+        while (helice>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                if (helice==2) {
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.HELICE, true)), rX, rY);
+                }else{
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.HELICE, false)), rX, rY);
+                }
+                helice --;
+            }
+        }
+        int bdv=2;
+        while (bdv>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                if (bdv==2) {
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.BOITE_DE_VITESSE, true)), rX, rY);
+                }else{
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.BOITE_DE_VITESSE, false)), rX, rY);
+                }
+                bdv --;
+            }
+        }
+        int cde=2;
+        while (cde>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                if (cde==2) {
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.CRISTAL_D_ENERGIE, true)), rX, rY);
+                }else{
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.CRISTAL_D_ENERGIE, false)), rX, rY);
+                }
+                cde --;
+            }
+        }
+        int sdn=2;
+        while (sdn>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                if (sdn==2) {
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.SYSTEME_DE_NAVIGATION,true)), rX, rY);
+                }else{
+                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.SYSTEME_DE_NAVIGATION, false)), rX, rY);
+                }
+                sdn --;
             }
         }
     }
@@ -233,4 +258,72 @@ public class Plateau {
     public void dechainer() {
         setNiv_tempete((float) (this.getNiv_tempete()+0.5));
     }
+
+    public void affichePiece(){ //NE MARCHE PAS
+        int helice=0;
+        int hx=-1;
+        int hy=-1;
+        int cristal=0;
+        int cx=-1;
+        int cy=-1;
+        int boite=0;
+        int bx=-1;
+        int by=-1;
+        int systeme=0;
+        int sx=-1;
+        int sy=-1;
+        for (int i=0; i<taille; i++){
+            for (int j=0; j<taille; j++){
+                if (this.getCase(i,j).getPiece()!= null){
+                    switch(this.getCase(i,j).getPiece()){
+                        case HELICE:
+                            helice++;
+                            if (this.getCase(i,j).getLigne()){
+                                hx=i;
+                            }else{
+                                hy=j;
+                            }
+                        case CRISTAL_D_ENERGIE:
+                            cristal++;
+                            if (this.getCase(i,j).getLigne()){
+                                cx=i;
+                            }else{
+                                cy=j;
+                            }
+                        case SYSTEME_DE_NAVIGATION:
+                            systeme++;
+                            if (this.getCase(i,j).getLigne()){
+                                sx=i;
+                            }else{
+                                sy=j;
+                            }
+                        case BOITE_DE_VITESSE:
+                            boite++;
+                            if (this.getCase(i,j).getLigne()){
+                                bx=i;
+                            }else{
+                                by=j;
+                            }
+                    }
+                }
+            }
+        }
+        if (helice==2 && !hRev){
+            this.getCase(hx,hy).setPiece(IndicePiece.Piece.HELICE);
+            this.hRev=true;
+        }
+        if (cristal==2 && !cRev){
+            this.getCase(cx,cy).setPiece(IndicePiece.Piece.CRISTAL_D_ENERGIE);
+            this.cRev=true;
+        }
+        if (boite==2 && !bRev){
+            this.getCase(bx,by).setPiece(IndicePiece.Piece.BOITE_DE_VITESSE);
+            this.bRev=true;
+        }
+        if (systeme==2 && !sRev){
+            this.sRev=true;
+            this.getCase(sx,sy).setPiece(IndicePiece.Piece.SYSTEME_DE_NAVIGATION);
+        }
+    }
+
 }

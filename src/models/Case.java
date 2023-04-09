@@ -5,7 +5,7 @@ import controllers.ControleCase;
 public class Case {
 
     public enum Dir {HAUT, BAS, GAUCHE, DROITE};
-    public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE};
+    public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE};
 
     //Attributs
     private Plateau plateau;
@@ -14,6 +14,7 @@ public class Case {
     private boolean exploree;
     private TYPE type;
     private ControleCase cc;
+    private IndicePiece.Piece piece;
 
     //Constructeur
     public Case(int x, int y, Plateau p, TYPE t){
@@ -39,6 +40,31 @@ public class Case {
     }
     public boolean isExploree() { return exploree; }
 
+    public String getIndice(){return "";}
+
+    public IndicePiece.Piece getPiece() {
+        return null;
+    }
+    public boolean getLigne(){
+        return false;
+    }
+
+    public String strPiece(){
+        if (this.piece != null){
+            switch (this.piece){
+                case SYSTEME_DE_NAVIGATION:
+                    return "SYSTEME";
+                case BOITE_DE_VITESSE:
+                    return "BOITE";
+                case CRISTAL_D_ENERGIE:
+                    return "CRISTAL";
+                case HELICE:
+                    return "HELICE";
+            }
+        }
+        return "";
+    }
+
     //Setters
     public void setCc(ControleCase CC){this.cc = CC;}
     public void ensabler() { this.sable++; }
@@ -51,6 +77,10 @@ public class Case {
     }
 
     public void setExploree(){ this.exploree=true;}
+
+    public void setPiece(IndicePiece.Piece pm){
+        this.piece=pm;
+    }
 
     //Methode
 
