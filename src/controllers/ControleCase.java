@@ -12,10 +12,12 @@ public class ControleCase extends IG.ZoneCliquable {
     public ControleCase(models.Case c) {
         super("",100,100);
         int sable = c.getSable();
-        if (c.isExploree()) {
-            this.changeTexte(Integer.toString(sable)+"explorée");
-        }else{
-            this.changeTexte(Integer.toString(sable));
+        if(c.getType()!= Case.TYPE.OEIL) {
+            if (c.isExploree()) {
+                this.changeTexte(Integer.toString(sable) + "*");
+            } else {
+                this.changeTexte(Integer.toString(sable));
+            }
         }
         this.c = c;
         colore(c);
@@ -64,17 +66,24 @@ public class ControleCase extends IG.ZoneCliquable {
 
     public void refresh() {
         int sable = c.getSable();
-        if (c.isExploree()) {
-            this.changeTexte(Integer.toString(sable)+" * ");
-        }else{
-            this.changeTexte(Integer.toString(sable));
+        if(c.getType()!= Case.TYPE.OEIL) {
+            if (c.isExploree()) {
+                this.changeTexte(Integer.toString(sable) + "*");
+            } else {
+                this.changeTexte(Integer.toString(sable));
+            }
         }
         this.c = c;
         this.colore(c);
     }
 
     @Override
-    public void clicGauche() {}
+    public void clicGauche() {
+        if( !c.isExploree()){
+            c.setExploree();
+        }
+        this.refresh();
+    }
 
     @Override
     public void clicDroit() {}

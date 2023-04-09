@@ -11,6 +11,13 @@ public class Plateau {
 
     //Constructeurs
     public Plateau(int taille) {
+        int crash=1;
+        int oasis=2;
+        int mirage=1;
+        int engrenage=6;
+        int tunnels=3;
+        int indices=8;
+        int piste=1;
         this.taille = taille;
         this.sable = 0;
         this.niv_tempete = 0;
@@ -20,7 +27,42 @@ public class Plateau {
         for (int i=0; i<taille; i++) {
             for (int j=0; j<taille;j++) {
                 if (i != this.oeil[0] || j != this.oeil[1]) {
-                    Case c = new Case(i, j, this, Case.TYPE.NORMALE);
+                    /*boolean flag=true;
+                    Case c= new Case(i, j, this, Case.TYPE.NORMALE);
+                    while (flag) {
+                        int r = (int) Math.floor(Math.random() * 7);
+                        if (r == 0 && crash > 0) {
+                            flag=false;
+                            crash--;
+                            c = new Case(i, j, this, Case.TYPE.CRASH);
+                        }else if (r==1 && oasis>0){
+                            flag=false;
+                            oasis--;
+                            c = new Case(i, j, this, Case.TYPE.OASIS);
+                        }else if (r==2 && mirage>0){
+                            flag=false;
+                            mirage--;
+                            c = new Case(i, j, this, Case.TYPE.MIRAGE);
+                        }else if (r==3 && engrenage>0){
+                            flag=false;
+                            engrenage--;
+                            c = new Case(i, j, this, Case.TYPE.ENGRENAGE);
+                        }
+                        else if (r==4 && tunnels>0){
+                            flag=false;
+                            tunnels--;
+                            c = new Case(i, j, this, Case.TYPE.TUNNEL);
+                        }else if (r==5 && piste>0){
+                            flag=false;
+                            piste--;
+                            c = new Case(i, j, this, Case.TYPE.DECOLLAGE);
+                        }else if(r==6 && indices>0){
+                            flag=false;
+                            indices--;
+                            c = new Case(i, j, this, Case.TYPE.NORMALE);
+                        }
+                    }*/
+                    Case c= new Case(i, j, this, Case.TYPE.NORMALE);
                     this.plateau[i][j] = c;
                 }else {
                     Case c = new Case(i, j, this, Case.TYPE.OEIL);
@@ -33,6 +75,54 @@ public class Plateau {
             this.getCase(t[0],t[1]).ensabler();
         }
         this.setSable(8);
+        while (crash>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.CRASH)), rX, rY);
+                crash --;
+            }
+        }
+        while (oasis>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.OASIS)), rX, rY);
+                oasis --;
+            }
+        }
+        while (mirage>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.MIRAGE)), rX, rY);
+                mirage --;
+            }
+        }
+        while (engrenage>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.ENGRENAGE)), rX, rY);
+                engrenage --;
+            }
+        }
+        while (tunnels>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.TUNNEL)), rX, rY);
+                tunnels--;
+            }
+        }
+        while (piste>0){
+            int rX = (int) Math.floor(Math.random() * 5);
+            int rY = (int) Math.floor(Math.random() * 5);
+            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+                this.setCase((new Case(rX,rY,this, Case.TYPE.DECOLLAGE)), rX, rY);
+                piste --;
+            }
+        }
     }
 
     //Getters
@@ -72,9 +162,6 @@ public class Plateau {
         Case c = getCase(coord[0],coord[1]);
         this.oeil = c.voisine(d).getCoord();
     }
-
-    //Methodes
-
     public void souffler(Case.Dir d, int f) {
         int[] tmp=getOeil();
         int oX = tmp[0];
@@ -90,12 +177,13 @@ public class Plateau {
                 }
                 while (cpt!=f) {
                     cpt++;
-                    Case t = getCase(oX+cpt,oY);
-                    t.setCoord(oX+cpt-1,oY);
+                    Case t = getCase(oX+cpt, oY);
+                    t.setCoord(oX+cpt-1, oY);
+                    this.setCase(t,oX+cpt-1, oY );
                     t.ensabler();
-                    this.setCase(t,oX+cpt-1,oY );
                 }
                 this.setOeil(new int[] {oX + f, oY});
+                oeil.setCoord(oX+f, oY);
                 this.setCase(oeil,oX+f,oY);
             case BAS:
                 while (oX-f<0){
@@ -109,7 +197,8 @@ public class Plateau {
                     this.setCase(t, oX-cpt+1,oY);
                 }
                 this.setOeil(new int[] {oX - f, oY});
-                this.setCase(oeil,oX-f,oY);
+                oeil.setCoord(oX-f, oY);
+                this.setCase(oeil,oX,oY-f);
             case GAUCHE:
                 while (oY+f>=5){
                     f--;
@@ -121,7 +210,8 @@ public class Plateau {
                     t.ensabler();
                     this.setCase(t, oX,oY+cpt-1);
                 }
-                this.setOeil(new int[] {oX , oY+ f});
+                this.setOeil(new int[] {oX , oY+f});
+                oeil.setCoord(oX, oY+f);
                 this.setCase(oeil,oX,oY+f);
             case DROITE:
                 while (oY-f<0){
@@ -135,6 +225,7 @@ public class Plateau {
                     this.setCase(t, oX,oY-cpt+1);
                 }
                 this.setOeil(new int[] {oX , oY-f});
+                oeil.setCoord(oX, oY-f);
                 this.setCase(oeil,oX,oY-f);
         }
     }

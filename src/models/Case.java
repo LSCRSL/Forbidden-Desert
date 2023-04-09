@@ -10,7 +10,7 @@ public class Case {
     //Attributs
     private Plateau plateau;
     private int sable;
-    private int x,y;
+    private int x,y; //x indice ligne, y indice colonne, avec (0,0) en haut à gauche et première lign -> x=0
     private boolean exploree;
     private TYPE type;
     private ControleCase cc;
@@ -37,6 +37,7 @@ public class Case {
     public TYPE getType() {
         return type;
     }
+    public boolean isExploree() { return exploree; }
 
     //Setters
     public void setCc(ControleCase CC){this.cc = CC;}
@@ -49,8 +50,9 @@ public class Case {
         this.y=cY;
     }
 
+    public void setExploree(){ this.exploree=true;}
+
     //Methode
-    public boolean isExploree() { return exploree; }
 
     public Case voisine(Dir d) {
         int x = this.getX();

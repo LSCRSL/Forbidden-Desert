@@ -32,7 +32,7 @@ public class FinDeTour extends JButton {
                 if (n == 0) {
                     int f=0;
                     int rdir = (int) Math.floor(Math.random() * 4 );
-                    int rfor = (int) Math.floor(Math.random() * 6 ); //A REMANIER car il y a + de f=1 que de f=3...
+                    int rfor = (int) Math.floor(Math.random() * 6 );
                     if (rfor<=2){
                         f=1;
                     }else if(rfor<=4){
@@ -41,12 +41,16 @@ public class FinDeTour extends JButton {
                         f=3;
                     }
                     if (rdir==0){
+                        System.out.print("Haut"+f+"\n");
                         p.souffler(Case.Dir.HAUT, f);
                     }else if (rdir==1){
+                        System.out.print("Bas"+f+"\n");
                         p.souffler(Case.Dir.BAS, f);
                     }else if (rdir==2){
+                        System.out.print("Droite"+f+"\n");
                         p.souffler(Case.Dir.DROITE, f);
                     }else if (rdir==3){
+                        System.out.print("Gauche"+f+"\n");
                         p.souffler(Case.Dir.GAUCHE, f);
                     }
                 } else if (n==1) {
