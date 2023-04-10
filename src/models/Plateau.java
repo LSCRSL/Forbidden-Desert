@@ -8,6 +8,7 @@ public class Plateau {
     private int sable;
     private float niv_tempete;
     private int[] oeil;
+    private int[] crash;
 
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;
@@ -37,11 +38,6 @@ public class Plateau {
                 }
             }
         }
-        int[][] s = {{0,2},{1,1},{1,3},{2,0},{2,4},{3,1},{3,3},{4,2}};
-        for (int[] t : s) {
-            this.getCase(t[0],t[1]).ensabler();
-        }
-        this.setSable(8);
         int crash=1;
         int oasis=2;
         int mirage=1;
@@ -54,6 +50,7 @@ public class Plateau {
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 this.setCase((new Case(rX,rY,this, Case.TYPE.CRASH)), rX, rY);
                 crash --;
+                this.setCrash(new int[]{rX, rY});
             }
         }
         while (oasis>0){
@@ -148,6 +145,11 @@ public class Plateau {
                 sdn --;
             }
         }
+        int[][] s = {{0,2},{1,1},{1,3},{2,0},{2,4},{3,1},{3,3},{4,2}};
+        for (int[] t : s) {
+            this.getCase(t[0],t[1]).ensabler();
+        }
+        this.setSable(8);
     }
 
     //Getters
@@ -158,6 +160,7 @@ public class Plateau {
     public int getTaille() { return taille; }
 
     public int[] getOeil() { return oeil; }
+    public int[] getCrash() { return crash; }
 
     public Case getCase(int x,int y) {
         return this.plateau[x][y];
@@ -174,12 +177,15 @@ public class Plateau {
     public void setOeil(int[] oeil) {
         this.oeil = oeil;
     }
+    public void setCrash(int[] cr) {
+        this.oeil = cr;
+    }
 
     public void setCase(Case c, int x, int y){
         this.plateau[x][y]= c;
     }
 
-    public void bouge_oeil(Case.Dir d){
+    public void bouge_oeil(Case.Dir d){ //A SUPPRIMER????
         //fct pour oeil car se déplace dans le sens inverse de la tempete
         //creer une fonction qui renvoie la direction opposée
         //fonction fausse (mais il y a de l'idée)
@@ -197,7 +203,7 @@ public class Plateau {
         int cpt=0;
         switch (d){
             case HAUT:
-                while (oX+f>=5){
+                while (oX+f>=5 && f>=0){
                     f--;
                 }
                 while (cpt!=f) {
@@ -210,8 +216,9 @@ public class Plateau {
                 this.setOeil(new int[] {oX + f, oY});
                 oeil.setCoord(oX+f, oY);
                 this.setCase(oeil,oX+f,oY);
+                this.setSable(this.getSablePlateau()+f);
             case BAS:
-                while (oX-f<0){
+                while (oX-f<0 && f>=0){
                     f--;
                 }
                 while (cpt!=f) {
@@ -224,8 +231,9 @@ public class Plateau {
                 this.setOeil(new int[] {oX - f, oY});
                 oeil.setCoord(oX-f, oY);
                 this.setCase(oeil,oX,oY-f);
+                this.setSable(this.getSablePlateau()+f);
             case GAUCHE:
-                while (oY+f>=5){
+                while (oY+f>=5 && f>=0){
                     f--;
                 }
                 while (cpt!=f) {
@@ -238,8 +246,9 @@ public class Plateau {
                 this.setOeil(new int[] {oX , oY+f});
                 oeil.setCoord(oX, oY+f);
                 this.setCase(oeil,oX,oY+f);
+                this.setSable(this.getSablePlateau()+f);
             case DROITE:
-                while (oY-f<0){
+                while (oY-f<0 && f>=0){
                     f--;
                 }
                 while (cpt!=f) {
@@ -252,6 +261,7 @@ public class Plateau {
                 this.setOeil(new int[] {oX , oY-f});
                 oeil.setCoord(oX, oY-f);
                 this.setCase(oeil,oX,oY-f);
+                this.setSable(this.getSablePlateau()+f);
         }
     }
 

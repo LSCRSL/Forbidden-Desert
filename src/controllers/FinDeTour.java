@@ -2,6 +2,7 @@ package controllers;
 
 import javax.swing.*;
 import models.Case;
+import views.AfficheSable;
 import views.AfficheTempete;
 
 import java.awt.event.ActionEvent;
@@ -23,12 +24,8 @@ public class FinDeTour extends JButton {
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //génère entier entre 0 et 2
-                int n = (int) Math.floor(Math.random() * 3 );
+                int n = (int) Math.floor(Math.random() * 3 );//génère entier entre 0 et 2
                 //System.out.print("random="+n+"\n");
-                //à enlever (juste pour voir)
-                //p.getCase(1,1).ensabler();
-
                 if (n == 0) {
                     int f=0;
                     int rdir = (int) Math.floor(Math.random() * 4 );
@@ -58,8 +55,6 @@ public class FinDeTour extends JButton {
                 } else{
                     //Vague de chaleur, à implémenter quand on aura les joueurs
                 }
-
-                //p.dechainer();
                 if (isDefaite(p)){
                     System.out.print("PERDU\n");
                 }
@@ -73,12 +68,14 @@ public class FinDeTour extends JButton {
         for (int i=0; i<p.getTaille();i++){
             for (int j=0; j<p.getTaille();j++){
                 Case c = p.getCase(i,j);
-
                 c.getCc().refresh();
             }
         }
         AfficheTempete temp = this.v.getNiv();
         temp.setLabel(this.p.getNiv_tempete());
+        AfficheSable sab =this.v.getSab();
+        System.out.println(this.p.getSablePlateau());
+        sab.setLabels(this.p.getSablePlateau());
     }
 
 }
