@@ -14,6 +14,7 @@ public class Views {
 
 
     public Views(String nom,models.Plateau p) {
+        int[] o = p.getOeil();
         this.fenetre = new IG.Fenetre(nom);
         this.ap = new AffichePlateau(p);
         this.fenetre.setLocationRelativeTo(null);

@@ -1,5 +1,4 @@
 package IG;
-
 import javax.swing.*;
 
 

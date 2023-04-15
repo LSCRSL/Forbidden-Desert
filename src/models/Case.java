@@ -78,9 +78,13 @@ public class Case {
 
     public void setExploree(){ this.exploree=true;}
 
+    public void setExploree2(boolean exp){ this.exploree=exp;}
+
     public void setPiece(IndicePiece.Piece pm){
         this.piece=pm;
     }
+
+    public void setSable(int quantite) {this.sable = quantite;}
 
     //Methode
 

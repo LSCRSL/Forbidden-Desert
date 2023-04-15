@@ -1,5 +1,7 @@
 package models;
 
+import controllers.ControleCase;
+
 public class Plateau {
 
     //Attributs
@@ -25,7 +27,9 @@ public class Plateau {
         this.sable = 0;
         this.niv_tempete = 0;
         int[] oeil = {taille/2, taille/2};
+
         this.oeil = oeil;
+
         this.plateau = new Case[taille][taille];
         for (int i=0; i<taille; i++) {
             for (int j=0; j<taille;j++) {
@@ -47,12 +51,14 @@ public class Plateau {
         while (crash>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
+            if (this.getCase(rX,rY).getType() == Case.TYPE.NORMALE){
                 this.setCase((new Case(rX,rY,this, Case.TYPE.CRASH)), rX, rY);
                 crash --;
                 this.setCrash(new int[]{rX, rY});
+
             }
         }
+
         while (oasis>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -61,6 +67,7 @@ public class Plateau {
                 oasis --;
             }
         }
+
         while (mirage>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -69,6 +76,7 @@ public class Plateau {
                 mirage --;
             }
         }
+
         while (engrenage>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -77,6 +85,7 @@ public class Plateau {
                 engrenage --;
             }
         }
+
         while (tunnels>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -85,6 +94,7 @@ public class Plateau {
                 tunnels--;
             }
         }
+
         while (piste>0){
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -93,6 +103,7 @@ public class Plateau {
                 piste --;
             }
         }
+
         int helice=2;
         while (helice>0){
             int rX = (int) Math.floor(Math.random() * 5);
@@ -145,11 +156,14 @@ public class Plateau {
                 sdn --;
             }
         }
+
         int[][] s = {{0,2},{1,1},{1,3},{2,0},{2,4},{3,1},{3,3},{4,2}};
         for (int[] t : s) {
             this.getCase(t[0],t[1]).ensabler();
         }
+
         this.setSable(8);
+
     }
 
     //Getters
@@ -178,7 +192,7 @@ public class Plateau {
         this.oeil = oeil;
     }
     public void setCrash(int[] cr) {
-        this.oeil = cr;
+        this.crash = cr;
     }
 
     public void setCase(Case c, int x, int y){
@@ -193,76 +207,83 @@ public class Plateau {
         Case c = getCase(coord[0],coord[1]);
         this.oeil = c.voisine(d).getCoord();
     }
+
     public void souffler(Case.Dir d, int f) {
+        //rajouter des conditions si la force est trop élévée
+        //les cases avec les indices se decouvrent quand on permutte
         int[] tmp=getOeil();
         int oX = tmp[0];
         int oY = tmp[1];
-        Case oeil=this.getCase(oX,oY);
-        System.out.print("x="+oX+"\n");
-        System.out.print("y="+oY+"\n");
         int cpt=0;
         switch (d){
             case HAUT:
-                while (oX+f>=5 && f>=0){
-                    f--;
-                }
                 while (cpt!=f) {
+                    this.permute_case(this.getCase(oX,oY),this.getCase(oX-1,oY));
+                    oX -=1;
                     cpt++;
-                    Case t = getCase(oX+cpt, oY);
-                    t.setCoord(oX+cpt-1, oY);
-                    this.setCase(t,oX+cpt-1, oY );
-                    t.ensabler();
+
                 }
-                this.setOeil(new int[] {oX + f, oY});
-                oeil.setCoord(oX+f, oY);
-                this.setCase(oeil,oX+f,oY);
-                this.setSable(this.getSablePlateau()+f);
             case BAS:
-                while (oX-f<0 && f>=0){
-                    f--;
-                }
                 while (cpt!=f) {
+                    this.permute_case(this.getCase(oX,oY),this.getCase(oX+1,oY));
+                    oX +=1;
                     cpt++;
-                    Case t = getCase(oX-cpt,oY);
-                    t.setCoord(oX-cpt+1,oY);
-                    t.ensabler();
-                    this.setCase(t, oX-cpt+1,oY);
+
                 }
-                this.setOeil(new int[] {oX - f, oY});
-                oeil.setCoord(oX-f, oY);
-                this.setCase(oeil,oX,oY-f);
-                this.setSable(this.getSablePlateau()+f);
             case GAUCHE:
-                while (oY+f>=5 && f>=0){
-                    f--;
-                }
                 while (cpt!=f) {
+                    this.permute_case(this.getCase(oX,oY),this.getCase(oX,oY-1));
+                    oY -=1;
                     cpt++;
-                    Case t = getCase(oX,oY+cpt);
-                    t.setCoord(oX,oY+cpt-1);
-                    t.ensabler();
-                    this.setCase(t, oX,oY+cpt-1);
+
                 }
-                this.setOeil(new int[] {oX , oY+f});
-                oeil.setCoord(oX, oY+f);
-                this.setCase(oeil,oX,oY+f);
-                this.setSable(this.getSablePlateau()+f);
             case DROITE:
-                while (oY-f<0 && f>=0){
-                    f--;
-                }
                 while (cpt!=f) {
-                    cpt++;
-                    Case t = getCase(oX,oY-cpt);
-                    t.setCoord(oX,oY-cpt+1);
-                    t.ensabler();
-                    this.setCase(t, oX,oY-cpt+1);
-                }
-                this.setOeil(new int[] {oX , oY-f});
-                oeil.setCoord(oX, oY-f);
-                this.setCase(oeil,oX,oY-f);
-                this.setSable(this.getSablePlateau()+f);
+                this.permute_case(this.getCase(oX,oY),this.getCase(oX,oY+1));
+                oY +=1;
+                cpt++;
+
+            }
         }
+    }
+
+    public void permute_case(Case c1, Case c2) {
+        int s1 = c1.getSable();
+        boolean exp1 = c1.isExploree();
+        Case.TYPE typ1 = c1.getType();
+        ControleCase cc1 = c1.getCc();
+        IndicePiece.Piece p1 = c1.getPiece();
+
+        //mettre un switch ??
+        if ( typ1 == Case.TYPE.OEIL) {
+            int[] o ={c2.getX(), c2.getY()} ;
+            setOeil(o);
+        }
+        if ( c2.getType() == Case.TYPE.OEIL) {
+            int[] o ={c1.getX(), c1.getY()} ;
+            setOeil(o);
+        }
+
+        if ( typ1 == Case.TYPE.CRASH) {
+            int[] c ={c2.getX(), c2.getY()} ;
+            setCrash(c);
+        }
+        if ( c2.getType() == Case.TYPE.CRASH) {
+            int[] c ={c1.getX(), c1.getY()} ;
+            setCrash(c);
+        }
+
+        c1.setType(c2.getType());
+        c1.setCc(c2.getCc());
+        c1.setPiece(c2.getPiece());
+        c1.setExploree2(c2.isExploree());
+        c1.setSable(c2.getSable());
+
+        c2.setType(typ1);
+        c2.setCc(cc1);
+        c2.setPiece(p1);
+        c2.setExploree2(exp1);
+        c2.setSable(s1);
     }
 
     public void dechainer() {

@@ -2,6 +2,7 @@ package controllers;
 
 import javax.swing.*;
 import models.Case;
+
 import views.AfficheSable;
 import views.AfficheTempete;
 
@@ -13,13 +14,13 @@ public class FinDeTour extends JButton {
     private models.Plateau p;
     private views.Views v;
 
-    public boolean isDefaite(models.Plateau p){
-        return p.getSablePlateau()>=43 || p.getNiv_tempete()>=7;
+    public boolean isDefaite(){
+        return this.p.getSablePlateau()>=43 || this.p.getNiv_tempete()>=7;
     }
 
-    public FinDeTour(models.Plateau p, views.Views v) {
+    public FinDeTour(models.Plateau plat, views.Views v) {
         super("Fin de tour");
-        this.p = p;
+        this.p = plat;
         this.v = v;
         this.addActionListener(new ActionListener() {
             @Override
@@ -51,30 +52,29 @@ public class FinDeTour extends JButton {
                         p.souffler(Case.Dir.GAUCHE, f);
                     }
                 } else if (n==1) {
+                    //le sable n'augmente pas, à faire
                     p.dechainer();
                 } else{
                     //Vague de chaleur, à implémenter quand on aura les joueurs
                 }
-                if (isDefaite(p)){
+                if (isDefaite()){
                     System.out.print("PERDU\n");
                 }
-                refresh(p);
+                refresh();
             }
         });
 
     }
     //NB : changer l'état de la case -> refresh change la couleur
-    public void refresh(models.Plateau p){
+    public void refresh(){
         for (int i=0; i<p.getTaille();i++){
             for (int j=0; j<p.getTaille();j++){
-                Case c = p.getCase(i,j);
-                c.getCc().refresh();
+                p.getCase(i,j).getCc().refresh();
             }
         }
         AfficheTempete temp = this.v.getNiv();
         temp.setLabel(this.p.getNiv_tempete());
         AfficheSable sab =this.v.getSab();
-        System.out.println(this.p.getSablePlateau());
         sab.setLabels(this.p.getSablePlateau());
     }
 

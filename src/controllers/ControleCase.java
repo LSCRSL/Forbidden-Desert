@@ -3,6 +3,7 @@ package controllers;
 import models.Case;
 import models.IndicePiece;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class ControleCase extends IG.ZoneCliquable {
@@ -15,91 +16,117 @@ public class ControleCase extends IG.ZoneCliquable {
         if (c.isExploree()) {
             this.changeTexte(Integer.toString(sable) + "*");
         }
-        if(c.getType()== Case.TYPE.OEIL) {
-            this.changeTexte("OEUIL");
-        } else {
+        if(c.getType()!= Case.TYPE.OEIL) {
             this.changeTexte(Integer.toString(sable));
         }
         this.c = c;
-        colore(c);
     }
 
-    public void colore(models.Case c) {
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Image s = new ImageIcon("resources/sand.jpg").getImage();
+        int x7 = (this.getWidth() - s.getWidth(null)) / 2;
+        int y7 = (this.getHeight() - s.getHeight(null)) / 2;
+        g.drawImage(s,x7,y7,null);
         switch (c.getType()) {
             case ENGRENAGE:
                 if (c.isExploree()) {
-                    this.setBackground(new Color(128, 128, 128));
-                }else{
-                    this.setBackground(new Color(220, 158, 0, 255));
+                    //mettre image
+                    g.setColor(new Color(128, 128, 128));
+                    g.fillRect(0, 0, getWidth(), getHeight());
                 }
                 break;
             case CRASH:
-                this.setBackground(new Color(255,0,0)); break;
+                Image cr = new ImageIcon("resources/crash.png").getImage();
+                int x4 = (this.getWidth() - cr.getWidth(null)) / 3;
+                int y4 = (this.getHeight() - cr.getHeight(null)) / 3;
+                g.drawImage(cr,x4,y4,null);
+                break;
             case NORMALE:
-                this.setBackground(new Color(220, 158, 0, 255));
+                break;
+                //rectangle coloré
+                //g.setColor(new Color(220, 158, 0, 255));
+                //g.fillRect(0, 0, getWidth(), getHeight());break;
             case INDICE:
                 if (c.isExploree()) {
-                    this.setBackground(new Color(220, 158, 0, 255)); break;
-                }else{
-                    this.setBackground(new Color(220, 158, 0, 255));
+                    //mettre image de l'indice
+                    g.setColor(new Color(220, 158, 0, 255));
+                    g.fillRect(0, 0, getWidth(), getHeight());
                 }
                 break;
             case TUNNEL:
                 if (c.isExploree()) {
-                    this.setBackground(new Color(88,41,0)); break;
-                }else{
-                    this.setBackground(new Color(220, 158, 0, 255));
+                    Image tun = new ImageIcon("resources/tunnel3.png").getImage();
+                    int x3 = (this.getWidth() - tun.getWidth(null)) / 2;
+                    int y3 = (this.getHeight() - tun.getHeight(null)) / 2;
+                    g.drawImage(tun,x3,y3,null);
                 }
                 break;
             case OASIS:
-                this.setBackground(new Color(0,128,255)); break;
+                Image oa = new ImageIcon("resources/oasis.png").getImage();
+                int x = (this.getWidth() - oa.getWidth(null)) /4; //on soustrait par case/2 pour centrer
+                int y = (this.getHeight() - oa.getHeight(null)) /4;
+                g.drawImage(oa,x,y,null);
+                break;
             case MIRAGE:
-                if (c.isExploree()) {
-                    this.setBackground(new Color(0,128,128));
-                }else{
-                    this.setBackground(new Color(0,128,255));
+                if (!c.isExploree()) {
+                    Image oa1 = new ImageIcon("resources/oasis.png").getImage();
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    g.drawImage(oa1,x2,y2,null);
                 }
                 break;
             case OEIL:
-                this.setBackground(new Color(255, 255,255)); break;
+                Image tornade = new ImageIcon("resources/tornade.png").getImage();
+                int x1 = (this.getWidth() - tornade.getWidth(null)) / 2;
+                int y1 = (this.getHeight() - tornade.getHeight(null)) / 2;
+                g.drawImage(tornade,x1,y1,null);
+                break;
             case DECOLLAGE:
                 if (c.isExploree()) {
-                    this.setBackground(new Color(0,255,0));
-                }else{
-                    this.setBackground(new Color(220, 158, 0, 255));
+                    g.setColor(new Color(0,255,0));
+                    g.fillRect(0, 0, getWidth(), getHeight());
                 }
                 break;
         }
     }
 
+
     public void refresh() {
-        int sable = c.getSable();
-        if(c.getType()== Case.TYPE.OEIL) {
-            this.changeTexte("OEUIL");
+        int sable = this.c.getSable();
+        if(this.c.getType()== Case.TYPE.OEIL) {
         }else{
-            if (c.isExploree()) {
-                if (c.getType()== Case.TYPE.INDICE){
-                    this.changeTexte(Integer.toString(sable) +"* "+c.getIndice()+" "+c.strPiece());
+            if (this.c.isExploree()) {
+                if (this.c.getType()== Case.TYPE.INDICE){
+                    this.changeTexte(Integer.toString(sable) +"* "+this.c.getIndice()+" "+this.c.strPiece());
                 }else{
-                    this.changeTexte(Integer.toString(sable) + "* "+c.strPiece());
+                    this.changeTexte(Integer.toString(sable) + "* "+this.c.strPiece());
                 }
             } else {
-                this.changeTexte(Integer.toString(sable)+" "+c.strPiece());
+                this.changeTexte(Integer.toString(sable)+" "+this.c.strPiece());
             }
         }
-        this.c = c;
-        this.colore(c);
+        repaint();
+
     }
 
     @Override
     public void clicGauche() {
+        //ai juste fait ça pour qu'on clique et que la case soit explorée
         if( !c.isExploree()){
             c.setExploree();
         }
         //p.affichePiece(); //NE MARCHE PAS
+        //on peut remplacer refresh par repaint je crois
         this.refresh();
     }
 
     @Override
     public void clicDroit() {}
+
+    @Override
+    public void repaint() {
+        super.repaint();
+    }
 }

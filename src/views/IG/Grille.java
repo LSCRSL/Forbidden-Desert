@@ -1,4 +1,3 @@
-package IG;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,7 @@ public class Grille extends JPanel {
      * @param largeur Nombre de colonnes de la grille.
      */
     public Grille (int hauteur, int largeur) {
-	 setLayout(new GridLayout(hauteur, largeur, 5, 5));
+	 setLayout(new GridLayout(hauteur, largeur, 2, 2));
     }
 
     /**
