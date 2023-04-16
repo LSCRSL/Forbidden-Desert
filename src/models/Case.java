@@ -98,6 +98,15 @@ public class Case {
     public void addJ(Joueur j){
         J.add(j);
     }
+    public void remJ(Joueur j) { J.remove(j);}
+    public void setJ(Set<Joueur> JJ){
+        for (Joueur jr : this.J){
+            this.remJ(jr);
+        }
+        for (Joueur ja : JJ){
+            this.addJ(ja);
+        }
+    }
 
     public Case voisine(Dir d) {
         int x = this.getX();

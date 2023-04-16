@@ -102,15 +102,16 @@ public class ControleCase extends IG.ZoneCliquable {
     public void refresh() {
         int sable = this.c.getSable();
         if(this.c.getType()== Case.TYPE.OEIL) {
+            this.changeTexte(" ");
         }else{
             if (this.c.isExploree()) {
                 if (this.c.getType()== Case.TYPE.INDICE){
-                    this.changeTexte(Integer.toString(sable) +"* "+this.c.getIndice()+" "+this.c.strPiece());
+                    this.changeTexte(Integer.toString(sable) +"* "+this.c.getIndice()+" ");
                 }else{
-                    this.changeTexte(Integer.toString(sable) + "* "+this.c.strPiece());
+                    this.changeTexte(Integer.toString(sable) + "* ");
                 }
             } else {
-                this.changeTexte(Integer.toString(sable)+" "+this.c.strPiece());
+                this.changeTexte(Integer.toString(sable)+" ");
             }
         }
         repaint();

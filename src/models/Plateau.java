@@ -255,6 +255,7 @@ public class Plateau {
         Case.TYPE typ1 = c1.getType();
         ControleCase cc1 = c1.getCc();
         IndicePiece.Piece p1 = c1.getPiece();
+        Set<Joueur> J1= c1.getJ();
 
         //mettre un switch ??
         if ( typ1 == Case.TYPE.OEIL) {
@@ -274,18 +275,62 @@ public class Plateau {
             int[] c ={c1.getX(), c1.getY()} ;
             setCrash(c);
         }
+        /*boolean isI1=false;
+        boolean iL1=false;
+        IndicePiece.Piece piece1=null;
+        if (c1.getType()==Case.TYPE.INDICE){
+            c1=(IndicePiece) c1;
+            isI1=true;
+            iL1=c1.getLigne();
+            piece1=c1.getPiece();
+            c1=(Case) c1;
+        }
+        boolean isI2=false;
+        boolean iL2=false;
+        IndicePiece.Piece piece2=null;
+        if (c2.getType()==Case.TYPE.INDICE){
+            c2=(IndicePiece) c2;
+            isI2=true;
+            iL2=c2.getLigne();
+            piece2=c2.getPiece();
+            c2=(Case) c2;
+        }*/
 
         c1.setType(c2.getType());
+        /*if (isI2){
+            //c1= new IndicePiece(c1.getX(), c1.getY(), this, Case.TYPE.INDICE, piece2, iL2);
+            ((IndicePiece) c1).setIndice(piece2, iL2);
+        }*/
         c1.setCc(c2.getCc());
         c1.setPiece(c2.getPiece());
         c1.setExploree2(c2.isExploree());
-        c1.setSable(c2.getSable());
+        System.out.print("Avant, c1:");
+        System.out.print(J1);
+        System.out.print("\nAvant, c2:");
+        System.out.print(c2.getJ());
+        c1.setJ(c2.getJ());
+        if (c2.getType()!=Case.TYPE.OEIL) {
+            c1.setSable(c2.getSable()+1);
+            this.setSable(this.getSablePlateau()+1);
+        }
 
         c2.setType(typ1);
+        /*if (isI1){
+            //c2= new IndicePiece(c2.getX(), c2.getY(), this, Case.TYPE.INDICE, piece1, iL1);
+            ((IndicePiece) c2).setIndice(piece1, iL1);
+        }*/
         c2.setCc(cc1);
         c2.setPiece(p1);
         c2.setExploree2(exp1);
-        c2.setSable(s1);
+        c2.setJ(J1);
+        if (typ1!=Case.TYPE.OEIL) {
+            c2.setSable(s1+1);
+            this.setSable(this.getSablePlateau()+1);
+        }
+        System.out.print("\nAprès, c1:");
+        System.out.print(c1.getJ());
+        System.out.print("\nAprès, c2:");
+        System.out.print(c2.getJ());
     }
 
     public void dechainer() {

@@ -7,13 +7,15 @@ public class IndicePiece extends Case {
 
     //Constructeur
     public IndicePiece(int x, int y, Plateau p, TYPE t, Piece piece, boolean ligne) {
-        super(x, y, p, t);
+        super(x, y, p, TYPE.INDICE);
         this.pm = piece;
         this.isLigne = ligne;
     }
 
     //getter
+    @Override
     public Piece getPiece(){ return this.pm; }
+    @Override
     public boolean getLigne(){
         return this.isLigne;
     }
@@ -24,6 +26,7 @@ public class IndicePiece extends Case {
             return "c";
         }
     }
+
     public String getIndice() {
         String dir = this.getDir();
         switch (this.getPiece()) {
@@ -37,5 +40,11 @@ public class IndicePiece extends Case {
                 return dir + ": Système";
         }
         return dir;
+    }
+
+    //Setter
+    public void setIndice(Piece pm, boolean iL){
+        this.isLigne=iL;
+        this.pm=pm;
     }
 }
