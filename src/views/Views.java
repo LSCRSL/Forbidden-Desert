@@ -1,7 +1,7 @@
 package views;
 import controllers.FinDeTour;
 
-import javax.swing.JButton;
+import javax.swing.*;
 
 public class Views {
 
@@ -22,6 +22,7 @@ public class Views {
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
         this.fin= new AfficheFin(this.ap.getPlateau());
+
 
     }
 

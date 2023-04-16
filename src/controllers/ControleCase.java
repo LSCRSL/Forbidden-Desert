@@ -2,9 +2,11 @@ package controllers;
 
 import models.Case;
 import models.IndicePiece;
+import models.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
     private models.Case c;
@@ -89,6 +91,10 @@ public class ControleCase extends IG.ZoneCliquable {
                     g.fillRect(0, 0, getWidth(), getHeight());
                 }
                 break;
+        }
+        Set<Joueur> pers = c.getJ();
+        for (Joueur j : pers) {
+            g.drawString(j.getName(), 20, 20);
         }
     }
 

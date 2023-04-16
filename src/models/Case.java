@@ -2,12 +2,16 @@ package models;
 
 import controllers.ControleCase;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Case {
 
     public enum Dir {HAUT, BAS, GAUCHE, DROITE};
     public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE};
 
     //Attributs
+    private Set<Joueur> J;
     private Plateau plateau;
     private int sable;
     private int x,y; //x indice ligne, y indice colonne, avec (0,0) en haut à gauche et première lign -> x=0
@@ -24,6 +28,7 @@ public class Case {
         this.sable = 0;
         this.exploree = false;
         this.type = t;
+        this.J = new HashSet<>();
     }
 
     //Getters
@@ -39,6 +44,8 @@ public class Case {
         return type;
     }
     public boolean isExploree() { return exploree; }
+
+    public Set<Joueur> getJ() { return J; }
 
     public String getIndice(){return "";}
 
@@ -87,6 +94,10 @@ public class Case {
     public void setSable(int quantite) {this.sable = quantite;}
 
     //Methode
+
+    public void addJ(Joueur j){
+        J.add(j);
+    }
 
     public Case voisine(Dir d) {
         int x = this.getX();

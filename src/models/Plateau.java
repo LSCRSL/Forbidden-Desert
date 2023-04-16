@@ -2,6 +2,9 @@ package models;
 
 import controllers.ControleCase;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Plateau {
 
     //Attributs
@@ -11,7 +14,7 @@ public class Plateau {
     private float niv_tempete;
     private int[] oeil;
     private int[] crash;
-
+    private Set<Joueur> joueurs;
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;
     private boolean bRev;
@@ -26,6 +29,7 @@ public class Plateau {
         this.taille = taille;
         this.sable = 0;
         this.niv_tempete = 0;
+        this.joueurs = new HashSet<Joueur>();
         int[] oeil = {taille/2, taille/2};
 
         this.oeil = oeil;
@@ -176,7 +180,8 @@ public class Plateau {
     public int[] getOeil() { return oeil; }
     public int[] getCrash() { return crash; }
 
-    public Case getCase(int x,int y) {
+
+    public Case getCase(int x, int y) {
         return this.plateau[x][y];
     }
 
@@ -199,13 +204,10 @@ public class Plateau {
         this.plateau[x][y]= c;
     }
 
-    public void bouge_oeil(Case.Dir d){ //A SUPPRIMER????
-        //fct pour oeil car se déplace dans le sens inverse de la tempete
-        //creer une fonction qui renvoie la direction opposée
-        //fonction fausse (mais il y a de l'idée)
-        int[] coord = getOeil();
-        Case c = getCase(coord[0],coord[1]);
-        this.oeil = c.voisine(d).getCoord();
+    public void addJoueur(int i, String nom, Carte.Personnage per) {
+        Joueur j = new Joueur(i,this,nom,per);
+        joueurs.add(j);
+        j.getPos().addJ(j);
     }
 
     public void souffler(Case.Dir d, int f) {

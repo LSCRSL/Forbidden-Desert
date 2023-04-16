@@ -1,8 +1,13 @@
 package views;
 
 import javax.swing.*;
+
+import models.Carte;
+import models.Joueur;
+import models.Plateau;
 import java.awt.*;
 
+/**
 public class AfficheJoueur extends JPanel { //NE MARCHE PAS
     private JFrame frame= new JFrame("J1");
     JPanel jp=new AfficheJoueur();
@@ -15,4 +20,23 @@ public class AfficheJoueur extends JPanel { //NE MARCHE PAS
         g2.setColor( new Color(0,0,0));
         g2.drawString("J1", 20, 20);
     }
+}
+ **/
+//a faire plus tard
+
+public class AfficheJoueur extends JPanel {
+
+    private Plateau p;
+    private Joueur j;
+    private JPanel joueur;
+
+    public void AfficheJoueur() {
+        Joueur j = new Joueur(1,this.p, "J1", Carte.Personnage.ALPINISTE);
+
+
+
+
+    }
+
+
 }

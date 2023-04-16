@@ -2,7 +2,7 @@ package models;
 
 public class Joueur {
     //Attributs
-    private static int id;
+    private final int id;
     private int niv_eau;
 
     private models.Plateau p;
@@ -10,8 +10,8 @@ public class Joueur {
     private static String name;
 
     private Carte.Personnage perso;
-
-    private int x, y;
+    //mettre la case à la place je pense
+    private Case pos;
 
     private String description="";
 
@@ -22,8 +22,7 @@ public class Joueur {
         this.niv_eau=4;
         this.name=nom;
         this.perso=per;
-        this.x=this.p.getCrash()[0];
-        this.y=this.p.getCrash()[1];
+        this.pos = p.getCase(this.p.getCrash()[0],this.p.getCrash()[1]);
     }
 
     //Getters
@@ -34,9 +33,7 @@ public class Joueur {
         return this.niv_eau;
     }
 
-    public models.Case getCase(){
-        return this.p.getCase(this.x, this.y);
-    }
+    public models.Case getPos(){ return this.pos;}
 
     //Setters
     public static void setName(String name) {
@@ -48,8 +45,7 @@ public class Joueur {
     }
 
     public void setPos(int[] pos){
-        this.x=pos[0];
-        this.y=pos[1];
+        this.pos = p.getCase(pos[0],pos[1]);
     }
 
     //Méthodes
@@ -61,13 +57,13 @@ public class Joueur {
         c.explorer();
     }
 
+    //a refaire avec la case et pas les x,y
     public void deplacer(Case.Dir d){
-        models.Case c=this.getCase();
+        models.Case c=this.getPos();
         models.Case newC=c.voisine(d);
         int[] ncc=newC.getCoord();
         if (c.getCoord()!=ncc){
-            this.x=ncc[0];
-            this.y=ncc[1];
+            this.pos = p.getCase(ncc[0], ncc[1]);
         }else{
             throw new RuntimeException("Deplacement impossible.");
         }
