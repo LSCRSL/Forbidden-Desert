@@ -3,11 +3,14 @@ package controllers;
 import javax.swing.*;
 import models.Case;
 
+import views.AfficheActions;
 import views.AfficheSable;
 import views.AfficheTempete;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class FinDeTour extends JButton {
 
@@ -20,6 +23,9 @@ public class FinDeTour extends JButton {
 
     public FinDeTour(models.Plateau plat, views.Views v) {
         super("Fin de tour");
+        this.setVerticalTextPosition(SwingConstants.CENTER);
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.setBounds(0,0,100,50);
         this.p = plat;
         this.v = v;
         this.addActionListener(new ActionListener() {
@@ -76,6 +82,7 @@ public class FinDeTour extends JButton {
         temp.setLabel(this.p.getNiv_tempete());
         AfficheSable sab =this.v.getSab();
         sab.setLabels(this.p.getSablePlateau());
+        AfficheActions act =this.v.getAct();
+        act.setLabels(4);
     }
-
 }

@@ -44,8 +44,8 @@ public class Joueur {
         this.niv_eau = niv_eau;
     }
 
-    public void setPos(int[] pos){
-        this.pos = p.getCase(pos[0],pos[1]);
+    public void setPos(Case c){
+        this.pos = c;
     }
 
     //Méthodes
@@ -57,13 +57,21 @@ public class Joueur {
         c.explorer();
     }
 
-    //a refaire avec la case et pas les x,y
     public void deplacer(Case.Dir d){
         models.Case c=this.getPos();
         models.Case newC=c.voisine(d);
         int[] ncc=newC.getCoord();
         if (c.getCoord()!=ncc){
             this.pos = p.getCase(ncc[0], ncc[1]);
+        }else{
+            throw new RuntimeException("Deplacement impossible.");
+        }
+    }
+
+    public void deplaceC(Case c) {
+        int[] ncc = c.getCoord();
+        if (this.getPos().getCoord() != ncc){
+            this.pos = c;
         }else{
             throw new RuntimeException("Deplacement impossible.");
         }

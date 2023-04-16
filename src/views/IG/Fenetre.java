@@ -24,6 +24,8 @@ public class Fenetre extends JFrame {
 	    super(nom);
 	    this.elements = new JPanel();
 	    this.add(elements);
+        this.elements.setLayout(null);
+        //this.elements.setSize(1920,1080);
     }
 
     /**
@@ -39,9 +41,11 @@ public class Fenetre extends JFrame {
      * Afficher la fenetre.
      */
     public void dessineFenetre() {
-	    this.pack();
-	    this.setVisible(true);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setSize(1000,1030);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }

@@ -9,11 +9,11 @@ import java.awt.*;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
-    private models.Case c;
+    private final models.Case c;
     private models.Plateau p;
 
     public ControleCase(models.Case c) {
-        super("",100,100);
+        super("",150,150);
         int sable = c.getSable();
         if (c.isExploree()) {
             this.changeTexte(Integer.toString(sable) + "*");
@@ -93,9 +93,14 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
         }
         Set<Joueur> pers = c.getJ();
+        Image mumu = new ImageIcon("resources/mumu.png").getImage();
         for (Joueur j : pers) {
-            g.drawString(j.getName(), 20, 20);
+            //g.drawString(j.getName(), 20, 20);
+            int x1 = (this.getWidth() - mumu.getWidth(null)) / 2;
+            int y1 = (this.getHeight() - mumu.getHeight(null)) / 2;
+            g.drawImage(mumu,0,0,null);
         }
+
     }
 
 
@@ -120,12 +125,26 @@ public class ControleCase extends IG.ZoneCliquable {
 
     @Override
     public void clicGauche() {
+        System.out.println("OK1");
         //ai juste fait ça pour qu'on clique et que la case soit explorée
+
         if( !c.isExploree()){
             c.setExploree();
         }
+        System.out.println("OKk");
         //p.affichePiece(); //NE MARCHE PAS
-        //on peut remplacer refresh par repaint je crois
+        Case C = p.getCase(2,2);
+        System.out.println("OK2");
+        Set<Joueur> J = C.getJ();
+        System.out.println("OK3");
+        for (Joueur j : J) {
+            System.out.println(j.getPos());
+            j.deplaceC(C);
+            System.out.println(j.getPos());
+
+            c.addJ(j);
+        }
+
         this.refresh();
     }
 

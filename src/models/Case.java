@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Case {
 
-    public enum Dir {HAUT, BAS, GAUCHE, DROITE};
+    public enum Dir {HAUT,HAUT_DROIT, HAUT_GAUCHE, BAS,BAS_DROIT, BAS_GAUCHE, GAUCHE, DROITE};
     public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE};
 
     //Attributs
@@ -56,6 +56,8 @@ public class Case {
         return false;
     }
 
+    public boolean hasPlayer() { return !this.getJ().isEmpty();}
+
     public String strPiece(){
         if (this.piece != null){
             switch (this.piece){
@@ -99,6 +101,8 @@ public class Case {
         J.add(j);
     }
     public void remJ(Joueur j) { J.remove(j);}
+
+    /**
     public void setJ(Set<Joueur> JJ){
         for (Joueur jr : this.J){
             this.remJ(jr);
@@ -106,6 +110,10 @@ public class Case {
         for (Joueur ja : JJ){
             this.addJ(ja);
         }
+    }**/
+
+    public void setJ(Set<Joueur> JJ) {
+        this.J = JJ;
     }
 
     public Case voisine(Dir d) {

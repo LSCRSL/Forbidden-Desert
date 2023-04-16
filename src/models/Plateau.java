@@ -217,36 +217,41 @@ public class Plateau {
         int oX = tmp[0];
         int oY = tmp[1];
         int cpt=0;
-        switch (d){
-            case HAUT:
-                while (cpt!=f) {
-                    this.permute_case(this.getCase(oX,oY),this.getCase(oX-1,oY));
-                    oX -=1;
-                    cpt++;
+        try {
+            switch (d) {
+                case HAUT:
+                    while (cpt != f) {
+                        System.out.println(oX);
+                        this.permute_case(this.getCase(oX, oY), this.getCase(oX - 1, oY));
+                        oX -= 1;
+                        cpt++;
 
-                }
-            case BAS:
-                while (cpt!=f) {
-                    this.permute_case(this.getCase(oX,oY),this.getCase(oX+1,oY));
-                    oX +=1;
-                    cpt++;
+                    }
+                case BAS:
+                    while (cpt != f) {
+                        System.out.println(oX);
+                        this.permute_case(this.getCase(oX, oY), this.getCase(oX + 1, oY));
+                        oX += 1;
+                        cpt++;
 
-                }
-            case GAUCHE:
-                while (cpt!=f) {
-                    this.permute_case(this.getCase(oX,oY),this.getCase(oX,oY-1));
-                    oY -=1;
-                    cpt++;
+                    }
+                case GAUCHE:
+                    while (cpt != f) {
+                        System.out.println(oY);
+                        this.permute_case(this.getCase(oX, oY), this.getCase(oX, oY - 1));
+                        oY -= 1;
+                        cpt++;
 
-                }
-            case DROITE:
-                while (cpt!=f) {
-                this.permute_case(this.getCase(oX,oY),this.getCase(oX,oY+1));
-                oY +=1;
-                cpt++;
-
+                    }
+                case DROITE:
+                    while (cpt != f) {
+                        System.out.println(oY);
+                        this.permute_case(this.getCase(oX, oY), this.getCase(oX, oY + 1));
+                        oY += 1;
+                        cpt++;
+                    }
             }
-        }
+        } catch (ArrayIndexOutOfBoundsException e) {}
     }
 
     public void permute_case(Case c1, Case c2) {
@@ -255,7 +260,7 @@ public class Plateau {
         Case.TYPE typ1 = c1.getType();
         ControleCase cc1 = c1.getCc();
         IndicePiece.Piece p1 = c1.getPiece();
-        Set<Joueur> J1= c1.getJ();
+        Set<Joueur> J = c1.getJ();
 
         //mettre un switch ??
         if ( typ1 == Case.TYPE.OEIL) {
@@ -304,11 +309,14 @@ public class Plateau {
         c1.setCc(c2.getCc());
         c1.setPiece(c2.getPiece());
         c1.setExploree2(c2.isExploree());
-        System.out.print("Avant, c1:");
-        System.out.print(J1);
-        System.out.print("\nAvant, c2:");
-        System.out.print(c2.getJ());
+
+        //on associe à la case les nouveaux joueurs
         c1.setJ(c2.getJ());
+        //on associe aux joueurs la nouvelle case (car flèche bidirectionnelle)
+        for (Joueur j : c1.getJ()){
+            j.setPos(c1);
+        }
+
         if (c2.getType()!=Case.TYPE.OEIL) {
             c1.setSable(c2.getSable()+1);
             this.setSable(this.getSablePlateau()+1);
@@ -322,15 +330,16 @@ public class Plateau {
         c2.setCc(cc1);
         c2.setPiece(p1);
         c2.setExploree2(exp1);
-        c2.setJ(J1);
+        c2.setJ(J);
+        for (Joueur j : c2.getJ()){
+            j.setPos(c2);
+        }
+
         if (typ1!=Case.TYPE.OEIL) {
             c2.setSable(s1+1);
             this.setSable(this.getSablePlateau()+1);
         }
-        System.out.print("\nAprès, c1:");
-        System.out.print(c1.getJ());
-        System.out.print("\nAprès, c2:");
-        System.out.print(c2.getJ());
+
     }
 
     public void dechainer() {

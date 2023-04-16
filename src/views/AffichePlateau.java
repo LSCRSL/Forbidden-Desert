@@ -12,9 +12,9 @@ public class AffichePlateau extends JPanel {
     private Plateau plateau;
 
     public AffichePlateau (Plateau p) {
-        this.setLayout(new GridLayout(p.getTaille(), p.getTaille(), 2, 2));
+        this.setLayout(new GridLayout(p.getTaille(), p.getTaille(), 1, 1));
         this.setSize(700,700);
-        this.setBackground(new Color(220, 158, 0, 255));
+        this.setBackground(new Color(0, 0, 0));
         this.plateau = p;
         //on ajoute les cases
         for (int i = 0; i < plateau.getTaille(); i ++) {
