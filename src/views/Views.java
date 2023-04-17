@@ -69,37 +69,39 @@ public class Views {
 
         this.ap.setLocation((this.fenetre.getWidth() - ap.getWidth())/2, (this.fenetre.getHeight() - ap.getHeight())/2);
         this.fenetre.add(ap);
-
-        this.fdt.setLocation(1150,700);
+        System.out.println((this.fenetre.getWidth() - ap.getWidth())*0.5);
+        System.out.println((this.fenetre.getHeight() - ap.getHeight())*0.5);
+        System.out.println(this.fenetre.getHeight());
+        this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getHeight()/3 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
         this.fenetre.add(this.fdt);
 
-        this.deplacer.setLocation(1100,390);
+        this.deplacer.setLocation(this.fenetre.getWidth()- this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2 - deplacer.getHeight()/2);
         this.fenetre.add(this.deplacer);
 
-        this.creuser.setLocation(1200,390);
+        this.creuser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 - creuser.getHeight()/2);
         this.fenetre.add(this.creuser);
 
-        this.explorer.setLocation(1100,440);
+        this.explorer.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2  + explorer.getHeight()/2);
         this.fenetre.add(this.explorer);
 
-        this.ramasser.setLocation(1200,440);
+        this.ramasser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + ramasser.getHeight()/2);
         this.fenetre.add(this.ramasser);
 
-        this.valider.setLocation(1100,510);
+        this.valider.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/3 - valider.getHeight());
         this.valider.setBackground(Color.GREEN);
         this.fenetre.add(this.valider);
 
-        this.annuler.setLocation(1200,510);
+        this.annuler.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/3 - valider.getHeight());
         this.annuler.setBackground(Color.RED);
         this.fenetre.add(this.annuler);
 
-        this.niv.setLocation(1150,100);
+        this.niv.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8);
         this.fenetre.add(this.niv);
 
-        this.sab.setLocation(1150,140);
+        this.sab.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8 + 2*sab.getHeight());
         this.fenetre.add(this.sab);
 
-        this.act.setLocation(600,30);
+        this.act.setLocation(this.fenetre.getWidth()/2 - this.fenetre.getWidth()/12 ,act.getHeight());
         this.fenetre.add(this.act);
         //this.fenetre.ajouteElement(this.fin);
 
