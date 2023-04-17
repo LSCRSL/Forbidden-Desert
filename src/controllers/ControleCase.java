@@ -1,7 +1,7 @@
 package controllers;
 
 import models.Case;
-import models.IndicePiece;
+import models.Plateau;
 import models.Joueur;
 
 import javax.swing.*;
@@ -111,12 +111,12 @@ public class ControleCase extends IG.ZoneCliquable {
         }else{
             if (this.c.isExploree()) {
                 if (this.c.getType()== Case.TYPE.INDICE){
-                    this.changeTexte(Integer.toString(sable) +"* "+this.c.getIndice()+" ");
+                    this.changeTexte(this.c.strPiece()+Integer.toString(sable) +"* "+this.c.getIndice());
                 }else{
-                    this.changeTexte(Integer.toString(sable) + "* ");
+                    this.changeTexte(this.c.strPiece()+Integer.toString(sable) + "* ");
                 }
             } else {
-                this.changeTexte(Integer.toString(sable)+" ");
+                this.changeTexte(this.c.strPiece()+Integer.toString(sable));
             }
         }
         repaint();
@@ -131,7 +131,7 @@ public class ControleCase extends IG.ZoneCliquable {
         if( !c.isExploree()){
             c.setExploree();
         }
-        System.out.println("OKk");
+        /*System.out.println("OKk");
         //p.affichePiece(); //NE MARCHE PAS
         Case C = p.getCase(2,2);
         System.out.println("OK2");
@@ -143,7 +143,7 @@ public class ControleCase extends IG.ZoneCliquable {
             System.out.println(j.getPos());
 
             c.addJ(j);
-        }
+        }*/
 
         this.refresh();
     }

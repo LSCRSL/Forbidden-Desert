@@ -73,6 +73,7 @@ public class FinDeTour extends JButton {
     }
     //NB : changer l'état de la case -> refresh change la couleur
     public void refresh(){
+        p.affichePiece();//Ca beugue si je mets dans ControlCase... :/
         for (int i=0; i<p.getTaille();i++){
             for (int j=0; j<p.getTaille();j++){
                 p.getCase(i,j).getCc().refresh();

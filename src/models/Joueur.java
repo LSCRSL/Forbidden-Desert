@@ -1,5 +1,7 @@
 package models;
 
+import java.util.HashSet;
+
 public class Joueur {
     //Attributs
     private final int id;
@@ -90,7 +92,11 @@ public class Joueur {
     }
 
     public void ramasserPiece(){
-        //TODO
+        Case c=this.getPos();
+        if (c.isExploree() && c.getSable()<2){
+            c.setPiece(new HashSet<>());
+            p.addPiecesRecup(c.getPiece());
+        }
     }
 
     public void partagerEau(Joueur j, int cran){

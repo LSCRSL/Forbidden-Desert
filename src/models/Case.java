@@ -7,18 +7,20 @@ import java.util.Set;
 
 public class Case {
 
-    public enum Dir {HAUT,HAUT_DROIT, HAUT_GAUCHE, BAS,BAS_DROIT, BAS_GAUCHE, GAUCHE, DROITE};
-    public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE};
-
+    public enum Dir {HAUT,HAUT_DROIT, HAUT_GAUCHE, BAS,BAS_DROIT, BAS_GAUCHE, GAUCHE, DROITE}
+    public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE}
+    public enum Piece {HELICE, BOITE_DE_VITESSE, CRISTAL_D_ENERGIE, SYSTEME_DE_NAVIGATION}
     //Attributs
     private Set<Joueur> J;
     private Plateau plateau;
     private int sable;
-    private int x,y; //x indice ligne, y indice colonne, avec (0,0) en haut à gauche et première lign -> x=0
+    private int x,y; //x indice ligne, y indice colonne, avec (0,0) en haut à gauche et première ligne -> x=0
     private boolean exploree;
     private TYPE type;
     private ControleCase cc;
-    private IndicePiece.Piece piece;
+    private Piece indice; //la pièce sur laquelle l'indice porte
+    private boolean indLigne; //si la case INDICE indique la ligne ou non (ie la colonne)
+    private Set<Piece> piece; //la (ou les) pièce révélée qui se trouve sur la case
 
     //Constructeur
     public Case(int x, int y, Plateau p, TYPE t){
@@ -28,6 +30,9 @@ public class Case {
         this.sable = 0;
         this.exploree = false;
         this.type = t;
+        this.piece= new HashSet<>();
+        this.indice=null;
+        this.indLigne= false;
         this.J = new HashSet<>();
     }
 
@@ -36,8 +41,7 @@ public class Case {
     public int getX() { return x; }
     public int getY() { return y; }
     public int[] getCoord() {
-        int[] array = {this.getX(),this.getY()};
-        return array;
+        return new int[]{this.getX(), this.getY()};
     }
     public ControleCase getCc(){return cc;}
     public TYPE getType() {
@@ -47,31 +51,52 @@ public class Case {
 
     public Set<Joueur> getJ() { return J; }
 
-    public String getIndice(){return "";}
-
-    public IndicePiece.Piece getPiece() {
-        return null;
+    public String getDir(){
+        if (this.indLigne){
+            return "l";
+        }else{
+            return "c";
+        }
     }
-    public boolean getLigne(){
-        return false;
+    public String getIndice() {
+        String dir = this.getDir();
+        switch (this.indicePiece()) {
+            case HELICE:
+                return dir + ": Hélice";
+            case BOITE_DE_VITESSE:
+                return dir + ": Boite";
+            case CRISTAL_D_ENERGIE:
+                return dir + ": Cristal";
+            case SYSTEME_DE_NAVIGATION:
+                return dir + ": Système";
+        }
+        return dir;
+    }
+    public Piece indicePiece(){ return this.indice; }
+
+    public boolean indiceLigne(){ return this.indLigne;}
+
+    public Set<Piece> getPiece() {
+        return piece;
     }
 
     public boolean hasPlayer() { return !this.getJ().isEmpty();}
 
     public String strPiece(){
-        if (this.piece != null){
-            switch (this.piece){
+        String res="";
+        for (Piece p: this.piece) {
+            switch (p) {
                 case SYSTEME_DE_NAVIGATION:
-                    return "SYSTEME";
+                    res+="SYSTEME "; break;
                 case BOITE_DE_VITESSE:
-                    return "BOITE";
+                    res+="BOITE "; break;
                 case CRISTAL_D_ENERGIE:
-                    return "CRISTAL";
+                    res+="CRISTAL "; break;
                 case HELICE:
-                    return "HELICE";
+                    res+="HELICE "; break;
             }
         }
-        return "";
+        return res;
     }
 
     //Setters
@@ -89,28 +114,22 @@ public class Case {
 
     public void setExploree2(boolean exp){ this.exploree=exp;}
 
-    public void setPiece(IndicePiece.Piece pm){
+    public void setIndice(Piece pm, boolean isLigne){ this.indice=pm; this.indLigne=isLigne; }
+
+    public void addPiece(Piece p){
+        piece.add(p);
+    }
+    public void setPiece(Set<Piece> pm){
         this.piece=pm;
     }
 
     public void setSable(int quantite) {this.sable = quantite;}
 
     //Methode
-
     public void addJ(Joueur j){
         J.add(j);
     }
     public void remJ(Joueur j) { J.remove(j);}
-
-    /**
-    public void setJ(Set<Joueur> JJ){
-        for (Joueur jr : this.J){
-            this.remJ(jr);
-        }
-        for (Joueur ja : JJ){
-            this.addJ(ja);
-        }
-    }**/
 
     public void setJ(Set<Joueur> JJ) {
         this.J = JJ;
@@ -135,7 +154,7 @@ public class Case {
     }
 
     public void explorer(){
-        if (this.exploree==true){
+        if (this.exploree){
             throw new RuntimeException("Case déjà explorée");
         }else{
             this.exploree=true;

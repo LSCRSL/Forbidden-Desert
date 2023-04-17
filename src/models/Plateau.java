@@ -15,6 +15,7 @@ public class Plateau {
     private int[] oeil;
     private int[] crash;
     private Set<Joueur> joueurs;
+    private Set<Case.Piece> piecesRecup;
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;
     private boolean bRev;
@@ -26,6 +27,7 @@ public class Plateau {
         this.sRev=false;
         this.bRev=false;
         this.cRev=false;
+        this.piecesRecup=new HashSet<>();
         this.taille = taille;
         this.sable = 0;
         this.niv_tempete = 0;
@@ -114,9 +116,11 @@ public class Plateau {
             int rY = (int) Math.floor(Math.random() * 5);
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 if (helice==2) {
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.HELICE, true)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.HELICE,true);
                 }else{
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.HELICE, false)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.HELICE,false);
                 }
                 helice --;
             }
@@ -127,9 +131,11 @@ public class Plateau {
             int rY = (int) Math.floor(Math.random() * 5);
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 if (bdv==2) {
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.BOITE_DE_VITESSE, true)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.BOITE_DE_VITESSE,true);
                 }else{
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.BOITE_DE_VITESSE, false)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.BOITE_DE_VITESSE,false);
                 }
                 bdv --;
             }
@@ -140,9 +146,11 @@ public class Plateau {
             int rY = (int) Math.floor(Math.random() * 5);
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 if (cde==2) {
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.CRISTAL_D_ENERGIE, true)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE,true);
                 }else{
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.CRISTAL_D_ENERGIE, false)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE,false);
                 }
                 cde --;
             }
@@ -153,9 +161,11 @@ public class Plateau {
             int rY = (int) Math.floor(Math.random() * 5);
             if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
                 if (sdn==2) {
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.SYSTEME_DE_NAVIGATION,true)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION,true);
                 }else{
-                    this.setCase((new IndicePiece(rX, rY, this, Case.TYPE.INDICE, IndicePiece.Piece.SYSTEME_DE_NAVIGATION, false)), rX, rY);
+                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX,rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION,false);
                 }
                 sdn --;
             }
@@ -185,6 +195,8 @@ public class Plateau {
         return this.plateau[x][y];
     }
 
+    public Set<Case.Piece> getPiecesRecup(){ return this.piecesRecup; }
+
     //Setters
     public void setNiv_tempete(float niveau) {
         this.niv_tempete = niveau;
@@ -204,6 +216,9 @@ public class Plateau {
         this.plateau[x][y]= c;
     }
 
+    public void addPiecesRecup(Set<Case.Piece> pm){
+        for (Case.Piece p: pm){this.piecesRecup.add(p);} }
+
     public void addJoueur(int i, String nom, Carte.Personnage per) {
         Joueur j = new Joueur(i,this,nom,per);
         joueurs.add(j);
@@ -211,8 +226,7 @@ public class Plateau {
     }
 
     public void souffler(Case.Dir d, int f) {
-        //rajouter des conditions si la force est trop élévée
-        //les cases avec les indices se decouvrent quand on permutte
+        //rajouter des conditions si la force est trop élévée --- ok?
         int[] tmp=getOeil();
         int oX = tmp[0];
         int oY = tmp[1];
@@ -255,21 +269,30 @@ public class Plateau {
     }
 
     public void permute_case(Case c1, Case c2) {
-        int s1 = c1.getSable();
-        boolean exp1 = c1.isExploree();
-        Case.TYPE typ1 = c1.getType();
+        int s1 = c1.getSable(); //niv_sabla
+        boolean exp1 = c1.isExploree(); //si déjà explorée
+        Case.TYPE typ1 = c1.getType(); //type
         ControleCase cc1 = c1.getCc();
-        IndicePiece.Piece p1 = c1.getPiece();
-        Set<Joueur> J = c1.getJ();
-
-        //mettre un switch ??
+        Set<Case.Piece> p1 = c1.getPiece(); //Piece présente sur Case1
+        Set<Case.Piece> p2 = c2.getPiece(); //Piece présente sur Case2
+        Set<Joueur> J = c1.getJ(); //Joueur présent sur Case
+        Case.Piece ip1 = c1.indicePiece(); //indice pour piece
+        boolean il1 = c1.indiceLigne(); //indice pour ligne
         if ( typ1 == Case.TYPE.OEIL) {
             int[] o ={c2.getX(), c2.getY()} ;
             setOeil(o);
+            for (Case.Piece p: p1){
+                p2.add(p);
+            }
+            p1=new HashSet<>();
         }
         if ( c2.getType() == Case.TYPE.OEIL) {
             int[] o ={c1.getX(), c1.getY()} ;
             setOeil(o);
+            for (Case.Piece p: p2) {
+                p1.add(p);
+            }
+            p2=new HashSet<>();
         }
 
         if ( typ1 == Case.TYPE.CRASH) {
@@ -280,34 +303,11 @@ public class Plateau {
             int[] c ={c1.getX(), c1.getY()} ;
             setCrash(c);
         }
-        /*boolean isI1=false;
-        boolean iL1=false;
-        IndicePiece.Piece piece1=null;
-        if (c1.getType()==Case.TYPE.INDICE){
-            c1=(IndicePiece) c1;
-            isI1=true;
-            iL1=c1.getLigne();
-            piece1=c1.getPiece();
-            c1=(Case) c1;
-        }
-        boolean isI2=false;
-        boolean iL2=false;
-        IndicePiece.Piece piece2=null;
-        if (c2.getType()==Case.TYPE.INDICE){
-            c2=(IndicePiece) c2;
-            isI2=true;
-            iL2=c2.getLigne();
-            piece2=c2.getPiece();
-            c2=(Case) c2;
-        }*/
 
         c1.setType(c2.getType());
-        /*if (isI2){
-            //c1= new IndicePiece(c1.getX(), c1.getY(), this, Case.TYPE.INDICE, piece2, iL2);
-            ((IndicePiece) c1).setIndice(piece2, iL2);
-        }*/
         c1.setCc(c2.getCc());
-        c1.setPiece(c2.getPiece());
+        c1.setPiece(p2);
+        c1.setIndice(c2.indicePiece(),c2.indiceLigne());
         c1.setExploree2(c2.isExploree());
 
         //on associe à la case les nouveaux joueurs
@@ -323,12 +323,9 @@ public class Plateau {
         }
 
         c2.setType(typ1);
-        /*if (isI1){
-            //c2= new IndicePiece(c2.getX(), c2.getY(), this, Case.TYPE.INDICE, piece1, iL1);
-            ((IndicePiece) c2).setIndice(piece1, iL1);
-        }*/
         c2.setCc(cc1);
         c2.setPiece(p1);
+        c2.setIndice(ip1,il1);
         c2.setExploree2(exp1);
         c2.setJ(J);
         for (Joueur j : c2.getJ()){
@@ -346,7 +343,7 @@ public class Plateau {
         setNiv_tempete((float) (this.getNiv_tempete()+0.5));
     }
 
-    public void affichePiece(){ //NE MARCHE PAS
+    public void affichePiece(){
         int helice=0;
         int hx=-1;
         int hy=-1;
@@ -361,55 +358,56 @@ public class Plateau {
         int sy=-1;
         for (int i=0; i<taille; i++){
             for (int j=0; j<taille; j++){
-                if (this.getCase(i,j).getPiece()!= null){
-                    switch(this.getCase(i,j).getPiece()){
+                if(this.getCase(i,j).getType()== Case.TYPE.INDICE && this.getCase(i,j).isExploree()) {
+                    Case.Piece p = this.getCase(i,j).indicePiece();
+                    switch(p){
                         case HELICE:
                             helice++;
-                            if (this.getCase(i,j).getLigne()){
+                            if (this.getCase(i,j).indiceLigne()){
                                 hx=i;
                             }else{
                                 hy=j;
-                            }
+                            } break;
                         case CRISTAL_D_ENERGIE:
                             cristal++;
-                            if (this.getCase(i,j).getLigne()){
+                            if (this.getCase(i,j).indiceLigne()){
                                 cx=i;
                             }else{
                                 cy=j;
-                            }
+                            } break;
                         case SYSTEME_DE_NAVIGATION:
                             systeme++;
-                            if (this.getCase(i,j).getLigne()){
+                            if (this.getCase(i,j).indiceLigne()){
                                 sx=i;
                             }else{
                                 sy=j;
-                            }
+                            } break;
                         case BOITE_DE_VITESSE:
                             boite++;
-                            if (this.getCase(i,j).getLigne()){
+                            if (this.getCase(i,j).indiceLigne()){
                                 bx=i;
                             }else{
                                 by=j;
-                            }
+                            } break;
                     }
                 }
             }
         }
         if (helice==2 && !hRev){
-            this.getCase(hx,hy).setPiece(IndicePiece.Piece.HELICE);
+            this.getCase(hx,hy).addPiece(Case.Piece.HELICE);
             this.hRev=true;
         }
         if (cristal==2 && !cRev){
-            this.getCase(cx,cy).setPiece(IndicePiece.Piece.CRISTAL_D_ENERGIE);
+            this.getCase(cx,cy).addPiece(Case.Piece.CRISTAL_D_ENERGIE);
             this.cRev=true;
         }
         if (boite==2 && !bRev){
-            this.getCase(bx,by).setPiece(IndicePiece.Piece.BOITE_DE_VITESSE);
+            this.getCase(bx,by).addPiece(Case.Piece.BOITE_DE_VITESSE);
             this.bRev=true;
         }
         if (systeme==2 && !sRev){
+            this.getCase(sx,sy).addPiece(Case.Piece.SYSTEME_DE_NAVIGATION);
             this.sRev=true;
-            this.getCase(sx,sy).setPiece(IndicePiece.Piece.SYSTEME_DE_NAVIGATION);
         }
     }
 
