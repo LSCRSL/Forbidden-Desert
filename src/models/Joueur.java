@@ -6,14 +6,12 @@ public class Joueur {
     //Attributs
     private final int id;
     private int niv_eau;
-
     private models.Plateau p;
-
     private static String name;
-
     private Carte.Personnage perso;
-    //mettre la case à la place je pense
     private Case pos;
+    private int nb_action;
+    private boolean mon_tour;
 
     private String description="";
 
@@ -25,6 +23,9 @@ public class Joueur {
         this.name=nom;
         this.perso=per;
         this.pos = p.getCase(this.p.getCrash()[0],this.p.getCrash()[1]);
+        this.nb_action = 4;
+        this.mon_tour = false;
+
     }
 
     //Getters
@@ -37,6 +38,14 @@ public class Joueur {
 
     public models.Case getPos(){ return this.pos;}
 
+    public boolean isMon_tour() {
+        return mon_tour;
+    }
+
+    public int getNb_action() {
+        return nb_action;
+    }
+
     //Setters
     public static void setName(String name) {
         Joueur.name = name;
@@ -48,6 +57,18 @@ public class Joueur {
 
     public void setPos(Case c){
         this.pos = c;
+    }
+
+    public void setMon_tour(boolean mon_tour) {
+        this.mon_tour = mon_tour;
+    }
+
+    public void decremente_action() {
+        this.nb_action --;
+    }
+
+    public void reset_action() {
+        this.nb_action = 4;
     }
 
     //Méthodes
@@ -73,7 +94,9 @@ public class Joueur {
     public void deplaceC(Case c) {
         int[] ncc = c.getCoord();
         if (this.getPos().getCoord() != ncc){
+            this.pos.remJ(this);
             this.pos = c;
+            c.addJ(this);
         }else{
             throw new RuntimeException("Deplacement impossible.");
         }

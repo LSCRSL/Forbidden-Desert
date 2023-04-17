@@ -153,6 +153,23 @@ public class Case {
         return this;
     }
 
+
+    public boolean isVoisine(Case C){
+        if (C.getType() == TYPE.OEIL){
+            return false;
+        }else {
+            int X = C.getX();
+            int Y = C.getY();
+            if (X == this.x && Y == this.y-1 || X == this.x && Y == this.y+1
+                    || X == this.x-1 && Y == this.y || X == this.x+1 && Y == this.y){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
     public void explorer(){
         if (this.exploree){
             throw new RuntimeException("Case déjà explorée");

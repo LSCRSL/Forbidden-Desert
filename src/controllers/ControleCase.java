@@ -6,14 +6,16 @@ import models.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
     private final models.Case c;
     private models.Plateau p;
 
-    public ControleCase(models.Case c) {
+    public ControleCase(models.Case c, Plateau plateau) {
         super("",150,150);
+        this.p = plateau;
         int sable = c.getSable();
         if (c.isExploree()) {
             this.changeTexte(Integer.toString(sable) + "*");
@@ -125,12 +127,27 @@ public class ControleCase extends IG.ZoneCliquable {
 
     @Override
     public void clicGauche() {
-        System.out.println("OK1");
+        System.out.print("x :" + c.getX());
+        System.out.println(", y :" + c.getY());
         //ai juste fait ça pour qu'on clique et que la case soit explorée
 
         if( !c.isExploree()){
             c.setExploree();
         }
+        ArrayList<Joueur> J = this.p.getJoueurs();
+        for (Joueur j : J ){
+            //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
+            if (j.isMon_tour() && j.getPos().isVoisine(c) && j.getNb_action()>0) {
+                ControleCase cc = j.getPos().getCc();
+                j.deplaceC(c);
+                cc.repaint();
+                j.decremente_action();
+                System.out.println(j.getNb_action());
+            }
+        }
+
+
+
         /*System.out.println("OKk");
         //p.affichePiece(); //NE MARCHE PAS
         Case C = p.getCase(2,2);

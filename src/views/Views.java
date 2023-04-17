@@ -4,7 +4,6 @@ import controllers.*;
 import javax.swing.*;
 import java.awt.*;
 
-//ajouter un bouton annuler et valider pour les actions
 public class Views {
 
     private JFrame fenetre;
@@ -13,8 +12,6 @@ public class Views {
     private JButton creuser;
     private JButton explorer;
     private JButton deplacer;
-    private JButton valider;
-    private JButton annuler;
 
 
     private AffichePlateau ap;
@@ -22,11 +19,11 @@ public class Views {
     private AfficheTempete niv;
     private AfficheSable sab;
     private AfficheFin fin;
+    private AffichePieces pieces;
+    private AfficheTourJoueur T_joueur;
 
 
     public Views(String nom,models.Plateau p) {
-        int[] o = p.getOeil();
-        //this.fenetre = new IG.Fenetre(nom);
         this.fenetre = new JFrame("ForbiddenDesert");
         this.fenetre.setSize(700,700);
         this.fenetre.setLayout(null);
@@ -38,13 +35,13 @@ public class Views {
         this.creuser = new Creuser(this.ap.getPlateau(),this);
         this.ramasser = new Ramasser(this.ap.getPlateau(),this);
         this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
-        this.valider = new Valider(this.ap.getPlateau(),this);
-        this.annuler = new Annuler(this.ap.getPlateau(),this);
 
         this.act = new AfficheActions(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
         this.fin= new AfficheFin(this.ap.getPlateau());
+        this.pieces = new AffichePieces(this.ap.getPlateau());
+        this.T_joueur = new AfficheTourJoueur(this.ap.getPlateau());
 
 
     }
@@ -69,9 +66,6 @@ public class Views {
 
         this.ap.setLocation((this.fenetre.getWidth() - ap.getWidth())/2, (this.fenetre.getHeight() - ap.getHeight())/2);
         this.fenetre.add(ap);
-        System.out.println((this.fenetre.getWidth() - ap.getWidth())*0.5);
-        System.out.println((this.fenetre.getHeight() - ap.getHeight())*0.5);
-        System.out.println(this.fenetre.getHeight());
         this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getHeight()/3 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
         this.fenetre.add(this.fdt);
 
@@ -87,23 +81,20 @@ public class Views {
         this.ramasser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + ramasser.getHeight()/2);
         this.fenetre.add(this.ramasser);
 
-        this.valider.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/3 - valider.getHeight());
-        this.valider.setBackground(Color.GREEN);
-        this.fenetre.add(this.valider);
-
-        this.annuler.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/3 - valider.getHeight());
-        this.annuler.setBackground(Color.RED);
-        this.fenetre.add(this.annuler);
-
         this.niv.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8);
         this.fenetre.add(this.niv);
 
         this.sab.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8 + 2*sab.getHeight());
         this.fenetre.add(this.sab);
 
-        this.act.setLocation(this.fenetre.getWidth()/2 - this.fenetre.getWidth()/12 ,act.getHeight());
+        this.act.setLocation(this.fenetre.getWidth()/2 + this.fenetre.getWidth()/6 ,act.getHeight());
         this.fenetre.add(this.act);
-        //this.fenetre.ajouteElement(this.fin);
+
+        this.pieces.setLocation(30, this.fenetre.getHeight()/3);
+        this.fenetre.add(this.pieces);
+
+        this.T_joueur.setLocation(this.fenetre.getWidth()/2 - this.fenetre.getWidth()/6,T_joueur.getHeight());
+        this.fenetre.add(this.T_joueur);
 
     }
 

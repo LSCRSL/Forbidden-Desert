@@ -1,6 +1,7 @@
 package views;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class AfficheActions extends JPanel{
@@ -10,7 +11,8 @@ public class AfficheActions extends JPanel{
         public AfficheActions(models.Plateau plateau){
             super();
             this.setBounds(0,0,250,30);
-            this.setBackground(Color.magenta);
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            this.setBorder(blackline);
             this.p=plateau;
             this.label= new JLabel("Nombre d'actions restantes: "+ "4");
             this.add(this.label);

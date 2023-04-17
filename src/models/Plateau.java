@@ -2,6 +2,7 @@ package models;
 
 import controllers.ControleCase;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,8 @@ public class Plateau {
     private float niv_tempete;
     private int[] oeil;
     private int[] crash;
-    private Set<Joueur> joueurs;
+    private int id_joueur_actuel;
+    private ArrayList<Joueur> joueurs;
     private Set<Case.Piece> piecesRecup;
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;
@@ -30,8 +32,9 @@ public class Plateau {
         this.piecesRecup=new HashSet<>();
         this.taille = taille;
         this.sable = 0;
+        this.id_joueur_actuel = 0;
         this.niv_tempete = 0;
-        this.joueurs = new HashSet<Joueur>();
+        this.joueurs = new ArrayList<>();
         int[] oeil = {taille/2, taille/2};
 
         this.oeil = oeil;
@@ -183,6 +186,8 @@ public class Plateau {
     //Getters
     public int getSablePlateau() { return sable; }
 
+    public int getId_joueur_actuel() { return id_joueur_actuel;}
+
     public float getNiv_tempete() { return niv_tempete; }
 
     public int getTaille() { return taille; }
@@ -194,6 +199,9 @@ public class Plateau {
     public Case getCase(int x, int y) {
         return this.plateau[x][y];
     }
+
+    public ArrayList<Joueur> getJoueurs() {
+        return this.joueurs;}
 
     public Set<Case.Piece> getPiecesRecup(){ return this.piecesRecup; }
 
@@ -216,6 +224,8 @@ public class Plateau {
         this.plateau[x][y]= c;
     }
 
+    public void setId_joueur_actuel(int id) {this.id_joueur_actuel = id;}
+
     public void addPiecesRecup(Set<Case.Piece> pm){
         for (Case.Piece p: pm){this.piecesRecup.add(p);} }
 
@@ -224,6 +234,7 @@ public class Plateau {
         joueurs.add(j);
         j.getPos().addJ(j);
     }
+
 
     public void souffler(Case.Dir d, int f) {
         //rajouter des conditions si la force est trop élévée --- ok?
@@ -235,7 +246,6 @@ public class Plateau {
             switch (d) {
                 case HAUT:
                     while (cpt != f) {
-                        System.out.println(oX);
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX - 1, oY));
                         oX -= 1;
                         cpt++;
@@ -243,7 +253,6 @@ public class Plateau {
                     }
                 case BAS:
                     while (cpt != f) {
-                        System.out.println(oX);
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX + 1, oY));
                         oX += 1;
                         cpt++;
@@ -251,7 +260,6 @@ public class Plateau {
                     }
                 case GAUCHE:
                     while (cpt != f) {
-                        System.out.println(oY);
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX, oY - 1));
                         oY -= 1;
                         cpt++;
@@ -259,7 +267,6 @@ public class Plateau {
                     }
                 case DROITE:
                     while (cpt != f) {
-                        System.out.println(oY);
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX, oY + 1));
                         oY += 1;
                         cpt++;

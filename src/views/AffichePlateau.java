@@ -2,10 +2,14 @@ package views;
 
 import controllers.ControleCase;
 import models.Carte;
+import models.Case;
+import models.Joueur;
 import models.Plateau;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class AffichePlateau extends JPanel {
 
@@ -19,16 +23,12 @@ public class AffichePlateau extends JPanel {
         //on ajoute les cases
         for (int i = 0; i < plateau.getTaille(); i ++) {
             for(int j = 0; j < plateau.getTaille(); j ++) {
-                models.Case c = this.plateau.getCase(i,j);
-                controllers.ControleCase cc = new ControleCase(c);
+                Case c = this.plateau.getCase(i,j);
+                ControleCase cc = new ControleCase(c,this.plateau);
                 this.add(cc);
                 c.setCc(cc);
             }
         }
-        //on ajoute les joueurs ?
-        this.plateau.addJoueur(1,"J1", Carte.Personnage.ALPINISTE);
-
-
     }
 
     public Plateau getPlateau() {

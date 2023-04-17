@@ -3,6 +3,7 @@ package controllers;
 import javax.swing.*;
 import models.Case;
 
+import models.Joueur;
 import views.AfficheActions;
 import views.AfficheSable;
 import views.AfficheTempete;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class FinDeTour extends JButton {
 
@@ -32,7 +34,6 @@ public class FinDeTour extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int n = (int) Math.floor(Math.random() * 3 );//génère entier entre 0 et 2
-                //System.out.print("random="+n+"\n");
                 if (n == 0) {
                     int f=0;
                     int rdir = (int) Math.floor(Math.random() * 4 );
@@ -45,16 +46,12 @@ public class FinDeTour extends JButton {
                         f=3;
                     }
                     if (rdir==0){
-                        System.out.print("Haut"+f+"\n");
                         p.souffler(Case.Dir.HAUT, f);
                     }else if (rdir==1){
-                        System.out.print("Bas"+f+"\n");
                         p.souffler(Case.Dir.BAS, f);
                     }else if (rdir==2){
-                        System.out.print("Droite"+f+"\n");
                         p.souffler(Case.Dir.DROITE, f);
                     }else if (rdir==3){
-                        System.out.print("Gauche"+f+"\n");
                         p.souffler(Case.Dir.GAUCHE, f);
                     }
                 } else if (n==1) {
@@ -85,5 +82,17 @@ public class FinDeTour extends JButton {
         sab.setLabels(this.p.getSablePlateau());
         AfficheActions act =this.v.getAct();
         act.setLabels(4);
+        //tenter de faire ça pour le joueur qui joue
+        for (Joueur j : this.p.getJoueurs()) {
+            j.reset_action();
+        }
+        //petits bugs d'affichage
+        int id = p.getId_joueur_actuel();
+        System.out.println(id);
+        p.getJoueurs().get(id).setMon_tour(false);
+        id = (id + 1)%p.getJoueurs().size();
+        p.setId_joueur_actuel(id);
+        p.getJoueurs().get(id).setMon_tour(true);
+
     }
 }
