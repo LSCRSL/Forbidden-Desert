@@ -2,6 +2,7 @@ package views;
 import controllers.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 //ajouter un bouton annuler et valider pour les actions
 public class Views {
@@ -12,7 +13,8 @@ public class Views {
     private JButton creuser;
     private JButton explorer;
     private JButton deplacer;
-
+    private JButton valider;
+    private JButton annuler;
 
 
     private AffichePlateau ap;
@@ -36,6 +38,8 @@ public class Views {
         this.creuser = new Creuser(this.ap.getPlateau(),this);
         this.ramasser = new Ramasser(this.ap.getPlateau(),this);
         this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
+        this.valider = new Valider(this.ap.getPlateau(),this);
+        this.annuler = new Annuler(this.ap.getPlateau(),this);
 
         this.act = new AfficheActions(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
@@ -80,6 +84,14 @@ public class Views {
 
         this.ramasser.setLocation(1200,440);
         this.fenetre.add(this.ramasser);
+
+        this.valider.setLocation(1100,510);
+        this.valider.setBackground(Color.GREEN);
+        this.fenetre.add(this.valider);
+
+        this.annuler.setLocation(1200,510);
+        this.annuler.setBackground(Color.RED);
+        this.fenetre.add(this.annuler);
 
         this.niv.setLocation(1150,100);
         this.fenetre.add(this.niv);
