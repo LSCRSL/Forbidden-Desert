@@ -3,6 +3,8 @@ package views;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import models.Case;
+import models.Plateau;
 
 public class AffichePieces extends JPanel {
 
@@ -20,11 +22,11 @@ public class AffichePieces extends JPanel {
         this.add(this.label);
     }
     public void setLabels(){
-        this.label.setText("Pièces trouvées : ");
-        /**
-        if (//piece decouverte)
-            this.label.setText("nom_piece");
-         **/
+        String lab="Pièces trouvées : ";
+        for(Case.Piece pm : p.getPiecesRecup()){
+            lab=lab+p.getStrPiece(pm)+" ";
+        }
+        this.label.setText(lab);
         this.repaint();
     }
 

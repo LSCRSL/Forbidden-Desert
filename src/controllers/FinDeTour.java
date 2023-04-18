@@ -20,7 +20,12 @@ public class FinDeTour extends JButton {
     private views.Views v;
 
     public boolean isDefaite(){
-        return this.p.getSablePlateau()>=43 || this.p.getNiv_tempete()>=7;
+        for (Joueur j: p.getJoueurs()){ //mort par soif
+            if (j.getNiv_eau()<=-1){
+                return true;
+            }
+        }
+        return this.p.getSablePlateau()>=43 || this.p.getNiv_tempete()>=7; //mort par ensablement ou tempête
     }
 
     public FinDeTour(models.Plateau plat, views.Views v) {
@@ -55,10 +60,11 @@ public class FinDeTour extends JButton {
                         p.souffler(Case.Dir.GAUCHE, f);
                     }
                 } else if (n==1) {
-                    //le sable n'augmente pas, à faire
                     p.dechainer();
                 } else{
-                    //Vague de chaleur, à implémenter quand on aura les joueurs
+                    for (Joueur j: p.getJoueurs()){
+                        j.boire();
+                    }
                 }
                 if (isDefaite()){
                     System.out.print("PERDU\n");

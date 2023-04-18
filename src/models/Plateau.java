@@ -418,4 +418,18 @@ public class Plateau {
         }
     }
 
+    public String getStrPiece(Case.Piece p){
+        switch(p){
+            case HELICE:
+                return "Helice";
+            case BOITE_DE_VITESSE:
+                return "Boite de vitesse";
+            case CRISTAL_D_ENERGIE:
+                return "Cristal d'énergie";
+            case SYSTEME_DE_NAVIGATION:
+                return "Système de navigation";
+        }
+        return "";
+    }
+
 }

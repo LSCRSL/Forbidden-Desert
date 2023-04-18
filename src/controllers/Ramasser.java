@@ -23,7 +23,7 @@ public class Ramasser extends JButton{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AfficheActions act = v.getAct();
-                act.setLabels(3);
+                act.setLabels(p.getJoueurs().get(p.getId_joueur_actuel()).getNb_action());
 
             }
         });

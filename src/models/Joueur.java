@@ -76,8 +76,16 @@ public class Joueur {
         return "";
     }
 
-    public void explorer(Case c){
-        c.explorer();
+    public void explorer(){
+        Case cPos=this.getPos();
+        cPos.explorer();
+        if (cPos.getType()== Case.TYPE.OASIS){
+            for (Joueur j: p.getJoueurs()){
+                if (j.getPos()==cPos){
+                    j.setNiv_eau(j.getNiv_eau()+2);
+                }
+            }
+        }
     }
 
     public void deplacer(Case.Dir d){

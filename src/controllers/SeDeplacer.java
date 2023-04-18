@@ -3,6 +3,8 @@ package controllers;
 import views.AfficheActions;
 import views.Views;
 
+import models.Joueur;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +25,7 @@ public class SeDeplacer extends JButton {
             public void actionPerformed(ActionEvent e) {
                 //decrémenter dans un premier temps le nbre d'action
                 AfficheActions act =v.getAct();
-                act.setLabels(2);
+                act.setLabels(p.getJoueurs().get(p.getId_joueur_actuel()).getNb_action());
 
             }
         });
