@@ -1,7 +1,7 @@
 package controllers;
 
 import models.Plateau;
-import views.AfficheActions;
+import views.AfficheTour;
 import views.Views;
 
 import javax.swing.*;
@@ -22,9 +22,12 @@ public class Explorer extends JButton {
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AfficheActions act = v.getAct();
-                act.setLabels(p.getJoueurs().get(p.getId_joueur_actuel()).getNb_action());
-
+                p.setAction(2);
+                //je pense qu'il faut mettre ca apres le clique mais pas d'accès au view depuis controle case
+                //on peut garder ca mais faire attention à pas toucher à 2 boutons à la suite !
+                //sinon le nbre d'action diminue alors qu'on a pas joué
+                AfficheTour act = v.getAct();
+                int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
             }
         });
 

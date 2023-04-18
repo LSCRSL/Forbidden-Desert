@@ -1,7 +1,7 @@
 package controllers;
 
 import models.Plateau;
-import views.AfficheActions;
+import views.AfficheTour;
 import views.Views;
 
 import javax.swing.*;
@@ -22,8 +22,10 @@ public class Ramasser extends JButton{
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AfficheActions act = v.getAct();
-                act.setLabels(p.getJoueurs().get(p.getId_joueur_actuel()).getNb_action());
+                p.setAction(3);
+                AfficheTour act = v.getAct();
+                int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
+
 
             }
         });

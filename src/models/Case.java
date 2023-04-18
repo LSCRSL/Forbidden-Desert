@@ -33,7 +33,7 @@ public class Case {
         this.piece= new HashSet<>();
         this.indice=null;
         this.indLigne= false;
-        this.J = new HashSet<>();
+        this.J = new HashSet<Joueur>();
     }
 
     //Getters

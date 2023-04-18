@@ -14,7 +14,7 @@ public class AffichePieces extends JPanel {
 
     public AffichePieces(models.Plateau plateau){
         super();
-        this.setBounds(0,0,150,30);
+        this.setBounds(0,0,150,200);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         this.setBorder(blackline);
         this.p=plateau;
@@ -22,9 +22,9 @@ public class AffichePieces extends JPanel {
         this.add(this.label);
     }
     public void setLabels(){
-        String lab="Pièces trouvées : ";
+        String lab="Pièces trouvées : \n";
         for(Case.Piece pm : p.getPiecesRecup()){
-            lab=lab+p.getStrPiece(pm)+" ";
+            lab=lab+p.getStrPiece(pm)+" \n";
         }
         this.label.setText(lab);
         this.repaint();

@@ -1,6 +1,6 @@
 package controllers;
 
-import views.AfficheActions;
+import views.AfficheTour;
 import views.Views;
 
 import models.Joueur;
@@ -24,8 +24,9 @@ public class SeDeplacer extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //decrémenter dans un premier temps le nbre d'action
-                AfficheActions act =v.getAct();
-                act.setLabels(p.getJoueurs().get(p.getId_joueur_actuel()).getNb_action());
+                p.setAction(0);
+                AfficheTour act =v.getAct();
+                int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
 
             }
         });

@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Carte;
+import models.Joueur;
 import models.Plateau;
 import views.Views;
 
@@ -11,9 +12,12 @@ public class Launcher {
     public void launch() {
         Plateau plateau = new Plateau(5);
         // A CHANGER IMPERATIVEMENT
-        plateau.addJoueur(0,"J1", Carte.Personnage.ALPINISTE);
-        plateau.addJoueur(1,"J2", Carte.Personnage.ARCHEOLOGUE);
-        plateau.getJoueurs().get(0).setMon_tour(true);
+        plateau.addJoueur(0,"Lisa", Carte.Personnage.ALPINISTE);
+        plateau.addJoueur(1,"Clement", Carte.Personnage.ALPINISTE);
+        plateau.addJoueur(2,"Asterix", Carte.Personnage.ALPINISTE);
+        plateau.addJoueur(3,"Obelix", Carte.Personnage.ALPINISTE);
+        //plateau.addJoueur(4,"Yoshi", Carte.Personnage.ALPINISTE);
+        plateau.getJoueur_i(0).setMon_tour(true);
         Views vue = new Views("ForbiddenDesert",plateau);
         vue.affiche();
     }

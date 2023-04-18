@@ -1,5 +1,7 @@
 package models;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashSet;
 
 public class Joueur {
@@ -7,11 +9,12 @@ public class Joueur {
     private final int id;
     private int niv_eau;
     private models.Plateau p;
-    private static String name;
+    private final String name;
     private Carte.Personnage perso;
     private Case pos;
     private int nb_action;
     private boolean mon_tour;
+    private Image img;
 
     private String description="";
 
@@ -26,9 +29,26 @@ public class Joueur {
         this.nb_action = 4;
         this.mon_tour = false;
 
+        Image img = new ImageIcon("resources/mumu.png").getImage();
+        switch (per) {
+            case EXPLORATEUR: img = new ImageIcon("resources/mumu.png").getImage(); break;
+            case ALPINISTE: img = new ImageIcon("resources/mumu.png").getImage(); break;
+            case ARCHEOLOGUE: img = new ImageIcon("resources/tunnel3.png").getImage(); break;
+            case METEOROLOGUE: img = new ImageIcon("resources/mumu.png").getImage(); break;
+            case NAVIGATRICE: img = new ImageIcon("resources/mumu.png").getImage(); break;
+            case PORTEUSE_D_EAU: img = new ImageIcon("resources/mumu.png").getImage(); break;
+        }
+        this.img = img;
+
     }
 
     //Getters
+
+
+    public int getId() {
+        return id;
+    }
+
     public String getName(){
         return this.name;
     }
@@ -46,10 +66,11 @@ public class Joueur {
         return nb_action;
     }
 
-    //Setters
-    public static void setName(String name) {
-        Joueur.name = name;
+    public Image getImg() {
+        return img;
     }
+
+    //Setters
 
     public void setNiv_eau(int niv_eau) {
         this.niv_eau = niv_eau;

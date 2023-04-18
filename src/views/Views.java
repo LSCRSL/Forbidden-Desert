@@ -15,12 +15,11 @@ public class Views {
 
 
     private AffichePlateau ap;
-    private AfficheActions act;
+    private AfficheTour act;
     private AfficheTempete niv;
     private AfficheSable sab;
     private AfficheFin fin;
     private AffichePieces pieces;
-    private AfficheTourJoueur T_joueur;
 
 
     public Views(String nom,models.Plateau p) {
@@ -28,7 +27,7 @@ public class Views {
         this.fenetre.setSize(700,700);
         this.fenetre.setLayout(null);
 
-        this.ap = new AffichePlateau(p);
+        this.ap = new AffichePlateau(p,this);
 
         this.fdt = new FinDeTour(this.ap.getPlateau(),this);
         this.explorer = new Explorer(this.ap.getPlateau(),this);
@@ -36,12 +35,11 @@ public class Views {
         this.ramasser = new Ramasser(this.ap.getPlateau(),this);
         this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
 
-        this.act = new AfficheActions(this.ap.getPlateau());
+        this.act = new AfficheTour(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
         this.fin= new AfficheFin(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
-        this.T_joueur = new AfficheTourJoueur(this.ap.getPlateau());
 
 
     }
@@ -50,11 +48,12 @@ public class Views {
 
     public AfficheSable getSab(){ return  this.sab;}
 
-    public AfficheActions getAct() {return this.act;}
+    public AfficheTour getAct() {return this.act;}
 
     public AfficheFin getFin() {
         return this.fin;
     }
+
 
     public void affiche() {
         //this.fenetre.add(this.ap);
@@ -87,14 +86,11 @@ public class Views {
         this.sab.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8 + 2*sab.getHeight());
         this.fenetre.add(this.sab);
 
-        this.act.setLocation(this.fenetre.getWidth()/2 + this.fenetre.getWidth()/6 ,act.getHeight());
+        this.act.setLocation(this.fenetre.getWidth()/2 - this.act.getWidth()/2 ,act.getHeight()/6);
         this.fenetre.add(this.act);
 
         this.pieces.setLocation(30, this.fenetre.getHeight()/3);
         this.fenetre.add(this.pieces);
-
-        this.T_joueur.setLocation(this.fenetre.getWidth()/2 - this.fenetre.getWidth()/6,T_joueur.getHeight());
-        this.fenetre.add(this.T_joueur);
 
     }
 

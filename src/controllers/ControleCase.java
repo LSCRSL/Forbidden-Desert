@@ -12,8 +12,9 @@ import java.util.Set;
 public class ControleCase extends IG.ZoneCliquable {
     private final models.Case c;
     private models.Plateau p;
+    private views.Views v;
 
-    public ControleCase(models.Case c, Plateau plateau) {
+    public ControleCase(models.Case c, Plateau plateau, views.Views view) {
         super("",150,150);
         this.p = plateau;
         int sable = c.getSable();
@@ -24,6 +25,7 @@ public class ControleCase extends IG.ZoneCliquable {
             this.changeTexte(Integer.toString(sable));
         }
         this.c = c;
+        this.v = view;
     }
 
     @Override
@@ -96,11 +98,18 @@ public class ControleCase extends IG.ZoneCliquable {
         }
         Set<Joueur> pers = c.getJ();
         Image mumu = new ImageIcon("resources/mumu.png").getImage();
+        int nb = this.c.getJ().size();
+        int k = 0;
         for (Joueur j : pers) {
-            //g.drawString(j.getName(), 20, 20);
-            int x1 = (this.getWidth() - mumu.getWidth(null)) / 2;
-            int y1 = (this.getHeight() - mumu.getHeight(null)) / 2;
-            g.drawImage(mumu,0,0,null);
+            mumu = j.getImg();
+            switch (nb) {
+                case 1: g.drawImage(mumu,0,0,null); break;
+                case 2: if (k == 0) g.drawImage(mumu,0,0,null); else g.drawImage(mumu,100,0,null); break;
+                case 3: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); else g.drawImage(mumu,0,100,null); break;
+                case 4: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); else g.drawImage(mumu,100,100,null); break;
+                //case 5: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); if (k==3) g.drawImage(mumu,100,100,null); else g.drawImage(mumu,50,50,null); break;
+            }
+            k++;
         }
 
     }
@@ -127,24 +136,40 @@ public class ControleCase extends IG.ZoneCliquable {
 
     @Override
     public void clicGauche() {
-        System.out.print("x :" + c.getX());
-        System.out.println(", y :" + c.getY());
-        //ai juste fait ça pour qu'on clique et que la case soit explorée
 
-        if( !c.isExploree()){
-            c.setExploree();
-        }
-        ArrayList<Joueur> J = this.p.getJoueurs();
-        for (Joueur j : J ){
+        Set<Joueur> J = this.p.getJoueurs();
+        for (Joueur j : J ) {
             //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
-            if (j.isMon_tour() && j.getPos().isVoisine(c) && j.getNb_action()>0) {
-                ControleCase cc = j.getPos().getCc();
-                j.deplaceC(c);
-                cc.repaint();
-                j.decremente_action();
-                System.out.println(j.getNb_action());
+            if (j.isMon_tour()  && j.getNb_action() > 0) {
+                if (p.getAction() == 0 && j.getPos().isVoisine(c)) {
+                    ControleCase cc = j.getPos().getCc();
+                    j.deplaceC(c);
+                    cc.repaint();
+                    j.decremente_action();
+                    this.v.getAct().setLabels(j);
+                }
+                if (p.getAction() == 1 && (j.getPos().isVoisine(c) || j.getPos() == c) ) {
+                    //creuser
+                    c.dessabler();
+                    j.decremente_action();
+                    this.v.getAct().setLabels(j);
+                }
+                if (p.getAction() == 2 && (!c.isExploree()) && ( j.getPos().isVoisine(c) || j.getPos() == c)) {
+                    c.setExploree();
+                    j.decremente_action();
+                    this.v.getAct().setLabels(j);
+                }
+
+                if (p.getAction() == 3 &&( j.getPos().isVoisine(c) || j.getPos() == c)) {
+                    //ramasser
+                    j.decremente_action();
+                    this.v.getAct().setLabels(j);
+                }
             }
         }
+        //p.setAction(-1);
+
+
 
 
 

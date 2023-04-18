@@ -4,15 +4,12 @@ import javax.swing.*;
 import models.Case;
 
 import models.Joueur;
-import views.AfficheActions;
+import views.AfficheTour;
 import views.AfficheSable;
 import views.AfficheTempete;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class FinDeTour extends JButton {
 
@@ -69,6 +66,7 @@ public class FinDeTour extends JButton {
                 if (isDefaite()){
                     System.out.print("PERDU\n");
                 }
+                p.setAction(-1);
                 refresh();
             }
         });
@@ -86,19 +84,23 @@ public class FinDeTour extends JButton {
         temp.setLabel(this.p.getNiv_tempete());
         AfficheSable sab =this.v.getSab();
         sab.setLabels(this.p.getSablePlateau());
-        AfficheActions act =this.v.getAct();
-        act.setLabels(4);
+        AfficheTour act =this.v.getAct();
+
         //tenter de faire ça pour le joueur qui joue
         for (Joueur j : this.p.getJoueurs()) {
             j.reset_action();
         }
         //petits bugs d'affichage
         int id = p.getId_joueur_actuel();
-        System.out.println(id);
-        p.getJoueurs().get(id).setMon_tour(false);
+        p.getJoueur_i(id).setMon_tour(false);
         id = (id + 1)%p.getJoueurs().size();
         p.setId_joueur_actuel(id);
-        p.getJoueurs().get(id).setMon_tour(true);
+        p.getJoueur_i(id).setMon_tour(true);
+        //AfficheTourJoueur tj = this.v.getT_joueur();
+        //tj.setLabels(p.getJoueur_i(id));
+        p.getJoueur_i(id).reset_action();
+        p.setAction(4);
+        act.setLabels(p.getJoueur_i(id));
 
     }
 }

@@ -2,6 +2,7 @@ package models;
 
 import controllers.ControleCase;
 
+import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,167 +17,170 @@ public class Plateau {
     private int[] oeil;
     private int[] crash;
     private int id_joueur_actuel;
-    private ArrayList<Joueur> joueurs;
+    private Set<Joueur> joueurs;
+    private int nb_joueur;
     private Set<Case.Piece> piecesRecup;
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;
     private boolean bRev;
     private boolean cRev;
+    private int action;
 
     //Constructeurs
     public Plateau(int taille) {
-        this.hRev=false;
-        this.sRev=false;
-        this.bRev=false;
-        this.cRev=false;
-        this.piecesRecup=new HashSet<>();
+        this.hRev = false;
+        this.sRev = false;
+        this.bRev = false;
+        this.cRev = false;
+        this.piecesRecup = new HashSet<>();
         this.taille = taille;
         this.sable = 0;
+        this.action = -1;
         this.id_joueur_actuel = 0;
         this.niv_tempete = 0;
-        this.joueurs = new ArrayList<>();
-        int[] oeil = {taille/2, taille/2};
+        this.joueurs = new HashSet<Joueur>();
+        int[] oeil = {taille / 2, taille / 2};
 
         this.oeil = oeil;
 
         this.plateau = new Case[taille][taille];
-        for (int i=0; i<taille; i++) {
-            for (int j=0; j<taille;j++) {
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
                 if (i != this.oeil[0] || j != this.oeil[1]) {
-                    Case c= new Case(i, j, this, Case.TYPE.NORMALE);
+                    Case c = new Case(i, j, this, Case.TYPE.NORMALE);
                     this.plateau[i][j] = c;
-                }else {
+                } else {
                     Case c = new Case(i, j, this, Case.TYPE.OEIL);
                     this.plateau[i][j] = c;
                 }
             }
         }
-        int crash=1;
-        int oasis=2;
-        int mirage=1;
-        int engrenage=6;
-        int tunnels=3;
-        int piste=1;
-        while (crash>0){
+        int crash = 1;
+        int oasis = 2;
+        int mirage = 1;
+        int engrenage = 6;
+        int tunnels = 3;
+        int piste = 1;
+        while (crash > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType() == Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.CRASH)), rX, rY);
-                crash --;
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.CRASH)), rX, rY);
+                crash--;
                 this.setCrash(new int[]{rX, rY});
 
             }
         }
 
-        while (oasis>0){
+        while (oasis > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.OASIS)), rX, rY);
-                oasis --;
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.OASIS)), rX, rY);
+                oasis--;
             }
         }
 
-        while (mirage>0){
+        while (mirage > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.MIRAGE)), rX, rY);
-                mirage --;
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.MIRAGE)), rX, rY);
+                mirage--;
             }
         }
 
-        while (engrenage>0){
+        while (engrenage > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.ENGRENAGE)), rX, rY);
-                engrenage --;
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.ENGRENAGE)), rX, rY);
+                engrenage--;
             }
         }
 
-        while (tunnels>0){
+        while (tunnels > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.TUNNEL)), rX, rY);
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.TUNNEL)), rX, rY);
                 tunnels--;
             }
         }
 
-        while (piste>0){
+        while (piste > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                this.setCase((new Case(rX,rY,this, Case.TYPE.DECOLLAGE)), rX, rY);
-                piste --;
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                this.setCase((new Case(rX, rY, this, Case.TYPE.DECOLLAGE)), rX, rY);
+                piste--;
             }
         }
 
-        int helice=2;
-        while (helice>0){
+        int helice = 2;
+        while (helice > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                if (helice==2) {
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.HELICE,true);
-                }else{
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.HELICE,false);
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                if (helice == 2) {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.HELICE, true);
+                } else {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.HELICE, false);
                 }
-                helice --;
+                helice--;
             }
         }
-        int bdv=2;
-        while (bdv>0){
+        int bdv = 2;
+        while (bdv > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                if (bdv==2) {
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.BOITE_DE_VITESSE,true);
-                }else{
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.BOITE_DE_VITESSE,false);
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                if (bdv == 2) {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.BOITE_DE_VITESSE, true);
+                } else {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.BOITE_DE_VITESSE, false);
                 }
-                bdv --;
+                bdv--;
             }
         }
-        int cde=2;
-        while (cde>0){
+        int cde = 2;
+        while (cde > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                if (cde==2) {
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE,true);
-                }else{
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE,false);
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                if (cde == 2) {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE, true);
+                } else {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.CRISTAL_D_ENERGIE, false);
                 }
-                cde --;
+                cde--;
             }
         }
-        int sdn=2;
-        while (sdn>0){
+        int sdn = 2;
+        while (sdn > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
-            if (this.getCase(rX,rY).getType()== Case.TYPE.NORMALE){
-                if (sdn==2) {
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION,true);
-                }else{
-                    this.setCase((new Case(rX,rY,this, Case.TYPE.INDICE)), rX, rY);
-                    this.getCase(rX,rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION,false);
+            if (this.getCase(rX, rY).getType() == Case.TYPE.NORMALE) {
+                if (sdn == 2) {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION, true);
+                } else {
+                    this.setCase((new Case(rX, rY, this, Case.TYPE.INDICE)), rX, rY);
+                    this.getCase(rX, rY).setIndice(Case.Piece.SYSTEME_DE_NAVIGATION, false);
                 }
-                sdn --;
+                sdn--;
             }
         }
 
-        int[][] s = {{0,2},{1,1},{1,3},{2,0},{2,4},{3,1},{3,3},{4,2}};
+        int[][] s = {{0, 2}, {1, 1}, {1, 3}, {2, 0}, {2, 4}, {3, 1}, {3, 3}, {4, 2}};
         for (int[] t : s) {
-            this.getCase(t[0],t[1]).ensabler();
+            this.getCase(t[0], t[1]).ensabler();
         }
 
         this.setSable(8);
@@ -184,31 +188,58 @@ public class Plateau {
     }
 
     //Getters
-    public int getSablePlateau() { return sable; }
+    public int getSablePlateau() {
+        return sable;
+    }
 
-    public int getId_joueur_actuel() { return id_joueur_actuel;}
+    public int getId_joueur_actuel() {
+        return id_joueur_actuel;
+    }
 
-    public float getNiv_tempete() { return niv_tempete; }
+    public float getNiv_tempete() {
+        return niv_tempete;
+    }
 
-    public int getTaille() { return taille; }
+    public int getTaille() {
+        return taille;
+    }
 
-    public int[] getOeil() { return oeil; }
-    public int[] getCrash() { return crash; }
+    public int[] getOeil() {
+        return oeil;
+    }
+
+    public int[] getCrash() {
+        return crash;
+    }
+
+    public int getAction() {
+        return action;
+    }
 
 
     public Case getCase(int x, int y) {
         return this.plateau[x][y];
     }
 
-    public ArrayList<Joueur> getJoueurs() {
-        return this.joueurs;}
+    public Set<Joueur> getJoueurs() {
+        return this.joueurs;
+    }
 
-    public Set<Case.Piece> getPiecesRecup(){ return this.piecesRecup; }
+    public Joueur getJoueur_i(int i) {
+            for (Joueur j : this.getJoueurs())
+                if (j.getId() == i) return j;
+            throw new RuntimeException("pas de joueur a l'indice"+i);
+    }
+
+    public Set<Case.Piece> getPiecesRecup() {
+        return this.piecesRecup;
+    }
 
     //Setters
     public void setNiv_tempete(float niveau) {
         this.niv_tempete = niveau;
     }
+
     public void setSable(int niv_sable) {
         this.sable = niv_sable;
     }
@@ -216,23 +247,40 @@ public class Plateau {
     public void setOeil(int[] oeil) {
         this.oeil = oeil;
     }
+
     public void setCrash(int[] cr) {
         this.crash = cr;
     }
 
-    public void setCase(Case c, int x, int y){
-        this.plateau[x][y]= c;
+    public void setAction(int a) {
+        this.action = a;
     }
 
-    public void setId_joueur_actuel(int id) {this.id_joueur_actuel = id;}
+    public void setCase(Case c, int x, int y) {
+        this.plateau[x][y] = c;
+    }
 
-    public void addPiecesRecup(Set<Case.Piece> pm){
-        for (Case.Piece p: pm){this.piecesRecup.add(p);} }
+    public void setId_joueur_actuel(int id) {
+        this.id_joueur_actuel = id;
+    }
 
-    public void addJoueur(int i, String nom, Carte.Personnage per) {
-        Joueur j = new Joueur(i,this,nom,per);
-        joueurs.add(j);
+    public void addPiecesRecup(Set<Case.Piece> pm) {
+        for (Case.Piece p : pm) {
+            this.piecesRecup.add(p);
+        }
+    }
+
+    public void addJoueur(int i, String name, Carte.Personnage per) {
+        Joueur j = new Joueur(i, this, name, per);
+        //System.out.println(this.getJoueur_i(0).getName() + " 1");
+        this.joueurs.add(j);
         j.getPos().addJ(j);
+        //System.out.println(this.getJoueur_i(0).getName());
+        //System.out.println(this.getJoueurs().get(1));
+    }
+
+    public void printJ(){
+        System.out.println(this.getJoueurs().toString());
     }
 
 
