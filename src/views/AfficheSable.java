@@ -14,7 +14,7 @@ public class AfficheSable extends JPanel {
 
     public AfficheSable(models.Plateau plateau){
         super();
-        this.setBounds(0,0,150,30);
+        this.setBounds(0,0,160,30);
         this.p=plateau;
         this.label= new JLabel("Niveau sable: "+ this.p.getSablePlateau());
         this.add(this.label);

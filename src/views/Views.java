@@ -22,6 +22,8 @@ public class Views {
     private AfficheJoueurs joueurs;
     private AffichePieces pieces;
 
+    private AfficheVictoire victoire;
+
 
     public Views(String nom,models.Plateau p) {
         this.fenetre = new JFrame("ForbiddenDesert");
@@ -42,6 +44,8 @@ public class Views {
         this.fin= new AfficheFin(this.ap.getPlateau());
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
+
+        this.victoire = new AfficheVictoire();
 
 
     }
@@ -101,6 +105,8 @@ public class Views {
 
         this.pieces.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3);
         this.fenetre.add(this.pieces);
+
+
 
     }
 

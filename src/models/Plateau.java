@@ -36,7 +36,7 @@ public class Plateau {
         this.sable = 0;
         this.action = -1;
         this.id_joueur_actuel = 0;
-        this.niv_tempete = 0;
+        this.niv_tempete = 1;
         this.joueurs = new HashSet<Joueur>();
         int[] oeil = {taille / 2, taille / 2};
 

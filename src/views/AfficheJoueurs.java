@@ -16,7 +16,7 @@ public class AfficheJoueurs extends JPanel {
     public AfficheJoueurs(models.Plateau plateau) {
         super();
         this.p=plateau;
-        this.setBounds(0,0,150,75*p.getJoueurs().size());
+        this.setBounds(0,0,170,75*p.getJoueurs().size());
         Border blackline = BorderFactory.createLineBorder(Color.black);
         this.setBorder(blackline);
         int nb = this.p.getJoueurs().size();

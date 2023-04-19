@@ -100,11 +100,13 @@ public class Joueur {
 
     public void explorer(){
         Case cPos=this.getPos();
-        cPos.explorer();
-        if (cPos.getType()== Case.TYPE.OASIS){
-            for (Joueur j: p.getJoueurs()){
-                if (j.getPos()==cPos){
-                    j.remplirGourde();
+        if (cPos.getSable()==0) {
+            cPos.explorer();
+            if (cPos.getType()== Case.TYPE.OASIS){
+                for (Joueur j: p.getJoueurs()){
+                    if (j.getPos()==cPos){
+                        j.remplirGourde();
+                    }
                 }
             }
         }
@@ -123,7 +125,7 @@ public class Joueur {
 
     public void deplaceC(Case c) {
         int[] ncc = c.getCoord();
-        if (this.getPos().getCoord() != ncc){
+        if (this.getPos().getCoord() != ncc && c.getSable()<=1){
             this.pos.remJ(this);
             this.pos = c;
             c.addJ(this);
@@ -204,8 +206,15 @@ class alpiniste extends Joueur{
                 "de l’alpiniste même s’il y a 2 marqueurs Sable ou plus.";
     }
     @Override
-    public void deplacer(Case.Dir d){
-        //TODO
+    public void deplaceC(Case c) {
+        int[] ncc = c.getCoord();
+        if (this.getPos().getCoord() != ncc){
+            this.getPos().remJ(this);
+            this.setPos(c);
+            c.addJ(this);
+        }else{
+            throw new RuntimeException("Deplacement impossible.");
+        }
     }
 }
 

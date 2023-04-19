@@ -7,11 +7,11 @@ public abstract class Carte {
     public enum Personnage {ALPINISTE, EXPLORATEUR, PORTEUSE_D_EAU, NAVIGATRICE, METEOROLOGUE, ARCHEOLOGUE};
 }
 
-class carteTempete extends Carte {
+class carteTempete extends Carte { //Classe inutile!!!
     private Effet e;
 
     @Override
-    public void piocher(Plateau p, Joueur j) { //PAS DU TOUT FINI
+    public void piocher(Plateau p, Joueur j) { //PAS DU TOUT FINI et inutile
         switch (this.e) {
             case LE_VENT_SOUFFLE:
                 p.souffler(Case.Dir.BAS, 1);

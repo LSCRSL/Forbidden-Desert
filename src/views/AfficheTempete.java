@@ -12,7 +12,7 @@ public class AfficheTempete extends JPanel {
 
     public AfficheTempete(models.Plateau plateau){
         super();
-        this.setBounds(0,0,150,30);
+        this.setBounds(0,0,160,30);
         this.p = plateau;
         this.label = new JLabel("Niveau tempête : "+this.p.getNiv_tempete());
         this.add(this.label);

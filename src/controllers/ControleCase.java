@@ -141,7 +141,7 @@ public class ControleCase extends IG.ZoneCliquable {
         for (Joueur j : J ) {
             //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
             if (j.isMon_tour()  && j.getNb_action() > 0) {
-                if (p.getAction() == 0 && j.getPos().isVoisine(c)) {
+                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree()))) {
                     ControleCase cc = j.getPos().getCc();
                     j.deplaceC(c);
                     cc.repaint();
@@ -150,7 +150,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 }
                 if (p.getAction() == 1 && (j.getPos().isVoisine(c) || j.getPos() == c) ) {
                     //creuser
-                    c.dessabler();
+                    j.dessabler(j.getPos()); //modif pour prendre en compte rôle de l'archéologue
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }

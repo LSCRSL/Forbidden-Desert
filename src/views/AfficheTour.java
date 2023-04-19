@@ -15,7 +15,7 @@ public class AfficheTour extends JPanel{
 
         public AfficheTour(models.Plateau plateau){
             super();
-            this.setBounds(0,0,200,70);
+            this.setBounds(0,0,250,70);
             Border blackline = BorderFactory.createLineBorder(Color.black);
             this.setBorder(blackline);
             this.p=plateau;
