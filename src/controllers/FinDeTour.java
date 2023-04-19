@@ -4,10 +4,7 @@ import javax.swing.*;
 import models.Case;
 
 import models.Joueur;
-import views.AfficheJoueurs;
-import views.AfficheTour;
-import views.AfficheSable;
-import views.AfficheTempete;
+import views.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,11 +79,15 @@ public class FinDeTour extends JButton {
                             }
                         }
                     }
+                    AfficheFin fin= v.getFin();
                     if (isDefaite()) {
                         System.out.print("PERDU\n");
+                        fin.setLabel("C'est perdu...", 0);
                     }
                     if (isVictoire()) {
                         System.out.print("GAGNÉ\n");
+                        fin.setLabel("C'est gagné!",1);
+
                     }
                 }
                 p.setAction(-1);

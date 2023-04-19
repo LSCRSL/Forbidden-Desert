@@ -2,7 +2,6 @@ package views;
 import controllers.*;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Views {
 
@@ -46,7 +45,6 @@ public class Views {
         this.pieces = new AffichePieces(this.ap.getPlateau());
 
         this.victoire = new AfficheVictoire();
-
 
     }
 
@@ -106,6 +104,8 @@ public class Views {
         this.pieces.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3);
         this.fenetre.add(this.pieces);
 
+        this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
+        this.fenetre.add(this.fin);
 
 
     }
