@@ -18,7 +18,6 @@ public class Plateau {
     private int[] crash;
     private int id_joueur_actuel;
     private Set<Joueur> joueurs;
-    private int nb_joueur;
     private Set<Case.Piece> piecesRecup;
     private boolean hRev; //true si l'objet a déjà été révélé
     private boolean sRev;

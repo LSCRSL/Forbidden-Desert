@@ -12,7 +12,6 @@ public class AfficheTour extends JPanel{
         private Joueur j;
         private JLabel joueur;
         private JLabel img;
-        private JLabel label2;
 
         public AfficheTour(models.Plateau plateau){
             super();

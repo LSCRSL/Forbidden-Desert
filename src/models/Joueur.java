@@ -3,6 +3,7 @@ package models;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Joueur {
     //Attributs
@@ -31,12 +32,12 @@ public class Joueur {
 
         Image img = new ImageIcon("resources/mumu.png").getImage();
         switch (per) {
-            case EXPLORATEUR: img = new ImageIcon("resources/mumu.png").getImage(); break;
-            case ALPINISTE: img = new ImageIcon("resources/mumu.png").getImage(); break;
-            case ARCHEOLOGUE: img = new ImageIcon("resources/tunnel3.png").getImage(); break;
-            case METEOROLOGUE: img = new ImageIcon("resources/mumu.png").getImage(); break;
-            case NAVIGATRICE: img = new ImageIcon("resources/mumu.png").getImage(); break;
-            case PORTEUSE_D_EAU: img = new ImageIcon("resources/mumu.png").getImage(); break;
+            case EXPLORATEUR: img = new ImageIcon("resources/PionVert.png").getImage(); break;
+            case ALPINISTE: img = new ImageIcon("resources/PionRouge.png").getImage(); break;
+            case ARCHEOLOGUE: img = new ImageIcon("resources/PionNoir.png").getImage(); break;
+            case METEOROLOGUE: img = new ImageIcon("resources/PionBlanc.png").getImage(); break;
+            case NAVIGATRICE: img = new ImageIcon("resources/PionViolet.png").getImage(); break;
+            case PORTEUSE_D_EAU: img = new ImageIcon("resources/PionBleu.png").getImage(); break;
         }
         this.img = img;
 
@@ -103,7 +104,7 @@ public class Joueur {
         if (cPos.getType()== Case.TYPE.OASIS){
             for (Joueur j: p.getJoueurs()){
                 if (j.getPos()==cPos){
-                    j.setNiv_eau(j.getNiv_eau()+2);
+                    j.remplirGourde();
                 }
             }
         }
@@ -140,15 +141,22 @@ public class Joueur {
     }
 
     public void remplirGourde(){
-        setNiv_eau((getNiv_eau()+2));
+        if (getNiv_eau() < 3) {
+            setNiv_eau((getNiv_eau() + 2));
+        } else {
+            setNiv_eau(5);
+        }
     }
 
-    public void ramasserPiece(){
+    public Set<Case.Piece> ramasserPiece(){
         Case c=this.getPos();
+        Set<Case.Piece> piece= c.getPiece();
         if (c.isExploree() && c.getSable()<2){
             c.setPiece(new HashSet<>());
-            p.addPiecesRecup(c.getPiece());
+            p.addPiecesRecup(piece);
+            return piece;
         }
+        return new HashSet<>();
     }
 
     public void partagerEau(Joueur j, int cran){

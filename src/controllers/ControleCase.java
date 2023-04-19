@@ -154,39 +154,22 @@ public class ControleCase extends IG.ZoneCliquable {
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
-                if (p.getAction() == 2 && (!c.isExploree()) && ( j.getPos().isVoisine(c) || j.getPos() == c)) {
-                    c.setExploree();
+                if (p.getAction() == 2 && (!c.isExploree())) {
+                    j.explorer();
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
+                    this.v.getJoueurs().setLabels();
                 }
 
                 if (p.getAction() == 3 &&( j.getPos().isVoisine(c) || j.getPos() == c)) {
                     //ramasser
+                    Set<Case.Piece> pc = j.ramasserPiece();
+                    this.v.getPieces().setLabels(pc);
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
             }
         }
-        //p.setAction(-1);
-
-
-
-
-
-        /*System.out.println("OKk");
-        //p.affichePiece(); //NE MARCHE PAS
-        Case C = p.getCase(2,2);
-        System.out.println("OK2");
-        Set<Joueur> J = C.getJ();
-        System.out.println("OK3");
-        for (Joueur j : J) {
-            System.out.println(j.getPos());
-            j.deplaceC(C);
-            System.out.println(j.getPos());
-
-            c.addJ(j);
-        }*/
-
         this.refresh();
     }
 

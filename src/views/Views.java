@@ -19,6 +19,7 @@ public class Views {
     private AfficheTempete niv;
     private AfficheSable sab;
     private AfficheFin fin;
+    private AfficheJoueurs joueurs;
     private AffichePieces pieces;
 
 
@@ -39,6 +40,7 @@ public class Views {
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
         this.fin= new AfficheFin(this.ap.getPlateau());
+        this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
 
 
@@ -49,6 +51,11 @@ public class Views {
     public AfficheSable getSab(){ return  this.sab;}
 
     public AfficheTour getAct() {return this.act;}
+
+    public AffichePieces getPieces() { return this.pieces;}
+
+    public AfficheJoueurs getJoueurs() { return this.joueurs;}
+
 
     public AfficheFin getFin() {
         return this.fin;
@@ -68,16 +75,16 @@ public class Views {
         this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getHeight()/3 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
         this.fenetre.add(this.fdt);
 
-        this.deplacer.setLocation(this.fenetre.getWidth()- this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2 - deplacer.getHeight()/2);
+        this.deplacer.setLocation(this.fenetre.getWidth()- this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2 );
         this.fenetre.add(this.deplacer);
 
-        this.creuser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 - creuser.getHeight()/2);
+        this.creuser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2);
         this.fenetre.add(this.creuser);
 
-        this.explorer.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2  + explorer.getHeight()/2);
+        this.explorer.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + this.fenetre.getHeight()/8);
         this.fenetre.add(this.explorer);
 
-        this.ramasser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + ramasser.getHeight()/2);
+        this.ramasser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + this.fenetre.getHeight()/8);
         this.fenetre.add(this.ramasser);
 
         this.niv.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8);
@@ -89,7 +96,10 @@ public class Views {
         this.act.setLocation(this.fenetre.getWidth()/2 - this.act.getWidth()/2 ,act.getHeight()/6);
         this.fenetre.add(this.act);
 
-        this.pieces.setLocation(30, this.fenetre.getHeight()/3);
+        this.joueurs.setLocation(30, 30);
+        this.fenetre.add(this.joueurs);
+
+        this.pieces.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3);
         this.fenetre.add(this.pieces);
 
     }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import models.Case;
 
 import models.Joueur;
+import views.AfficheJoueurs;
 import views.AfficheTour;
 import views.AfficheSable;
 import views.AfficheTempete;
@@ -84,7 +85,8 @@ public class FinDeTour extends JButton {
         temp.setLabel(this.p.getNiv_tempete());
         AfficheSable sab =this.v.getSab();
         sab.setLabels(this.p.getSablePlateau());
-        AfficheTour act =this.v.getAct();
+        AfficheTour tour =this.v.getAct();
+        AfficheJoueurs joueurs = this.v.getJoueurs();
 
         //tenter de faire ça pour le joueur qui joue
         for (Joueur j : this.p.getJoueurs()) {
@@ -100,7 +102,8 @@ public class FinDeTour extends JButton {
         //tj.setLabels(p.getJoueur_i(id));
         p.getJoueur_i(id).reset_action();
         p.setAction(4);
-        act.setLabels(p.getJoueur_i(id));
+        tour.setLabels(p.getJoueur_i(id));
+        joueurs.setLabels();
 
     }
 }
