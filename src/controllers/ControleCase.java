@@ -164,7 +164,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 }
                 if (p.getAction() == 1 && (j.getPos().isVoisine(c) || j.getPos() == c) ) {
                     //creuser
-                    j.dessabler(j.getPos()); //modif pour prendre en compte rôle de l'archéologue
+                    j.dessabler(c); //modif pour prendre en compte rôle de l'archéologue
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
