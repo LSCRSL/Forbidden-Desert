@@ -129,6 +129,9 @@ public class Joueur {
             this.pos.remJ(this);
             this.pos = c;
             c.addJ(this);
+            //this.getPos().getCc().setC(c);
+            System.out.println("nb joueurs new case : " + c.getJ().size());
+            System.out.println("coord depC: " + c.getX() + "," + c.getY());
         }else{
             throw new RuntimeException("Deplacement impossible.");
         }

@@ -127,8 +127,7 @@ public class Case {
 
     //Methode
     public void addJ(Joueur j){
-        J.add(j);
-    }
+        J.add(j);}
     public void remJ(Joueur j) { J.remove(j);}
 
     public void setJ(Set<Joueur> JJ) {

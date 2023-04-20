@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
-    private final models.Case c;
+    private /*final*/ models.Case c;
     private models.Plateau p;
     private views.Views v;
 
@@ -26,6 +26,14 @@ public class ControleCase extends IG.ZoneCliquable {
         }
         this.c = c;
         this.v = view;
+    }
+
+    public Case getC() {
+        return c;
+    }
+
+    public void setC(Case ca){
+        this.c = ca;
     }
 
     @Override
@@ -130,21 +138,27 @@ public class ControleCase extends IG.ZoneCliquable {
                 this.changeTexte(this.c.strPiece()+Integer.toString(sable));
             }
         }
-        repaint();
+        this.repaint();
 
     }
 
     @Override
     public void clicGauche() {
-
         Set<Joueur> J = this.p.getJoueurs();
         for (Joueur j : J ) {
+
             //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
             if (j.isMon_tour()  && j.getNb_action() > 0) {
-                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree()))) {
+                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) && j.getPos().getSable() < 2) {
                     ControleCase cc = j.getPos().getCc();
+                    Case av = cc.getC();
+                    System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
+                    System.out.println("avant " + j.getPos().getJ().size());
+                    System.out.println("avant c " + av.getJ().size());
                     j.deplaceC(c);
                     cc.repaint();
+                    System.out.println("apres " + j.getPos().getJ().size());
+
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
@@ -169,6 +183,7 @@ public class ControleCase extends IG.ZoneCliquable {
                     this.v.getAct().setLabels(j);
                 }
             }
+
         }
         this.refresh();
     }

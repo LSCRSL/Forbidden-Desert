@@ -44,7 +44,9 @@ public class Views {
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
 
-        this.victoire = new AfficheVictoire();
+        //il ne faut pas le mettre dans le constructeur
+        //on va créer une nouvelle classe qui choisis la fenetre
+        //this.victoire = new AfficheVictoire();
 
     }
 
