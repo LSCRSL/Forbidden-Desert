@@ -48,7 +48,7 @@ public class FinDeTour extends JButton {
                 for (int i=0; i<=1/*p.getNiv_tempete()*/; i++) {
                     int n = (int) Math.floor(Math.random() * 3);//génère entier entre 0 et 2
                     if (n == 0) {
-                        System.out.print("Le Vent Souffle\n");
+                        //System.out.print("Le Vent Souffle\n");
                         int f = 0;
                         int rdir = (int) Math.floor(Math.random() * 4);
                         int rfor = (int) Math.floor(Math.random() * 6);
@@ -69,10 +69,10 @@ public class FinDeTour extends JButton {
                             p.souffler(Case.Dir.GAUCHE, f);
                         }
                     } else if (n == 1) {
-                        System.out.print("La Tempête se déchaine\n");
+                        //System.out.print("La Tempête se déchaine\n");
                         p.dechainer();
                     } else {
-                        System.out.print("Vague de Chaleur\n");
+                        //System.out.print("Vague de Chaleur\n");
                         for (Joueur j : p.getJoueurs()) {
                             if (j.getPos().getType()!=Case.TYPE.TUNNEL) {
                                 j.boire();
@@ -83,6 +83,7 @@ public class FinDeTour extends JButton {
                     if (isDefaite()) {
                         System.out.print("PERDU\n");
                         fin.setLabel("C'est perdu...", 0);
+                        v.getAp().setVisible(false);
                     }
                     if (isVictoire()) {
                         System.out.print("GAGNÉ\n");

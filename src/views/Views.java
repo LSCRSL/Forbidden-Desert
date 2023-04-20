@@ -50,6 +50,10 @@ public class Views {
 
     }
 
+    public AffichePlateau getAp() {
+        return ap;
+    }
+
     public AfficheTempete getNiv() {return this.niv;}
 
     public AfficheSable getSab(){ return  this.sab;}
@@ -67,7 +71,6 @@ public class Views {
 
 
     public void affiche() {
-        //this.fenetre.add(this.ap);
         this.fenetre.pack();
         this.fenetre.setSize(1920,1080);
         this.fenetre.setLocationRelativeTo(null);

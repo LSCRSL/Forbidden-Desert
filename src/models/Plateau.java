@@ -247,6 +247,8 @@ public class Plateau {
         this.oeil = oeil;
     }
 
+    public void setJoueurs(Set<Joueur> j){ this.joueurs = j;}
+
     public void setCrash(int[] cr) {
         this.crash = cr;
     }
@@ -332,6 +334,7 @@ public class Plateau {
         Set<Joueur> J = c1.getJ(); //Joueur présent sur Case
         Case.Piece ip1 = c1.indicePiece(); //indice pour piece
         boolean il1 = c1.indiceLigne(); //indice pour ligne
+
         if ( typ1 == Case.TYPE.OEIL) {
             int[] o ={c2.getX(), c2.getY()} ;
             setOeil(o);

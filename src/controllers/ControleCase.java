@@ -71,7 +71,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
             case TUNNEL:
                 if (c.isExploree()) {
-                    Image tun = new ImageIcon("resources/tunnel3.png").getImage();
+                    Image tun = new ImageIcon("resources/tunnel.png").getImage();
                     int x3 = (this.getWidth() - tun.getWidth(null)) / 2;
                     int y3 = (this.getHeight() - tun.getHeight(null)) / 2;
                     g.drawImage(tun,x3,y3,null);
@@ -115,7 +115,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 case 2: if (k == 0) g.drawImage(mumu,0,0,null); else g.drawImage(mumu,100,0,null); break;
                 case 3: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); else g.drawImage(mumu,0,100,null); break;
                 case 4: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); else g.drawImage(mumu,100,100,null); break;
-                //case 5: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); if (k==3) g.drawImage(mumu,100,100,null); else g.drawImage(mumu,50,50,null); break;
+                case 5: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); if (k==3) g.drawImage(mumu,100,100,null); else g.drawImage(mumu,50,100,null); break;
             }
             k++;
         }
@@ -152,7 +152,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) && j.getPos().getSable() < 2) {
                     ControleCase cc = j.getPos().getCc();
                     Case av = cc.getC();
-                    System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
+                    //System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
                     System.out.println("avant " + j.getPos().getJ().size());
                     System.out.println("avant c " + av.getJ().size());
                     j.deplaceC(c);

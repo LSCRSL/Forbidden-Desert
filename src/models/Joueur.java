@@ -17,7 +17,7 @@ public class Joueur {
     private boolean mon_tour;
     private Image img;
 
-    private String description="";
+    private String description="description joueur";
 
     //Constructeur
     public Joueur(int i, models.Plateau p, String nom, Carte.Personnage per){
@@ -32,7 +32,7 @@ public class Joueur {
 
         Image img = new ImageIcon("resources/mumu.png").getImage();
         switch (per) {
-            case EXPLORATEUR: img = new ImageIcon("resources/PionVert.png").getImage(); break;
+            case EXPLORATEUR: img = new ImageIcon("resources/PionVert.png").getImage();break;
             case ALPINISTE: img = new ImageIcon("resources/PionRouge.png").getImage(); break;
             case ARCHEOLOGUE: img = new ImageIcon("resources/PionNoir.png").getImage(); break;
             case METEOROLOGUE: img = new ImageIcon("resources/PionBlanc.png").getImage(); break;
@@ -71,6 +71,13 @@ public class Joueur {
         return img;
     }
 
+    public Carte.Personnage getPerso() {
+        return perso;
+    }
+
+    public String getDescription() {
+        return description;
+    }
     //Setters
 
     public void setNiv_eau(int niv_eau) {
