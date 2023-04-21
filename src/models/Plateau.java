@@ -24,6 +24,7 @@ public class Plateau {
     private boolean bRev;
     private boolean cRev;
     private int action;
+    private PaquetCartes paquets;
 
     //Constructeurs
     public Plateau(int taille) {
@@ -37,6 +38,7 @@ public class Plateau {
         this.action = -1;
         this.id_joueur_actuel = 0;
         this.niv_tempete = 1;
+        this.paquets = new PaquetCartes();
         this.joueurs = new HashSet<Joueur>();
         int[] oeil = {taille / 2, taille / 2};
         this.oeil = oeil;
@@ -204,6 +206,8 @@ public class Plateau {
         return action;
     }
 
+    public PaquetCartes getPaquets() {return paquets; }
+
     public Case getCase(int x, int y) {
         return this.plateau[x][y];
     }
@@ -237,6 +241,11 @@ public class Plateau {
     }
 
     public void setJoueurs(Set<Joueur> j){ this.joueurs = j;}
+
+    public void setPaquets(ArrayList<Carte.Effet> cartes){
+        this.paquets = new PaquetCartes(cartes);
+
+    }
 
     public void setCrash(int[] cr) {
         this.crash = cr;

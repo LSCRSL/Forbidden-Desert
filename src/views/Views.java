@@ -21,6 +21,7 @@ public class Views {
     private AfficheJoueurs joueurs;
     private AffichePieces pieces;
     private AfficheCarteTempete carte;
+    private AfficheInfos info;
 
     private AfficheVictoire victoire;
 
@@ -45,6 +46,7 @@ public class Views {
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
         this.carte = new AfficheCarteTempete(this.ap.getPlateau());
+        this.info = new AfficheInfos();
 
     }
 
@@ -79,6 +81,7 @@ public class Views {
 
         this.ap.setLocation((this.fenetre.getWidth() - ap.getWidth())/2, (this.fenetre.getHeight() - ap.getHeight())/2);
         this.fenetre.add(ap);
+
         this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
         this.fenetre.add(this.fdt);
 
@@ -114,6 +117,9 @@ public class Views {
 
         this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
         this.fenetre.add(this.carte);
+
+        this.info.setLocation(190,this.fenetre.getHeight() - this.fenetre.getHeight()/3 + 150);
+        this.fenetre.add(this.info);
 
     }
 

@@ -5,6 +5,8 @@ public abstract class Carte {
 
     public enum Effet {LE_VENT_SOUFFLE, LA_TEMPETE_SE_DECHAINE, VAGUE_DE_CHALEUR};
 
+    public enum Equipement{Blaster, Jetpack, Bouclier_Solaire, Appareil};
+
     public enum Personnage {
         ALPINISTE {
             @Override

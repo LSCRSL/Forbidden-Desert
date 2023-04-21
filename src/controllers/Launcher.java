@@ -41,10 +41,18 @@ public class Launcher {
             perso.remove(n);
             k++;
         }
-        /** je tenterai de trier le set en fonction de l'id
-        Set<Joueur>J = plateau.getJoueurs();
-        plateau.setJoueurs();**/
 
+        ArrayList<Carte.Effet> cartes = new ArrayList<>();
+        for (int i = 0; i<4; i++) {
+            cartes.add(Carte.Effet.VAGUE_DE_CHALEUR);
+        }
+        for (int j = 0; j<3; j++) {
+            cartes.add(Carte.Effet.LA_TEMPETE_SE_DECHAINE);
+        }
+        for (int l = 0; l<24;l++){
+            cartes.add(Carte.Effet.LE_VENT_SOUFFLE);
+        }
+        plateau.setPaquets(cartes);
         plateau.getJoueur_i(0).setMon_tour(true);
         Views vue = new Views("ForbiddenDesert",plateau);
         vue.affiche();

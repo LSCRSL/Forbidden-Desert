@@ -28,7 +28,6 @@ public class AfficheJoueurs extends JPanel {
         this.gourde = new JLabel[nb];
         Set<Joueur> js = this.p.getJoueurs();
         for (Joueur j : js){
-            //System.out.println(j.getName());
             JLabel casej = new JLabel("",SwingConstants.LEFT);
             JLabel caseg = new JLabel("",SwingConstants.LEFT);
             casej.setText(j.getName() + ": " + System.lineSeparator() + j.getPerso().toString());
@@ -36,19 +35,6 @@ public class AfficheJoueurs extends JPanel {
             caseg.setText("Niveau de gourde : " + j.getNiv_eau());
             this.joueurs[j.getId()] = casej;
             this.gourde[j.getId()] = caseg;
-            casej.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    JLabel text = new JLabel(j.giveDescription());
-                    popup = PopupFactory.getSharedInstance().getPopup(e.getComponent(), text, e.getXOnScreen(), e.getYOnScreen());
-                    popup.show();
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    popup.hide();
-                }
-            });
             this.add(this.joueurs[j.getId()]);
             this.add(this.gourde[j.getId()]);
 

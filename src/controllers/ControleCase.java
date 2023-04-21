@@ -46,9 +46,10 @@ public class ControleCase extends IG.ZoneCliquable {
         switch (c.getType()) {
             case ENGRENAGE:
                 if (c.isExploree()) {
-                    //mettre image
-                    g.setColor(new Color(128, 128, 128));
-                    g.fillRect(0, 0, getWidth(), getHeight());
+                    Image oa1 = new ImageIcon("resources/engrenage.png").getImage();
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    g.drawImage(oa1,x2,y2,null);
                 }
                 break;
             case CRASH:
@@ -59,14 +60,37 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
             case NORMALE:
                 break;
-                //rectangle coloré
-                //g.setColor(new Color(220, 158, 0, 255));
-                //g.fillRect(0, 0, getWidth(), getHeight());break;
             case INDICE:
                 if (c.isExploree()) {
-                    //mettre image de l'indice
-                    g.setColor(new Color(220, 158, 0, 255));
-                    g.fillRect(0, 0, getWidth(), getHeight());
+                    Set<Case.Piece> p = c.getPiece();
+                    for (Case.Piece piece : p ){
+                        switch (piece){
+                            case SYSTEME_DE_NAVIGATION:
+                                Image image = new ImageIcon("resources/systemeNavigation.png").getImage();
+                                int X = (this.getWidth() - image.getWidth(null)) / 3;
+                                int Y = (this.getHeight() - image.getHeight(null)) / 3;
+                                g.drawImage(image,X,Y,null);
+                                break;
+                            case HELICE:
+                                Image image1 = new ImageIcon("resources/helice.png").getImage();
+                                int X1 = (this.getWidth() - image1.getWidth(null)) / 3;
+                                int Y1 = (this.getHeight() - image1.getHeight(null)) / 3;
+                                g.drawImage(image1,X1,Y1,null);
+                                break;
+                            case CRISTAL_D_ENERGIE:
+                                Image image2 = new ImageIcon("resources/bouleCristal.png").getImage();
+                                int X2 = (this.getWidth() - image2.getWidth(null)) / 3;
+                                int Y2 = (this.getHeight() - image2.getHeight(null)) / 3;
+                                g.drawImage(image2,X2,Y2,null);
+                                break;
+                            case BOITE_DE_VITESSE:
+                                Image image3 = new ImageIcon("resources/boiteVitesse.png").getImage();
+                                int X3 = (this.getWidth() - image3.getWidth(null)) / 3;
+                                int Y3 = (this.getHeight() - image3.getHeight(null)) / 3;
+                                g.drawImage(image3,X3,Y3,null);
+                                break;
+                        }
+                    }
                 }
                 break;
             case TUNNEL:
@@ -89,6 +113,12 @@ public class ControleCase extends IG.ZoneCliquable {
                     int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
                     int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
                     g.drawImage(oa1,x2,y2,null);
+                }else{
+                    Image oa1 = new ImageIcon("resources/mirage.png").getImage();
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    g.drawImage(oa1,x2,y2,null);
+
                 }
                 break;
             case OEIL:
@@ -99,23 +129,25 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
             case DECOLLAGE:
                 if (c.isExploree()) {
-                    g.setColor(new Color(0,255,0));
-                    g.fillRect(0, 0, getWidth(), getHeight());
+                    Image oa1 = new ImageIcon("resources/decollage.png").getImage();
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    g.drawImage(oa1,x2,y2,null);
                 }
                 break;
         }
         Set<Joueur> pers = c.getJ();
-        Image mumu = new ImageIcon("resources/mumu.png").getImage();
+        Image img = new ImageIcon("resources/mumu.png").getImage();
         int nb = this.c.getJ().size();
         int k = 0;
         for (Joueur j : pers) {
-            mumu = j.getImg();
+            img = j.getImg();
             switch (nb) {
-                case 1: g.drawImage(mumu,0,0,null); break;
-                case 2: if (k == 0) g.drawImage(mumu,0,0,null); else g.drawImage(mumu,100,0,null); break;
-                case 3: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); else g.drawImage(mumu,0,100,null); break;
-                case 4: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); else g.drawImage(mumu,100,100,null); break;
-                case 5: if (k == 0) g.drawImage(mumu,0,0,null); if (k==1) g.drawImage(mumu,100,0,null); if (k==2) g.drawImage(mumu,0,100,null); if (k==3) g.drawImage(mumu,100,100,null); else g.drawImage(mumu,50,100,null); break;
+                case 1: g.drawImage(img,0,0,null); break;
+                case 2: if (k == 0) g.drawImage(img,0,0,null); else g.drawImage(img,100,0,null); break;
+                case 3: if (k == 0) g.drawImage(img,0,0,null); if (k==1) g.drawImage(img,100,0,null); else g.drawImage(img,0,100,null); break;
+                case 4: if (k == 0) g.drawImage(img,0,0,null); if (k==1) g.drawImage(img,100,0,null); if (k==2) g.drawImage(img,0,100,null); else g.drawImage(img,100,100,null); break;
+                case 5: if (k == 0) g.drawImage(img,0,0,null); if (k==1) g.drawImage(img,100,0,null); if (k==2) g.drawImage(img,0,100,null); if (k==3) g.drawImage(img,100,100,null); else g.drawImage(img,50,100,null); break;
             }
             k++;
         }

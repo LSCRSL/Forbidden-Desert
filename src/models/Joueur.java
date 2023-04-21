@@ -2,6 +2,7 @@ package models;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class Joueur {
     private int nb_action;
     private boolean mon_tour;
     private Image img;
+    private ArrayList<Carte.Equipement> equipement;
 
     private String description="r";
 
@@ -29,6 +31,7 @@ public class Joueur {
         this.pos = p.getCase(this.p.getCrash()[0],this.p.getCrash()[1]);
         this.nb_action = 4;
         this.mon_tour = false;
+        this.equipement = new ArrayList<>();
 
         Image img = new ImageIcon("resources/mumu.png").getImage();
         switch (per) {
@@ -68,6 +71,8 @@ public class Joueur {
     public Image getImg() {
         return img;
     }
+
+    public ArrayList<Carte.Equipement> getEquipement() {return equipement; }
 
     public Carte.Personnage getPerso() {
         return perso;
@@ -129,14 +134,23 @@ public class Joueur {
         return "";
     }
 
+    public void addEquipement(Carte.Equipement e){
+        this.equipement.add(e);
+    }
+
+    public void removeEquipement(Carte.Equipement e){
+        this.equipement.remove(e);
+    }
+
     public void explorer(){
         Case cPos=this.getPos();
         if (cPos.getSable()==0) {
             cPos.explorer();
-            if (cPos.getType()== Case.TYPE.OASIS){
+            if (cPos.getType() == Case.TYPE.OASIS){
                 for (Joueur j: p.getJoueurs()){
                     if (j.getPos()==cPos){
                         j.remplirGourde();
+                        
                     }
                 }
             }

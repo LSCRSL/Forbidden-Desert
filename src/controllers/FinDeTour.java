@@ -47,10 +47,13 @@ public class FinDeTour extends JButton {
             public void actionPerformed(ActionEvent e) {
                 AfficheCarteTempete carte=v.getCarteTempete();
                 float nbCartesT=p.getNiv_tempete();
+                //note a moi même : appeler la fct tirer de PaquetCartes
+                //p.getPaquets.tirer(); (ça renvoie la carte) faire un switch ensuite
                 for (int i=0; i<nbCartesT-0.5; i++) {
                     int n = (int) Math.floor(Math.random() * 3);//génère entier entre 0 et 2
                     if (n == 0) {
                         carte.setLabel("Le Vent souffle");
+                        //à garder mais voir si on peut pas utiliser une apporche similaire au paquet de cartes
                         int f = 0;
                         int rdir = (int) Math.floor(Math.random() * 4);
                         int rfor = (int) Math.floor(Math.random() * 6);
