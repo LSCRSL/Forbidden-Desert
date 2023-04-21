@@ -273,11 +273,8 @@ public class Plateau {
 
     public void addJoueur(int i, String name, Carte.Personnage per) {
         Joueur j = new Joueur(i, this, name, per);
-        //System.out.println(this.getJoueur_i(0).getName() + " 1");
         this.joueurs.add(j);
         j.getPos().addJ(j);
-        //System.out.println(this.getJoueur_i(0).getName());
-        //System.out.println(this.getJoueurs().get(1));
     }
 
     public void printJ(){
@@ -286,7 +283,6 @@ public class Plateau {
 
 
     public void souffler(Case.Dir d, int f) {
-        //rajouter des conditions si la force est trop élévée --- ok?
         int[] tmp=getOeil();
         int oX = tmp[0];
         int oY = tmp[1];

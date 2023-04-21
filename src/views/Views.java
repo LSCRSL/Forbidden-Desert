@@ -20,6 +20,7 @@ public class Views {
     private AfficheFin fin;
     private AfficheJoueurs joueurs;
     private AffichePieces pieces;
+    private AfficheCarteTempete carte;
 
     private AfficheVictoire victoire;
 
@@ -43,10 +44,7 @@ public class Views {
         this.fin= new AfficheFin(this.ap.getPlateau());
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
-
-        //il ne faut pas le mettre dans le constructeur
-        //on va créer une nouvelle classe qui choisis la fenetre
-        //this.victoire = new AfficheVictoire();
+        this.carte = new AfficheCarteTempete(this.ap.getPlateau());
 
     }
 
@@ -69,6 +67,8 @@ public class Views {
         return this.fin;
     }
 
+    public AfficheCarteTempete getCarteTempete(){ return this.carte;}
+
 
     public void affiche() {
         this.fenetre.pack();
@@ -79,7 +79,7 @@ public class Views {
 
         this.ap.setLocation((this.fenetre.getWidth() - ap.getWidth())/2, (this.fenetre.getHeight() - ap.getHeight())/2);
         this.fenetre.add(ap);
-        this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getHeight()/3 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
+        this.fdt.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2 ,this.fenetre.getHeight() - this.fenetre.getHeight()/4);
         this.fenetre.add(this.fdt);
 
         this.deplacer.setLocation(this.fenetre.getWidth()- this.fenetre.getWidth()/4,this.fenetre.getHeight() - this.fenetre.getHeight()/2 );
@@ -112,6 +112,8 @@ public class Views {
         this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
         this.fenetre.add(this.fin);
 
+        this.carte.setLocation((this.fenetre.getWidth() - carte.getWidth())/2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
+        this.fenetre.add(this.carte);
 
     }
 

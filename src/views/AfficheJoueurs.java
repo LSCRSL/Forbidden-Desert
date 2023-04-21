@@ -39,7 +39,7 @@ public class AfficheJoueurs extends JPanel {
             casej.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    JLabel text = new JLabel("look" + j.getDescription());
+                    JLabel text = new JLabel(j.giveDescription());
                     popup = PopupFactory.getSharedInstance().getPopup(e.getComponent(), text, e.getXOnScreen(), e.getYOnScreen());
                     popup.show();
                 }

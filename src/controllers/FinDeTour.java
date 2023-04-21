@@ -39,16 +39,17 @@ public class FinDeTour extends JButton {
         super("Fin de tour");
         this.setVerticalTextPosition(SwingConstants.CENTER);
         this.setHorizontalTextPosition(SwingConstants.CENTER);
-        this.setBounds(0,0,100,50);
+        this.setBounds(0,0,180,50);
         this.p = plat;
         this.v = v;
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i=0; i<=1/*p.getNiv_tempete()*/; i++) {
+                AfficheCarteTempete carte=v.getCarteTempete();
+                for (int i=0; i<=p.getNiv_tempete(); i++) {
                     int n = (int) Math.floor(Math.random() * 3);//génère entier entre 0 et 2
                     if (n == 0) {
-                        //System.out.print("Le Vent Souffle\n");
+                        carte.setLabel("Le Vent souffle");
                         int f = 0;
                         int rdir = (int) Math.floor(Math.random() * 4);
                         int rfor = (int) Math.floor(Math.random() * 6);
@@ -69,10 +70,10 @@ public class FinDeTour extends JButton {
                             p.souffler(Case.Dir.GAUCHE, f);
                         }
                     } else if (n == 1) {
-                        //System.out.print("La Tempête se déchaine\n");
+                        carte.setLabel("La Tempête se déchaine");
                         p.dechainer();
                     } else {
-                        //System.out.print("Vague de Chaleur\n");
+                        carte.setLabel("Vague de Chaleur");
                         for (Joueur j : p.getJoueurs()) {
                             if (j.getPos().getType()!=Case.TYPE.TUNNEL) {
                                 j.boire();
@@ -81,12 +82,10 @@ public class FinDeTour extends JButton {
                     }
                     AfficheFin fin= v.getFin();
                     if (isDefaite()) {
-                        System.out.print("PERDU\n");
                         fin.setLabel("C'est perdu...", 0);
                         v.getAp().setVisible(false);
                     }
                     if (isVictoire()) {
-                        System.out.print("GAGNÉ\n");
                         fin.setLabel("C'est gagné!",1);
 
                     }
