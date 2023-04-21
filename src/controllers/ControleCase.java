@@ -149,7 +149,7 @@ public class ControleCase extends IG.ZoneCliquable {
 
             //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
             if (j.isMon_tour()  && j.getNb_action() > 0) {
-                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) && j.getPos().getSable() < 2) {
+                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
                     ControleCase cc = j.getPos().getCc();
                     Case av = cc.getC();
                     //System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
@@ -164,7 +164,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 }
                 if (p.getAction() == 1 && (j.getPos().isVoisine(c) || j.getPos() == c) ) {
                     //creuser
-                    j.dessabler(c); //modif pour prendre en compte rôle de l'archéologue
+                    j.dessabler(c);
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
@@ -175,7 +175,7 @@ public class ControleCase extends IG.ZoneCliquable {
                     this.v.getJoueurs().setLabels();
                 }
 
-                if (p.getAction() == 3 &&( j.getPos().isVoisine(c) || j.getPos() == c)) {
+                if (p.getAction() == 3 && j.getPos() == c && c.isExploree() && c.getSable()<2) {
                     //ramasser
                     Set<Case.Piece> pc = j.ramasserPiece();
                     this.v.getPieces().setLabels(pc);

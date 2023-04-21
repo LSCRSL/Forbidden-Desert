@@ -44,8 +44,6 @@ public class Joueur {
     }
 
     //Getters
-
-
     public int getId() {
         return id;
     }
@@ -78,8 +76,9 @@ public class Joueur {
     public String getDescription() {
         return description;
     }
-    //Setters
 
+
+    //Setters
     public void setNiv_eau(int niv_eau) {
         this.niv_eau = niv_eau;
     }

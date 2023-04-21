@@ -27,9 +27,7 @@ public class SeDeplacer extends JButton {
                 p.setAction(0);
                 AfficheTour act =v.getAct();
                 int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
-
             }
         });
-
     }
 }

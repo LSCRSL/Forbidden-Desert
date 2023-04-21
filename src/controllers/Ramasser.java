@@ -25,11 +25,7 @@ public class Ramasser extends JButton{
                 p.setAction(3);
                 AfficheTour act = v.getAct();
                 int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
-
-
             }
         });
-
     }
-
 }

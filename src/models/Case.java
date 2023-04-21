@@ -166,7 +166,6 @@ public class Case {
                 return false;
             }
         }
-
     }
 
     public void explorer(){

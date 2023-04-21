@@ -14,8 +14,6 @@ import java.util.Set;
 public class Launcher {
     private ArrayList<String> names;
 
-
-
     public Launcher(){
         this.names = new ArrayList<String>();
         ChoixNbJoueurs choix = new ChoixNbJoueurs(this);
@@ -27,7 +25,6 @@ public class Launcher {
     }
 
     public void launch() {
-
         Plateau plateau = new Plateau(5);
         int k = 0;
         //attention aux yeux c'est très laid
@@ -52,6 +49,4 @@ public class Launcher {
         Views vue = new Views("ForbiddenDesert",plateau);
         vue.affiche();
     }
-
-
 }

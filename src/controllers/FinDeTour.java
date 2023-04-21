@@ -24,12 +24,12 @@ public class FinDeTour extends JButton {
     }
 
     public boolean isVictoire(){
-        for (Joueur j: p.getJoueurs()){
+        for (Joueur j: p.getJoueurs()){ //on verfifie que tous les joueurs se trouvent sur la piste de décollage
             if (j.getPos().getType()!=Case.TYPE.DECOLLAGE){
                 return false;
             }
         }
-        if (p.getPiecesRecup().size()>=4){
+        if (p.getPiecesRecup().size()>=4){ //on vérifie que les 4 pièces ont bien été récupérées
             return true;
         }
         return false;
@@ -46,7 +46,8 @@ public class FinDeTour extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AfficheCarteTempete carte=v.getCarteTempete();
-                for (int i=0; i<=p.getNiv_tempete(); i++) {
+                float nbCartesT=p.getNiv_tempete();
+                for (int i=0; i<nbCartesT-0.5; i++) {
                     int n = (int) Math.floor(Math.random() * 3);//génère entier entre 0 et 2
                     if (n == 0) {
                         carte.setLabel("Le Vent souffle");

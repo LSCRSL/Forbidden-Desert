@@ -3,9 +3,6 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class AfficheCarteTempete extends JPanel{
     private models.Plateau p;
     private JLabel label;

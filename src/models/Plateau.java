@@ -39,9 +39,7 @@ public class Plateau {
         this.niv_tempete = 1;
         this.joueurs = new HashSet<Joueur>();
         int[] oeil = {taille / 2, taille / 2};
-
         this.oeil = oeil;
-
         this.plateau = new Case[taille][taille];
         for (int i = 0; i < taille; i++) {
             for (int j = 0; j < taille; j++) {
@@ -70,7 +68,6 @@ public class Plateau {
 
             }
         }
-
         while (oasis > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -79,7 +76,6 @@ public class Plateau {
                 oasis--;
             }
         }
-
         while (mirage > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -88,7 +84,6 @@ public class Plateau {
                 mirage--;
             }
         }
-
         while (engrenage > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -97,7 +92,6 @@ public class Plateau {
                 engrenage--;
             }
         }
-
         while (tunnels > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -106,7 +100,6 @@ public class Plateau {
                 tunnels--;
             }
         }
-
         while (piste > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
             int rY = (int) Math.floor(Math.random() * 5);
@@ -115,7 +108,6 @@ public class Plateau {
                 piste--;
             }
         }
-
         int helice = 2;
         while (helice > 0) {
             int rX = (int) Math.floor(Math.random() * 5);
@@ -176,14 +168,11 @@ public class Plateau {
                 sdn--;
             }
         }
-
         int[][] s = {{0, 2}, {1, 1}, {1, 3}, {2, 0}, {2, 4}, {3, 1}, {3, 3}, {4, 2}};
         for (int[] t : s) {
             this.getCase(t[0], t[1]).ensabler();
         }
-
         this.setSable(8);
-
     }
 
     //Getters
@@ -215,7 +204,6 @@ public class Plateau {
         return action;
     }
 
-
     public Case getCase(int x, int y) {
         return this.plateau[x][y];
     }
@@ -233,6 +221,7 @@ public class Plateau {
     public Set<Case.Piece> getPiecesRecup() {
         return this.piecesRecup;
     }
+
 
     //Setters
     public void setNiv_tempete(float niveau) {
@@ -294,21 +283,18 @@ public class Plateau {
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX - 1, oY));
                         oX -= 1;
                         cpt++;
-
                     }
                 case BAS:
                     while (cpt != f) {
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX + 1, oY));
                         oX += 1;
                         cpt++;
-
                     }
                 case GAUCHE:
                     while (cpt != f) {
                         this.permute_case(this.getCase(oX, oY), this.getCase(oX, oY - 1));
                         oY -= 1;
                         cpt++;
-
                     }
                 case DROITE:
                     while (cpt != f) {
@@ -330,7 +316,6 @@ public class Plateau {
         Set<Joueur> J = c1.getJ(); //Joueur présent sur Case
         Case.Piece ip1 = c1.indicePiece(); //indice pour piece
         boolean il1 = c1.indiceLigne(); //indice pour ligne
-
         if ( typ1 == Case.TYPE.OEIL) {
             int[] o ={c2.getX(), c2.getY()} ;
             setOeil(o);
@@ -347,7 +332,6 @@ public class Plateau {
             }
             p2=new HashSet<>();
         }
-
         if ( typ1 == Case.TYPE.CRASH) {
             int[] c ={c2.getX(), c2.getY()} ;
             setCrash(c);
@@ -356,25 +340,21 @@ public class Plateau {
             int[] c ={c1.getX(), c1.getY()} ;
             setCrash(c);
         }
-
         c1.setType(c2.getType());
         c1.setCc(c2.getCc());
         c1.setPiece(p2);
         c1.setIndice(c2.indicePiece(),c2.indiceLigne());
         c1.setExploree2(c2.isExploree());
-
         //on associe à la case les nouveaux joueurs
         c1.setJ(c2.getJ());
         //on associe aux joueurs la nouvelle case (car flèche bidirectionnelle)
         for (Joueur j : c1.getJ()){
             j.setPos(c1);
         }
-
         if (c2.getType()!=Case.TYPE.OEIL) {
             c1.setSable(c2.getSable()+1);
             this.setSable(this.getSablePlateau()+1);
         }
-
         c2.setType(typ1);
         c2.setCc(cc1);
         c2.setPiece(p1);
@@ -384,12 +364,10 @@ public class Plateau {
         for (Joueur j : c2.getJ()){
             j.setPos(c2);
         }
-
         if (typ1!=Case.TYPE.OEIL) {
             c2.setSable(s1+1);
             this.setSable(this.getSablePlateau()+1);
         }
-
     }
 
     public void dechainer() {
@@ -477,5 +455,4 @@ public class Plateau {
         }
         return "";
     }
-
 }

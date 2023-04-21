@@ -112,7 +112,7 @@ public class Views {
         this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
         this.fenetre.add(this.fin);
 
-        this.carte.setLocation((this.fenetre.getWidth() - carte.getWidth())/2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
+        this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
         this.fenetre.add(this.carte);
 
     }
