@@ -75,7 +75,7 @@ public class FinDeTour extends JButton {
                     } else {
                         carte.setLabel("Vague de Chaleur");
                         for (Joueur j : p.getJoueurs()) {
-                            if (j.getPos().getType()!=Case.TYPE.TUNNEL) {
+                            if (j.getPos().getType()!=Case.TYPE.TUNNEL || (j.getPos().getType()== Case.TYPE.TUNNEL && !j.getPos().isExploree())) {
                                 j.boire();
                             }
                         }
@@ -83,7 +83,7 @@ public class FinDeTour extends JButton {
                     AfficheFin fin= v.getFin();
                     if (isDefaite()) {
                         fin.setLabel("C'est perdu...", 0);
-                        v.getAp().setVisible(false);
+                        /*v.getAp().setVisible(false);*/
                     }
                     if (isVictoire()) {
                         fin.setLabel("C'est gagné!",1);
