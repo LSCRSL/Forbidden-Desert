@@ -40,6 +40,9 @@ public class Case {
     public int getSable() { return sable; }
     public int getX() { return x; }
     public int getY() { return y; }
+
+    public Plateau getPlateau() { return this.plateau;}
+
     public int[] getCoord() {
         return new int[]{this.getX(), this.getY()};
     }
@@ -102,7 +105,7 @@ public class Case {
     //Setters
     public void setCc(ControleCase CC){this.cc = CC;}
     public void ensabler() { this.sable++; }
-    public void dessabler() { if (sable>=1){ this.sable--; } }
+    public void dessabler() { if (sable>=1){ this.sable--; this.getPlateau().setSable(this.getPlateau().getSablePlateau()-1); } }
     public void setType(TYPE t) { this.type = t; }
 
     public void setCoord(int cX, int cY){

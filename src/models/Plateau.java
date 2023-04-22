@@ -347,7 +347,7 @@ public class Plateau {
             for (Case.Piece p: p1){
                 p2.add(p);
             }
-            //p1=new HashSet<>();
+            p1=new HashSet<>();
         }
         if ( c2.getType() == Case.TYPE.OEIL) {
             int[] o ={c1.getX(), c1.getY()} ;
@@ -355,7 +355,7 @@ public class Plateau {
             for (Case.Piece p: p2) {
                 p1.add(p);
             }
-            //p2=new HashSet<>();
+            p2=new HashSet<>();
         }
         if ( typ1 == Case.TYPE.CRASH) {
             int[] c ={c2.getX(), c2.getY()} ;
@@ -534,39 +534,4 @@ public class Plateau {
         return false;
     }
 
-    public void DeplacementMultiple(){
-        int c = JOptionPane.showConfirmDialog(null,
-                "Voulez-vous ammener quelqu'un avec vous ?",
-                "Déplacement supplémentaire",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if (c == JOptionPane.YES_OPTION){
-            Set<Joueur> J = this.getJoueurs();
-            ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
-            for (Joueur j : J) {
-                if (j.getPerso() != Carte.Personnage.ALPINISTE){
-                    joueurs.add(j);
-                }
-            }
-            int taille = joueurs.size();
-            Object[] choix = new Object[taille];
-            for (int i = 0; i<taille; i++) {
-                choix[i] = joueurs.get(i).getName();
-            }
-            int r = JOptionPane.showOptionDialog(null,
-                    "Joueur a déplacer ",
-                    "Déplacement",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, choix, choix[0]);
-            Joueur j = joueurs.get(r);
-            ControleCase cc = j.getPos().getCc();
-            Case cas = this.getJoueur_i(this.getId_joueur_actuel()).getPos();
-            System.out.println(cas.getX() + " " + cas.getY());
-            j.deplaceC(cas);
-            cc.refresh();
-
-        }
-
-    }
 }

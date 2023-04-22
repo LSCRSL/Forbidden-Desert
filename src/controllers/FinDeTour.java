@@ -8,6 +8,7 @@ import models.Case;
 import models.Joueur;
 import views.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -63,25 +64,13 @@ public class FinDeTour extends JButton {
                             }break;
 
                     }
-                        //carte.setLabel("Le Vent souffle");
 
-                    AfficheFin fin= v.getFin();
+                    //AfficheFin fin= v.getFin();
                     if (p.isDefaite()) {
-                        fin.setLabel("C'est perdu...", 0);
-                        v.getFdt().setVisible(false);
-                        v.getRamasser().setVisible(false);
-                        v.getCreuser().setVisible(false);
-                        v.getDeplacer().setVisible(false);
-                        v.getExplorer().setVisible(false);
+                        affiche_fin(true);
                     }
                     if (p.isVictoire()) {
-                        fin.setLabel("C'est gagné!",1);
-                        v.getFdt().setVisible(false);
-                        v.getRamasser().setVisible(false);
-                        v.getCreuser().setVisible(false);
-                        v.getDeplacer().setVisible(false);
-                        v.getExplorer().setVisible(false);
-
+                        affiche_fin(false);
                     }
                 }
                 p.setAction(-1);
@@ -122,4 +111,41 @@ public class FinDeTour extends JButton {
         joueurs.setLabels();
 
     }
+
+    public void affiche_fin(boolean def) {
+        JFrame end = new JFrame("Fin");
+        end.setSize(400,400);
+        end.setUndecorated(true);
+        end.setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
+        end.setLayout(null);
+        end.pack();
+        end.setSize(1920,1080);
+        end.setLocationRelativeTo(null);
+        end.setVisible(true);
+        end.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        v.getFdt().setVisible(false);
+        v.getRamasser().setVisible(false);
+        v.getCreuser().setVisible(false);
+        v.getDeplacer().setVisible(false);
+        v.getExplorer().setVisible(false);
+        v.getDonner_eau().setVisible(false);
+        v.getAction_spe().setVisible(false);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0,0,200,200);
+        JLabel texte;
+        if(def) {
+            panel.setBackground(Color.RED);
+            texte = new JLabel("DEFAITE");
+        }else {
+            panel.setBackground(Color.GREEN);
+            texte = new JLabel("VICTOIRE");
+        }
+        panel.add(texte);
+        panel.setLocation(end.getWidth()/2 - 2*panel.getWidth(),end.getHeight()/2 - panel.getHeight());
+        end.add(panel);
+
+    }
+
 }

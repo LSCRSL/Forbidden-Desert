@@ -50,12 +50,42 @@ public class ActionsSpeciales extends JButton {
                             joueur.decremente_action();
                     }
 
-                } else {
-                    if (joueur.getPerso() == Carte.Personnage.NAVIGATRICE) {
+                }
+                if (joueur.getPerso() == Carte.Personnage.NAVIGATRICE) {
+                    Set<Joueur> J = plateau.getJoueurs();
+                    ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+                    for (Joueur j : J) {
+                        if (j.getPerso() != Carte.Personnage.NAVIGATRICE){
+                            joueurs.add(j);
+                        }
+                    }
+                    int taille = joueurs.size();
+                    Object[] choix = new Object[taille];
+                    for (int i = 0; i<taille; i++) {
+                        choix[i] = joueurs.get(i).getName();
+                    }
+                    int c = JOptionPane.showOptionDialog(null,
+                            "Joueur a déplacer ",
+                            "Déplacement",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, choix, choix[0]);
+                    Joueur j = joueurs.get(c);
+                    switch (j.getPerso()){
+
+                    }
+                }
+                if(joueur.getPerso() == Carte.Personnage.ALPINISTE){
+                    int c = JOptionPane.showConfirmDialog(null,
+                            "Voulez-vous ammener quelqu'un avec vous ?",
+                            "Déplacement supplémentaire",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (c == JOptionPane.YES_OPTION){
                         Set<Joueur> J = plateau.getJoueurs();
                         ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
                         for (Joueur j : J) {
-                            if (j.getPerso() != Carte.Personnage.NAVIGATRICE){
+                            if (j.getPerso() != Carte.Personnage.ALPINISTE){
                                 joueurs.add(j);
                             }
                         }
@@ -64,22 +94,23 @@ public class ActionsSpeciales extends JButton {
                         for (int i = 0; i<taille; i++) {
                             choix[i] = joueurs.get(i).getName();
                         }
-                        int c = JOptionPane.showOptionDialog(null,
+                        int r = JOptionPane.showOptionDialog(null,
                                 "Joueur a déplacer ",
                                 "Déplacement",
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
                                 null, choix, choix[0]);
-                        Joueur j = joueurs.get(c);
-                        switch (j.getPerso()){
-
-                        }
-
-
+                        Joueur j = joueurs.get(r);
+                        ControleCase cc = j.getPos().getCc();
+                        Case cas = plateau.getJoueur_i(plateau.getId_joueur_actuel()).getPos();
+                        j.deplaceC(cas);
+                        j.decremente_action();
+                        cc.refresh();
 
                     }
 
                 }
+
             }
             });
 

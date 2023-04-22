@@ -19,7 +19,7 @@ public class Views {
     private AfficheTour act;
     private AfficheTempete niv;
     private AfficheSable sab;
-    private AfficheFin fin;
+    //private AfficheFin fin;
     private AfficheJoueurs joueurs;
     private AffichePieces pieces;
     private AfficheCarteTempete carte;
@@ -46,13 +46,15 @@ public class Views {
         this.act = new AfficheTour(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
-        this.fin= new AfficheFin(this.ap.getPlateau());
+        //this.fin= new AfficheFin(this.ap.getPlateau());
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
         this.carte = new AfficheCarteTempete(this.ap.getPlateau());
         this.info = new AfficheInfos();
 
     }
+
+    public JFrame getFenetre() { return fenetre;}
 
     public AffichePlateau getAp() {
         return ap;
@@ -78,12 +80,13 @@ public class Views {
 
     public JButton getDeplacer () { return this.deplacer;}
 
+    public JButton getDonner_eau() { return this.donner_eau;}
 
+    public JButton getAction_spe() {return action_spe;}
 
-
-    public AfficheFin getFin() {
-        return this.fin;
-    }
+    //public AfficheFin getFin() {
+    //    return this.fin;
+    //}
 
     public AfficheCarteTempete getCarteTempete(){ return this.carte;}
 
@@ -136,8 +139,8 @@ public class Views {
         this.pieces.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3);
         this.fenetre.add(this.pieces);
 
-        this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
-        this.fenetre.add(this.fin);
+        //this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
+        //this.fenetre.add(this.fin);
 
         this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
         this.fenetre.add(this.carte);

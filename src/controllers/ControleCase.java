@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
-    private /*final*/ models.Case c;
+    private final models.Case c;
     private models.Plateau p;
     private views.Views v;
 
@@ -34,9 +34,6 @@ public class ControleCase extends IG.ZoneCliquable {
         return c;
     }
 
-    public void setC(Case ca){
-        this.c = ca;
-    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -160,7 +157,6 @@ public class ControleCase extends IG.ZoneCliquable {
     public void refresh() {
         int sable = this.c.getSable();
         if(this.c.getType() == Case.TYPE.OEIL) {
-            System.out.println("On passe ici");
             this.changeTexte(" ");
         }else{
             if (this.c.isExploree()) {
@@ -187,20 +183,14 @@ public class ControleCase extends IG.ZoneCliquable {
                 if (p.getAction() == 0 && (j.CaseVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
                     ControleCase cc = j.getPos().getCc();
                     Case av = cc.getC();
-                    //System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
-                    /**
+                    System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
                     System.out.println("avant " + j.getPos().getJ().size());
                     System.out.println("avant c " + av.getJ().size());
-                     **/
+                    System.out.println("x : " + av.getX() + " y :" + av.getY());
+
                     if (j.deplaceC(c)){
-                        if (j.getPerso() == Carte.Personnage.ALPINISTE){
-                                this.p.DeplacementMultiple();
-                        }
                         j.decremente_action();
                     }
-                    cc.refresh();
-                    //System.out.println("apres " + j.getPos().getJ().size());
-
 
                     this.v.getAct().setLabels(j);
                 }
@@ -210,6 +200,7 @@ public class ControleCase extends IG.ZoneCliquable {
                     j.creuser(c);
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
+                    this.v.getSab().setLabels(this.p.getSablePlateau());
                 }
                 //
                 if (p.getAction() == 2) {
@@ -231,7 +222,12 @@ public class ControleCase extends IG.ZoneCliquable {
             }
 
         }
-        this.refresh();
+
+        for (int i=0; i<p.getTaille();i++){
+            for (int j=0; j<p.getTaille();j++){
+                p.getCase(i,j).getCc().refresh();
+            }
+        }
     }
 
     @Override
