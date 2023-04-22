@@ -54,6 +54,7 @@ public class Launcher {
         }
         plateau.setPaquets(cartes);
         plateau.getJoueur_i(0).setMon_tour(true);
+
         Views vue = new Views("ForbiddenDesert",plateau);
         vue.affiche();
     }

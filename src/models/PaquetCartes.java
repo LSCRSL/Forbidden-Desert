@@ -20,14 +20,40 @@ public class PaquetCartes {
         for (Carte.Effet card : cartes){
             this.paquet.add(card);
         }
+        this.melanger(this.paquet);
+    }
+
+    public LinkedList<Carte.Effet> getPaquet() {
+        return paquet;
+    }
+
+    public void melanger(LinkedList<Carte.Effet> cartes) {
+
+        int taille = cartes.size();
+        Object[] cards = new Object[taille];
+        for (int i = 0; i < taille; i++) {
+            cards[i] = cartes.getFirst();
+            cartes.removeFirst();
+        }
+        for (int j = 0; j < 200; j++) {
+            int a = (int) Math.floor(Math.random() * taille);
+            int b = (int) Math.floor(Math.random() * taille);
+            Object obj = cards[a];
+            cards[a] = cards[b];
+            cards[b] = obj;
+        }
+        for (int k = 0; k < taille; k++) {
+            cartes.addFirst((Carte.Effet) cards[k]);
+        }
+    }
+
+    public void mettreSousPioche(){
+        Carte.Effet c = this.paquet.getFirst();
+        this.paquet.removeFirst();
+        this.paquet.addLast(c);
     }
 
 
-    public void melanger(LinkedList<Carte.Effet> cartes){
-        Collections.shuffle(cartes);
-        Collections.shuffle(cartes);
-        Collections.shuffle(cartes);
-    }
 
     public Carte.Effet tirer(){
         if (this.paquet.size() == 0){

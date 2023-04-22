@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import static models.Carte.Personnage.ARCHEOLOGUE;
+
 public class Joueur {
     //Attributs
     private final int id;
@@ -142,19 +144,34 @@ public class Joueur {
         this.equipement.remove(e);
     }
 
-    public void explorer(){
-        Case cPos=this.getPos();
-        if (cPos.getSable()==0) {
-            cPos.explorer();
-            if (cPos.getType() == Case.TYPE.OASIS){
-                for (Joueur j: p.getJoueurs()){
-                    if (j.getPos()==cPos){
-                        j.remplirGourde();
-                        
-                    }
+    public boolean explorer() {
+        Carte.Personnage pers = this.getPerso();
+        Case cPos = this.getPos();
+        if (pers == Carte.Personnage.PORTEUSE_D_EAU) {
+            if (cPos.getType() == Case.TYPE.OASIS) {
+                this.remplirGourde();
+                cPos.setExploree(true);
+                return true;
+            }else{
+                if (!cPos.isExploree()){
+                    cPos.explorer();
+                    return true;
                 }
             }
+        } else {
+            if (cPos.getSable() == 0 && !cPos.isExploree()) {
+                cPos.explorer();
+                if (cPos.getType() == Case.TYPE.OASIS) {
+                    for (Joueur j : p.getJoueurs()) {
+                        if (j.getPos() == cPos) {
+                            j.remplirGourde();
+                        }
+                    }
+                }
+                return true;
+            }
         }
+        return false;
     }
 
     public void deplacer(Case.Dir d){
@@ -168,22 +185,60 @@ public class Joueur {
         }
     }
 
-    public void deplaceC(Case c) {
+    public boolean CaseVoisine(Case c){
+        if (this.getPos().isVoisine(c)){
+            return true;
+        } else{
+            int X_arr = c.getX();
+            int Y_arr = c.getY();
+            int X_dep = this.getPos().getX();
+            int Y_dep = this.getPos().getY();
+            if (this.getPerso() == Carte.Personnage.EXPLORATEUR){
+                if ( (X_arr == X_dep-1  && Y_arr == Y_dep-1) || (X_arr == X_dep-1  && Y_arr == Y_dep+1)
+                || (X_arr == X_dep+1  && Y_arr == Y_dep-1) || (X_arr == X_dep+1  && Y_arr == Y_dep+1) ){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    }
+    public boolean deplaceC(Case c) {
         int[] ncc = c.getCoord();
-        if (this.getPos().getCoord() != ncc && c.getSable()<=1){
+        Carte.Personnage pers = this.getPerso();
+        if (pers == Carte.Personnage.ALPINISTE || this.getPos().isNavigateur()){
             this.pos.remJ(this);
             this.pos = c;
             c.addJ(this);
-            //this.getPos().getCc().setC(c);
-            System.out.println("nb joueurs new case : " + c.getJ().size());
-            System.out.println("coord depC: " + c.getX() + "," + c.getY());
-        }else{
-            throw new RuntimeException("Deplacement impossible.");
+            return true;
+        }else {
+            if (this.getPos().getCoord() != ncc && c.getSable() <= 1) {
+                this.pos.remJ(this);
+                this.pos = c;
+                c.addJ(this);
+                return true;
+                //this.getPos().getCc().setC(c);
+                //System.out.println("nb joueurs new case : " + c.getJ().size());
+                //System.out.println("coord depC: " + c.getX() + "," + c.getY());
+            } /**else {
+                throw new RuntimeException("Deplacement impossible.");
+            }**/
         }
+        return false;
     }
 
-    public void dessabler(Case c){
-        c.dessabler();
+    public void creuser(Case c){
+        Carte.Personnage pers = this.getPerso();
+        if (pers == ARCHEOLOGUE){
+            if (c.getSable() > 1){
+                c.dessabler();
+                c.dessabler();
+            } else {
+                c.dessabler();
+            }
+        }else {
+            c.dessabler();
+        }
     }
 
     public void boire(){
@@ -209,107 +264,4 @@ public class Joueur {
         return new HashSet<>();
     }
 
-    public void partagerEau(Joueur j, int cran){
-        this.setNiv_eau(j.getNiv_eau()-cran);
-        j.setNiv_eau(j.getNiv_eau()+cran);
-    }
-
-}
-
-class explorateur extends Joueur{
-    public explorateur(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.EXPLORATEUR);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "L’explorateur peut se déplacer, enlever du sable et utiliser les “Blasters”  diagonalement.";
-    }*/
-}
-
-class archeologue extends Joueur{
-    public archeologue(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.ARCHEOLOGUE);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "L'archéologue peut enlever 2 tonnes de sable sur la même tuile pour 1 action.";
-    }*/
-
-    @Override
-    public void dessabler(Case c){
-        c.dessabler();
-        c.dessabler();
-    }
-}
-
-class alpiniste extends Joueur{
-    public alpiniste(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.ALPINISTE);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "L’alpiniste peut aller sur les tuiles bloquées (les tuiles ayant au moins 2 marqueurs Sable). " +
-                "Elle peut aussi emmener un autre joueur avec elle à chaque fois qu’elle se déplace. " +
-                "Tous les pions sur la tuile de l’alpiniste ne sont jamais enlisés et peuvent quitter la tuile " +
-                "de l’alpiniste même s’il y a 2 marqueurs Sable ou plus.";
-    }*/
-    @Override
-    public void deplaceC(Case c) {
-        int[] ncc = c.getCoord();
-        if (this.getPos().getCoord() != ncc){
-            this.getPos().remJ(this);
-            this.setPos(c);
-            c.addJ(this);
-        }else{
-            throw new RuntimeException("Deplacement impossible.");
-        }
-    }
-}
-
-class navigatrice extends Joueur{
-    public navigatrice(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.NAVIGATRICE);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "La navigatrice peut déplacer un autre joueur jusqu'à 3 tuiles non bloquées par action, tunnels inclus. " +
-                "Elle peut déplacer l’explorateur diagonalement et peut déplacer l’alpiniste sur les tuiles bloquées. " +
-                "Déplacée ainsi, l’alpiniste peut aussi utiliser son pouvoir et emmener un autre joueur (dont la navigatrice) !";
-    }*/
-    public void deplacer(Case.Dir d){
-        //TODO
-    }
-}
-
-class meteorologue extends Joueur{
-    public meteorologue(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.METEOROLOGUE);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "La météorologue peut dépenser des actions pour tirer, à la fin de son tour, " +
-                "moins de cartes tempête (1 carte par action) que ne le nécessite le niveau actuel " +
-                "de la tempête de sable. Elle peut aussi dépenser 1 action pour regarder autant de " +
-                "cartes Tempête que son niveau actuel, puis en placer éventuellement une sous la pile. " +
-                "Les autres cartes sont remises sur le dessus de la pile dans l’ordre de son choix.";
-    }*/
-}
-
-class porteuseDEau extends Joueur {
-    public porteuseDEau(int i, Plateau p, String nom) {
-        super(i, p, nom, Carte.Personnage.PORTEUSE_D_EAU);
-        this.setNiv_eau(5);
-    }
-
-    /*@Override
-    public String giveDescription(){
-        return "La porteuse d’eau peut prendre 2 portions d’eau des tuiles « Point d’eau » déjà révélées pour 1 action. " +
-                "Elle peut aussi donner de l’eau aux joueurs sur les tuiles adjacentes gratuitement et à tout moment. " +
-                "Sa gourde commence avec 5 portions d’eau (au lieu de 4).";
-    }*/
 }

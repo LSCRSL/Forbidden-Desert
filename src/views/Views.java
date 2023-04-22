@@ -11,6 +11,8 @@ public class Views {
     private JButton creuser;
     private JButton explorer;
     private JButton deplacer;
+    private JButton donner_eau;
+    private JButton action_spe;
 
 
     private AffichePlateau ap;
@@ -38,6 +40,8 @@ public class Views {
         this.creuser = new Creuser(this.ap.getPlateau(),this);
         this.ramasser = new Ramasser(this.ap.getPlateau(),this);
         this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
+        this.donner_eau = new DonnerEau(this.ap.getPlateau(),this);
+        this.action_spe = new ActionsSpeciales(this.ap.getPlateau());
 
         this.act = new AfficheTour(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
@@ -63,6 +67,18 @@ public class Views {
     public AffichePieces getPieces() { return this.pieces;}
 
     public AfficheJoueurs getJoueurs() { return this.joueurs;}
+
+    public JButton getFdt () { return this.fdt;}
+
+    public JButton getRamasser () { return this.ramasser;}
+
+    public JButton getCreuser () { return this.creuser;}
+
+    public JButton getExplorer () { return this.explorer;}
+
+    public JButton getDeplacer () { return this.deplacer;}
+
+
 
 
     public AfficheFin getFin() {
@@ -96,6 +112,14 @@ public class Views {
 
         this.ramasser.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/6,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + this.fenetre.getHeight()/8);
         this.fenetre.add(this.ramasser);
+
+        if (this.ap.getPlateau().existePorteuse()) {
+            this.donner_eau.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth() / 12, this.fenetre.getHeight() - this.fenetre.getHeight() / 2);
+            this.fenetre.add(this.donner_eau);
+        }
+
+        this.action_spe.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth() / 12,this.fenetre.getHeight() - this.fenetre.getHeight()/2 + this.fenetre.getHeight()/8);
+        this.fenetre.add(this.action_spe);
 
         this.niv.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/5,this.fenetre.getHeight()/8);
         this.fenetre.add(this.niv);

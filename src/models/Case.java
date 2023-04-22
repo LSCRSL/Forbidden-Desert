@@ -110,9 +110,9 @@ public class Case {
         this.y=cY;
     }
 
-    public void setExploree(){ this.exploree=true;}
+    //public void setExploree(){ this.exploree=true;}
 
-    public void setExploree2(boolean exp){ this.exploree=exp;}
+    public void setExploree(boolean exp){ this.exploree=exp;}
 
     public void setIndice(Piece pm, boolean isLigne){ this.indice=pm; this.indLigne=isLigne; }
 
@@ -166,6 +166,16 @@ public class Case {
                 return false;
             }
         }
+    }
+
+    public boolean isNavigateur(){
+        Set<Joueur> J = this.getJ();
+        for (Joueur j : J){
+            if (j.getPerso() == Carte.Personnage.ALPINISTE){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void explorer(){

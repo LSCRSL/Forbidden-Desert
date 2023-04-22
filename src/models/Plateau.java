@@ -3,9 +3,8 @@ package models;
 import controllers.ControleCase;
 
 import javax.management.RuntimeErrorException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import javax.swing.*;
+import java.util.*;
 
 public class Plateau {
 
@@ -24,6 +23,7 @@ public class Plateau {
     private boolean bRev;
     private boolean cRev;
     private int action;
+    private int nbCartesT;
     private PaquetCartes paquets;
 
     //Constructeurs
@@ -38,6 +38,7 @@ public class Plateau {
         this.action = -1;
         this.id_joueur_actuel = 0;
         this.niv_tempete = 1;
+        this.nbCartesT = (int) this.getNiv_tempete();
         this.paquets = new PaquetCartes();
         this.joueurs = new HashSet<Joueur>();
         int[] oeil = {taille / 2, taille / 2};
@@ -222,6 +223,18 @@ public class Plateau {
             throw new RuntimeException("pas de joueur a l'indice"+i);
     }
 
+    public int getNbCartesT(){
+        return this.nbCartesT;
+    }
+
+    public void setNbCartesT(){
+        this.nbCartesT = (int) this.getNiv_tempete();
+    }
+
+    public void NbCartesT(){
+        this.nbCartesT -= 1;
+    }
+
     public Set<Case.Piece> getPiecesRecup() {
         return this.piecesRecup;
     }
@@ -244,6 +257,8 @@ public class Plateau {
 
     public void setPaquets(ArrayList<Carte.Effet> cartes){
         this.paquets = new PaquetCartes(cartes);
+        //this.paquets.melanger(this.paquets.paquet);
+
 
     }
 
@@ -325,13 +340,14 @@ public class Plateau {
         Set<Joueur> J = c1.getJ(); //Joueur présent sur Case
         Case.Piece ip1 = c1.indicePiece(); //indice pour piece
         boolean il1 = c1.indiceLigne(); //indice pour ligne
+
         if ( typ1 == Case.TYPE.OEIL) {
             int[] o ={c2.getX(), c2.getY()} ;
             setOeil(o);
             for (Case.Piece p: p1){
                 p2.add(p);
             }
-            p1=new HashSet<>();
+            //p1=new HashSet<>();
         }
         if ( c2.getType() == Case.TYPE.OEIL) {
             int[] o ={c1.getX(), c1.getY()} ;
@@ -339,7 +355,7 @@ public class Plateau {
             for (Case.Piece p: p2) {
                 p1.add(p);
             }
-            p2=new HashSet<>();
+            //p2=new HashSet<>();
         }
         if ( typ1 == Case.TYPE.CRASH) {
             int[] c ={c2.getX(), c2.getY()} ;
@@ -353,7 +369,7 @@ public class Plateau {
         c1.setCc(c2.getCc());
         c1.setPiece(p2);
         c1.setIndice(c2.indicePiece(),c2.indiceLigne());
-        c1.setExploree2(c2.isExploree());
+        c1.setExploree(c2.isExploree());
         //on associe à la case les nouveaux joueurs
         c1.setJ(c2.getJ());
         //on associe aux joueurs la nouvelle case (car flèche bidirectionnelle)
@@ -368,7 +384,7 @@ public class Plateau {
         c2.setCc(cc1);
         c2.setPiece(p1);
         c2.setIndice(ip1,il1);
-        c2.setExploree2(exp1);
+        c2.setExploree(exp1);
         c2.setJ(J);
         for (Joueur j : c2.getJ()){
             j.setPos(c2);
@@ -463,5 +479,94 @@ public class Plateau {
                 return "Système de navigation";
         }
         return "";
+    }
+
+    public boolean isDefaite(){
+        for (Joueur j: this.getJoueurs()){ //mort par soif
+            if (j.getNiv_eau()<=-1){
+                return true;
+            }
+        }
+        return this.getSablePlateau()>=43 || this.getNiv_tempete()>=7; //mort par ensablement ou tempête
+    }
+
+    public boolean isVictoire(){
+        for (Joueur j: this.getJoueurs()){ //on verfifie que tous les joueurs se trouvent sur la piste de décollage
+            if (j.getPos().getType()!=Case.TYPE.DECOLLAGE){
+                return false;
+            }
+        }
+        if (this.getPiecesRecup().size()>=4){ //on vérifie que les 4 pièces ont bien été récupérées
+            return true;
+        }
+        return false;
+    }
+    public Set<Case> Voisines(Case c){
+        int X = c.getX();
+        int Y = c.getY();
+        Set<Case> voisines = new HashSet<>();
+        voisines.add(c);
+        voisines.add(this.getCase(X+1,Y));
+        voisines.add(this.getCase(X,Y-1));
+        voisines.add(this.getCase(X,Y+1));
+        voisines.add(this.getCase(X-1,Y));
+        return voisines;
+    }
+    public Map<Integer, Case> Porteuse(){
+        Set<Joueur> J = this.getJoueurs();
+        Map<Integer,Case> map = new HashMap<>();
+        for (Joueur j : J){
+            if (j.getPerso() == Carte.Personnage.PORTEUSE_D_EAU){
+                map.put(j.getId(), j.getPos());
+                return map;
+            }
+        }
+        throw new RuntimeException("La porteuse d'eau n'existe pas");
+    }
+
+    public boolean existePorteuse(){
+        Set<Joueur> J = this.getJoueurs();
+        for (Joueur j : J) {
+            if (j.getPerso() == Carte.Personnage.PORTEUSE_D_EAU) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void DeplacementMultiple(){
+        int c = JOptionPane.showConfirmDialog(null,
+                "Voulez-vous ammener quelqu'un avec vous ?",
+                "Déplacement supplémentaire",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (c == JOptionPane.YES_OPTION){
+            Set<Joueur> J = this.getJoueurs();
+            ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+            for (Joueur j : J) {
+                if (j.getPerso() != Carte.Personnage.ALPINISTE){
+                    joueurs.add(j);
+                }
+            }
+            int taille = joueurs.size();
+            Object[] choix = new Object[taille];
+            for (int i = 0; i<taille; i++) {
+                choix[i] = joueurs.get(i).getName();
+            }
+            int r = JOptionPane.showOptionDialog(null,
+                    "Joueur a déplacer ",
+                    "Déplacement",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, choix, choix[0]);
+            Joueur j = joueurs.get(r);
+            ControleCase cc = j.getPos().getCc();
+            Case cas = this.getJoueur_i(this.getId_joueur_actuel()).getPos();
+            System.out.println(cas.getX() + " " + cas.getY());
+            j.deplaceC(cas);
+            cc.refresh();
+
+        }
+
     }
 }

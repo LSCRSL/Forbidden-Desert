@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Carte;
 import models.Case;
 import models.Plateau;
 import models.Joueur;
@@ -7,6 +8,7 @@ import models.Joueur;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
@@ -47,8 +49,8 @@ public class ControleCase extends IG.ZoneCliquable {
             case ENGRENAGE:
                 if (c.isExploree()) {
                     Image oa1 = new ImageIcon("resources/engrenage.png").getImage();
-                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
-                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 2;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 2;
                     g.drawImage(oa1,x2,y2,null);
                 }
                 break;
@@ -67,26 +69,26 @@ public class ControleCase extends IG.ZoneCliquable {
                         switch (piece){
                             case SYSTEME_DE_NAVIGATION:
                                 Image image = new ImageIcon("resources/systemeNavigation.png").getImage();
-                                int X = (this.getWidth() - image.getWidth(null)) / 3;
-                                int Y = (this.getHeight() - image.getHeight(null)) / 3;
+                                int X = (this.getWidth() - image.getWidth(null)) / 2;
+                                int Y = (this.getHeight() - image.getHeight(null)) / 2;
                                 g.drawImage(image,X,Y,null);
                                 break;
                             case HELICE:
                                 Image image1 = new ImageIcon("resources/helice.png").getImage();
-                                int X1 = (this.getWidth() - image1.getWidth(null)) / 3;
-                                int Y1 = (this.getHeight() - image1.getHeight(null)) / 3;
+                                int X1 = (this.getWidth() - image1.getWidth(null)) / 2;
+                                int Y1 = (this.getHeight() - image1.getHeight(null)) / 2;
                                 g.drawImage(image1,X1,Y1,null);
                                 break;
                             case CRISTAL_D_ENERGIE:
                                 Image image2 = new ImageIcon("resources/bouleCristal.png").getImage();
-                                int X2 = (this.getWidth() - image2.getWidth(null)) / 3;
-                                int Y2 = (this.getHeight() - image2.getHeight(null)) / 3;
+                                int X2 = (this.getWidth() - image2.getWidth(null)) / 2;
+                                int Y2 = (this.getHeight() - image2.getHeight(null)) / 2;
                                 g.drawImage(image2,X2,Y2,null);
                                 break;
                             case BOITE_DE_VITESSE:
                                 Image image3 = new ImageIcon("resources/boiteVitesse.png").getImage();
-                                int X3 = (this.getWidth() - image3.getWidth(null)) / 3;
-                                int Y3 = (this.getHeight() - image3.getHeight(null)) / 3;
+                                int X3 = (this.getWidth() - image3.getWidth(null)) / 2;
+                                int Y3 = (this.getHeight() - image3.getHeight(null)) / 2;
                                 g.drawImage(image3,X3,Y3,null);
                                 break;
                         }
@@ -103,15 +105,15 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
             case OASIS:
                 Image oa = new ImageIcon("resources/oasis.png").getImage();
-                int x = (this.getWidth() - oa.getWidth(null)) /4; //on soustrait par case/2 pour centrer
-                int y = (this.getHeight() - oa.getHeight(null)) /4;
+                int x = (this.getWidth() - oa.getWidth(null)) /2; //on soustrait par case/2 pour centrer
+                int y = (this.getHeight() - oa.getHeight(null)) /2;
                 g.drawImage(oa,x,y,null);
                 break;
             case MIRAGE:
                 if (!c.isExploree()) {
                     Image oa1 = new ImageIcon("resources/oasis.png").getImage();
-                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
-                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 2;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 2;
                     g.drawImage(oa1,x2,y2,null);
                 }else{
                     Image oa1 = new ImageIcon("resources/mirage.png").getImage();
@@ -130,8 +132,8 @@ public class ControleCase extends IG.ZoneCliquable {
             case DECOLLAGE:
                 if (c.isExploree()) {
                     Image oa1 = new ImageIcon("resources/decollage.png").getImage();
-                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 4;
-                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 4;
+                    int x2 = (this.getWidth() - oa1.getWidth(null)) / 2;
+                    int y2 = (this.getHeight() - oa1.getHeight(null)) / 2;
                     g.drawImage(oa1,x2,y2,null);
                 }
                 break;
@@ -157,7 +159,8 @@ public class ControleCase extends IG.ZoneCliquable {
 
     public void refresh() {
         int sable = this.c.getSable();
-        if(this.c.getType()== Case.TYPE.OEIL) {
+        if(this.c.getType() == Case.TYPE.OEIL) {
+            System.out.println("On passe ici");
             this.changeTexte(" ");
         }else{
             if (this.c.isExploree()) {
@@ -181,37 +184,48 @@ public class ControleCase extends IG.ZoneCliquable {
 
             //FAIRE L AFFICHAGE DU NB D ACTION -> faire classe au propre (control joueur) reliee à view
             if (j.isMon_tour()  && j.getNb_action() > 0) {
-                if (p.getAction() == 0 && (j.getPos().isVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
+                if (p.getAction() == 0 && (j.CaseVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
                     ControleCase cc = j.getPos().getCc();
                     Case av = cc.getC();
                     //System.out.println("coord clic: " + j.getPos().getX() + "," + j.getPos().getY());
+                    /**
                     System.out.println("avant " + j.getPos().getJ().size());
                     System.out.println("avant c " + av.getJ().size());
-                    j.deplaceC(c);
-                    cc.repaint();
-                    System.out.println("apres " + j.getPos().getJ().size());
+                     **/
+                    if (j.deplaceC(c)){
+                        if (j.getPerso() == Carte.Personnage.ALPINISTE){
+                                this.p.DeplacementMultiple();
+                        }
+                        j.decremente_action();
+                    }
+                    cc.refresh();
+                    //System.out.println("apres " + j.getPos().getJ().size());
 
-                    j.decremente_action();
+
                     this.v.getAct().setLabels(j);
                 }
-                if (p.getAction() == 1 && (j.getPos().isVoisine(c) || j.getPos() == c) ) {
+                //OK
+                if (p.getAction() == 1 && (j.CaseVoisine(c) || j.getPos() == c) && this.getC().getSable() > 0 ) {
                     //creuser
-                    j.dessabler(c);
+                    j.creuser(c);
                     j.decremente_action();
                     this.v.getAct().setLabels(j);
                 }
-                if (p.getAction() == 2 && (!c.isExploree())) {
-                    j.explorer();
-                    j.decremente_action();
+                //
+                if (p.getAction() == 2) {
+                    if (j.explorer()) {
+                        j.decremente_action();
+                    }
                     this.v.getAct().setLabels(j);
                     this.v.getJoueurs().setLabels();
                 }
 
                 if (p.getAction() == 3 && j.getPos() == c && c.isExploree() && c.getSable()<2) {
-                    //ramasser
                     Set<Case.Piece> pc = j.ramasserPiece();
                     this.v.getPieces().setLabels(pc);
-                    j.decremente_action();
+                    if (pc.size() != 0){
+                        j.decremente_action();
+                    }
                     this.v.getAct().setLabels(j);
                 }
             }
@@ -221,7 +235,10 @@ public class ControleCase extends IG.ZoneCliquable {
     }
 
     @Override
-    public void clicDroit() {}
+    public void clicDroit() {
+
+
+    }
 
     @Override
     public void repaint() {
