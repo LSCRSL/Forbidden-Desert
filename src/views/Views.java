@@ -19,13 +19,10 @@ public class Views {
     private AfficheTour act;
     private AfficheTempete niv;
     private AfficheSable sab;
-    //private AfficheFin fin;
     private AfficheJoueurs joueurs;
     private AffichePieces pieces;
     private AfficheCarteTempete carte;
     private AfficheInfos info;
-
-    private AfficheVictoire victoire;
 
 
     public Views(String nom,models.Plateau p) {
@@ -41,12 +38,11 @@ public class Views {
         this.ramasser = new Ramasser(this.ap.getPlateau(),this);
         this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
         this.donner_eau = new DonnerEau(this.ap.getPlateau(),this);
-        this.action_spe = new ActionsSpeciales(this.ap.getPlateau());
+        this.action_spe = new ActionsSpeciales(this.ap.getPlateau(),this);
 
         this.act = new AfficheTour(this.ap.getPlateau());
         this.niv = new AfficheTempete(this.ap.getPlateau());
         this.sab= new AfficheSable(this.ap.getPlateau());
-        //this.fin= new AfficheFin(this.ap.getPlateau());
         this.joueurs = new AfficheJoueurs(this.ap.getPlateau());
         this.pieces = new AffichePieces(this.ap.getPlateau());
         this.carte = new AfficheCarteTempete(this.ap.getPlateau());
@@ -84,9 +80,6 @@ public class Views {
 
     public JButton getAction_spe() {return action_spe;}
 
-    //public AfficheFin getFin() {
-    //    return this.fin;
-    //}
 
     public AfficheCarteTempete getCarteTempete(){ return this.carte;}
 
@@ -136,16 +129,13 @@ public class Views {
         this.joueurs.setLocation(30, 30);
         this.fenetre.add(this.joueurs);
 
-        this.pieces.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3);
+        this.pieces.setLocation(50,this.fenetre.getHeight() - this.fenetre.getHeight()/2);
         this.fenetre.add(this.pieces);
-
-        //this.fin.setLocation(this.fenetre.getWidth()/2 - this.fin.getWidth()/2 ,this.fenetre.getHeight()/6-this.fin.getHeight());
-        //this.fenetre.add(this.fin);
 
         this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
         this.fenetre.add(this.carte);
 
-        this.info.setLocation(190,this.fenetre.getHeight() - this.fenetre.getHeight()/3 + 150);
+        this.info.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3 + 150);
         this.fenetre.add(this.info);
 
     }

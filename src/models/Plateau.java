@@ -37,7 +37,7 @@ public class Plateau {
         this.sable = 0;
         this.action = -1;
         this.id_joueur_actuel = 0;
-        this.niv_tempete = 1;
+        this.niv_tempete = 2;
         this.nbCartesT = (int) this.getNiv_tempete();
         this.paquets = new PaquetCartes();
         this.joueurs = new HashSet<Joueur>();
@@ -257,7 +257,7 @@ public class Plateau {
 
     public void setPaquets(ArrayList<Carte.Effet> cartes){
         this.paquets = new PaquetCartes(cartes);
-        //this.paquets.melanger(this.paquets.paquet);
+        this.paquets.melanger(this.paquets.getPaquet());
 
 
     }

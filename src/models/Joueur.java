@@ -21,8 +21,6 @@ public class Joueur {
     private Image img;
     private ArrayList<Carte.Equipement> equipement;
 
-    private String description="r";
-
     //Constructeur
     public Joueur(int i, models.Plateau p, String nom, Carte.Personnage per){
         this.id=i;
@@ -80,9 +78,6 @@ public class Joueur {
         return perso;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
 
     //Setters
@@ -107,35 +102,6 @@ public class Joueur {
     }
 
     //Méthodes
-    public  String giveDescription(){
-        switch(this.getPerso()){
-            case ALPINISTE:
-                return "L’alpiniste peut aller sur les tuiles bloquées (les tuiles ayant au moins 2 marqueurs Sable). \n" +
-                        "Elle peut aussi emmener un autre joueur avec elle à chaque fois qu’elle se déplace. \n" +
-                        "Tous les pions sur la tuile de l’alpiniste ne sont jamais enlisés et peuvent quitter la tuile \n" +
-                        "de l’alpiniste même s’il y a 2 marqueurs Sable ou plus.\n";
-            case ARCHEOLOGUE:
-                return "L'archéologue peut enlever 2 tonnes de sable sur la même tuile pour 1 action.";
-            case NAVIGATRICE:
-                return "La navigatrice peut déplacer un autre joueur jusqu'à 3 tuiles non bloquées par action, tunnels inclus. \n" +
-                        "Elle peut déplacer l’explorateur diagonalement et peut déplacer l’alpiniste sur les tuiles bloquées. \n" +
-                        "Déplacée ainsi, l’alpiniste peut aussi utiliser son pouvoir et emmener un autre joueur (dont la navigatrice) !\n";
-            case EXPLORATEUR:
-                return "L’explorateur peut se déplacer, enlever du sable et utiliser les “Blasters”  diagonalement.";
-            case METEOROLOGUE:
-                return "La météorologue peut dépenser des actions pour tirer, à la fin de son tour, \n" +
-                        "moins de cartes tempête (1 carte par action) que ne le nécessite le niveau actuel \n" +
-                        "de la tempête de sable. Elle peut aussi dépenser 1 action pour regarder autant de \n" +
-                        "cartes Tempête que son niveau actuel, puis en placer éventuellement une sous la pile. \n" +
-                        "Les autres cartes sont remises sur le dessus de la pile dans l’ordre de son choix.\n";
-            case PORTEUSE_D_EAU:
-                return "La porteuse d’eau peut prendre 2 portions d’eau des tuiles « Point d’eau » déjà révélées pour 1 action. \n" +
-                        "Elle peut aussi donner de l’eau aux joueurs sur les tuiles adjacentes gratuitement et à tout moment. \n" +
-                        "Sa gourde commence avec 5 portions d’eau (au lieu de 4).\n";
-        }
-        return "";
-    }
-
     public void addEquipement(Carte.Equipement e){
         this.equipement.add(e);
     }
@@ -206,20 +172,23 @@ public class Joueur {
     public boolean deplaceC(Case c) {
         int[] ncc = c.getCoord();
         Carte.Personnage pers = this.getPerso();
-        if (pers == Carte.Personnage.ALPINISTE || this.getPos().isNavigateur()){
+        if (pers == Carte.Personnage.ALPINISTE ){
             this.pos.remJ(this);
             this.pos = c;
             c.addJ(this);
             return true;
-        }else {
-            if (this.getPos().getCoord() != ncc && c.getSable() <= 1) {
-                this.pos.remJ(this);
-                this.pos = c;
-                c.addJ(this);
-                return true;
-            } /**else {
-                throw new RuntimeException("Deplacement impossible.");
-            }**/
+        }
+        if (this.getPos().getCoord() != ncc && c.getSable() <= 1 && this.getPos().getSable() <=1) {
+            this.pos.remJ(this);
+            this.pos = c;
+            c.addJ(this);
+            return true;
+        }
+        if (this.getPos().getCoord() != ncc && this.getPos().isNavigateur() && c.getSable() <=1){
+            this.pos.remJ(this);
+            this.pos = c;
+            c.addJ(this);
+            return true;
         }
         return false;
     }

@@ -30,8 +30,10 @@ public class FinDeTour extends JButton {
             public void actionPerformed(ActionEvent e) {
                 AfficheCarteTempete carte= v.getCarteTempete();
                 int nbCartesT = p.getNbCartesT();
+                System.out.println(nbCartesT);
                 for (int i=0; i< nbCartesT; i++) {
                     Carte.Effet effet = p.getPaquets().tirer();
+                    System.out.println(effet);
                     switch(effet){
                         case LE_VENT_SOUFFLE:
                             int f = 0;
@@ -95,6 +97,8 @@ public class FinDeTour extends JButton {
         sab.setLabels(this.p.getSablePlateau());
         AfficheTour tour =this.v.getAct();
         AfficheJoueurs joueurs = this.v.getJoueurs();
+        AfficheCarteTempete ct = this.v.getCarteTempete();
+        ct.setLabel();
 
         //tenter de faire ça pour le joueur qui joue
         for (Joueur j : this.p.getJoueurs()) {
@@ -116,35 +120,51 @@ public class FinDeTour extends JButton {
         JFrame end = new JFrame("Fin");
         end.setSize(400,400);
         end.setUndecorated(true);
+        JButton close = new JButton("OK");
+        close.setBounds(0,0,50,50);
         end.setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         end.setLayout(null);
         end.pack();
         end.setSize(1920,1080);
         end.setLocationRelativeTo(null);
+
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Rectangle maximumWindowBounds = graphicsEnvironment.getMaximumWindowBounds();
+        int height = (int)maximumWindowBounds.getHeight();
+        int width = (int)maximumWindowBounds.getWidth();
+        end.setLocation(width/2 - end.getWidth()/2, height/2 - end.getHeight()/2);
+
         end.setVisible(true);
         end.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        v.getFdt().setVisible(false);
-        v.getRamasser().setVisible(false);
-        v.getCreuser().setVisible(false);
-        v.getDeplacer().setVisible(false);
-        v.getExplorer().setVisible(false);
-        v.getDonner_eau().setVisible(false);
-        v.getAction_spe().setVisible(false);
-
         JPanel panel = new JPanel();
-        panel.setBounds(0,0,200,200);
+        panel.setBounds(0,0,400,400);
         JLabel texte;
         if(def) {
-            panel.setBackground(Color.RED);
-            texte = new JLabel("DEFAITE");
+            texte = new JLabel("DEFAITE",SwingConstants.CENTER);
+            texte.setForeground(Color.RED);
         }else {
-            panel.setBackground(Color.GREEN);
-            texte = new JLabel("VICTOIRE");
+            texte = new JLabel("VICTOIRE",SwingConstants.CENTER);
+            texte.setForeground(Color.GREEN);
         }
+        texte.setFont(new Font("Serif", Font.BOLD, 80));
         panel.add(texte);
-        panel.setLocation(end.getWidth()/2 - 2*panel.getWidth(),end.getHeight()/2 - panel.getHeight());
+        panel.setOpaque(false);
+        close.setVisible(true);
+        close.setLocation(end.getWidth()/2 - close.getWidth()/2,end.getHeight()/2 - close.getHeight()/2 );
+        panel.setLocation(end.getWidth()/2 - panel.getWidth()/2,end.getHeight()/2 - panel.getHeight()/2);
+        end.add(close);
         end.add(panel);
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end.setVisible(false);
+                end.dispose();
+                v.getFenetre().setVisible(false);
+                v.getFenetre().dispose();
+
+            }
+        });
 
     }
 

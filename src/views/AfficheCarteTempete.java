@@ -11,13 +11,13 @@ public class AfficheCarteTempete extends JPanel{
         super();
         this.setBounds(0,0,180,40);
         this.p = plateau;
-        this.label = new JLabel("");
+        this.label = new JLabel("" + p.getNbCartesT());
         this.add(this.label);
 
     }
 
-    public void setLabel(String carte){
-        this.label.setText(carte);
+    public void setLabel(){
+        this.label.setText("" + p.getNbCartesT());
         this.repaint();
     }
 

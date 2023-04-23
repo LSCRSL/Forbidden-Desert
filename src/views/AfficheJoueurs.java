@@ -20,9 +20,7 @@ public class AfficheJoueurs extends JPanel {
         super();
         this.p=plateau;
         this.setBounds(0,0,250,75*p.getJoueurs().size());
-        Border blackline = BorderFactory.createLineBorder(new Color(	255, 190, 96));
-        this.setBorder(blackline);
-        this.setBackground(new Color(	255, 203, 96));
+        this.setBackground(new Color(	222,184,135));
         int nb = this.p.getJoueurs().size();
         this.joueurs = new JLabel[nb];
         this.gourde = new JLabel[nb];

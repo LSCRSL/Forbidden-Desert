@@ -4,8 +4,10 @@ import models.Carte;
 import models.Case;
 import models.Joueur;
 import models.Plateau;
+import views.Views;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,13 +15,15 @@ import java.util.Set;
 
 public class ActionsSpeciales extends JButton {
     private Plateau plateau;
+    private Views vue;
 
-    public ActionsSpeciales(models.Plateau p){
+    public ActionsSpeciales(models.Plateau p, Views v){
         super("Actions");
         this.setVerticalTextPosition(SwingConstants.CENTER);
         this.setHorizontalTextPosition(SwingConstants.CENTER);
         this.setBounds(0, 0, 100, 50);
         this.plateau = p;
+        this.vue = v;
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,8 +37,12 @@ public class ActionsSpeciales extends JButton {
                             JOptionPane.QUESTION_MESSAGE, null, choix, choix[0]);
                     switch (c) {
                         case 0:
+                            System.out.println(plateau.getNbCartesT());
                             plateau.NbCartesT();
+                            System.out.println(plateau.getNbCartesT());
                             joueur.decremente_action();
+                            v.getAct().setLabels(joueur);
+                            v.getCarteTempete().setLabel();
                             break;
                         case 1:
                             Object[] choix2 = {"Mettre sous la pile", "Ne rien faire"};
@@ -48,6 +56,7 @@ public class ActionsSpeciales extends JButton {
                                 plateau.getPaquets().mettreSousPioche();
                             }
                             joueur.decremente_action();
+                            v.getAct().setLabels(joueur);
                     }
 
                 }
@@ -75,7 +84,7 @@ public class ActionsSpeciales extends JButton {
 
                     }
                 }
-                if(joueur.getPerso() == Carte.Personnage.ALPINISTE){
+                if(joueur.getPerso() == Carte.Personnage.ALPINISTE && plateau.getAction() == 0){
                     int c = JOptionPane.showConfirmDialog(null,
                             "Voulez-vous ammener quelqu'un avec vous ?",
                             "Déplacement supplémentaire",
@@ -103,8 +112,9 @@ public class ActionsSpeciales extends JButton {
                         Joueur j = joueurs.get(r);
                         ControleCase cc = j.getPos().getCc();
                         Case cas = plateau.getJoueur_i(plateau.getId_joueur_actuel()).getPos();
-                        j.deplaceC(cas);
-                        j.decremente_action();
+                        j.getPos().remJ(j);
+                        j.setPos(cas);
+                        cas.addJ(j);
                         cc.refresh();
 
                     }

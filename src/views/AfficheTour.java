@@ -16,8 +16,7 @@ public class AfficheTour extends JPanel{
         public AfficheTour(models.Plateau plateau){
             super();
             this.setBounds(0,0,250,70);
-            Border blackline = BorderFactory.createLineBorder(Color.black);
-            this.setBorder(blackline);
+            this.setBackground(new Color(	222,184,135));
             this.p=plateau;
             this.action= new JLabel("Nombre d'actions restantes: "+ "4 \n");
             this.j = p.getJoueur_i(0);

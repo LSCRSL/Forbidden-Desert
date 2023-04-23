@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class PaquetCartes {
@@ -20,11 +18,14 @@ public class PaquetCartes {
         for (Carte.Effet card : cartes){
             this.paquet.add(card);
         }
-        this.melanger(this.paquet);
     }
 
     public LinkedList<Carte.Effet> getPaquet() {
         return paquet;
+    }
+
+    public LinkedList<Carte.Effet> getDefausse() {
+        return defausse;
     }
 
     public void melanger(LinkedList<Carte.Effet> cartes) {
