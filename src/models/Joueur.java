@@ -19,7 +19,6 @@ public class Joueur {
     private int nb_action;
     private boolean mon_tour;
     private Image img;
-    private ArrayList<Carte.Equipement> equipement;
 
     //Constructeur
     public Joueur(int i, models.Plateau p, String nom, Carte.Personnage per){
@@ -36,7 +35,6 @@ public class Joueur {
         this.pos = p.getCase(this.p.getCrash()[0],this.p.getCrash()[1]);
         this.nb_action = 4;
         this.mon_tour = false;
-        this.equipement = new ArrayList<>();
 
         Image img = new ImageIcon("resources/mumu.png").getImage();
         switch (per) {
@@ -77,7 +75,6 @@ public class Joueur {
         return img;
     }
 
-    public ArrayList<Carte.Equipement> getEquipement() {return equipement; }
 
     public Carte.Personnage getPerso() {
         return perso;
@@ -107,14 +104,7 @@ public class Joueur {
     }
 
     //Méthodes
-    public void addEquipement(Carte.Equipement e){
-        this.equipement.add(e);
-    }
-
-    public void removeEquipement(Carte.Equipement e){
-        this.equipement.remove(e);
-    }
-
+    
     public boolean explorer() {
         Carte.Personnage pers = this.getPerso();
         Case cPos = this.getPos();
