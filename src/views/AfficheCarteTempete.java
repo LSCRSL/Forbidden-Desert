@@ -9,15 +9,15 @@ public class AfficheCarteTempete extends JPanel{
 
     public AfficheCarteTempete(models.Plateau plateau){
         super();
-        this.setBounds(0,0,180,40);
+        this.setBounds(0,0,200,40);
         this.p = plateau;
-        this.label = new JLabel("" + p.getNbCartesT());
+        this.label = new JLabel("Nombre de cartes à piocher: " + p.getNbCartesT());
         this.add(this.label);
 
     }
 
     public void setLabel(){
-        this.label.setText("" + p.getNbCartesT());
+        this.label.setText("Nombre de cartes à piocher: " + p.getNbCartesT());
         this.repaint();
     }
 
