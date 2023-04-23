@@ -30,10 +30,8 @@ public class FinDeTour extends JButton {
             public void actionPerformed(ActionEvent e) {
                 AfficheCarteTempete carte= v.getCarteTempete();
                 int nbCartesT = p.getNbCartesT();
-                System.out.println(nbCartesT);
                 for (int i=0; i< nbCartesT; i++) {
                     Carte.Effet effet = p.getPaquets().tirer();
-                    System.out.println(effet);
                     switch(effet){
                         case LE_VENT_SOUFFLE:
                             int f = 0;
@@ -67,7 +65,6 @@ public class FinDeTour extends JButton {
 
                     }
 
-                    //AfficheFin fin= v.getFin();
                     if (p.isDefaite()) {
                         affiche_fin(true);
                     }

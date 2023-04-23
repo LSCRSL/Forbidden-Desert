@@ -23,7 +23,7 @@ public class AffichePieces extends JPanel {
 
     public AffichePieces(models.Plateau plateau){
         super();
-        this.setBounds(0,0,200,250);
+        this.setBounds(0,0,200,230);
         this.setBackground(new Color(	222,184,135));
         this.p=plateau;
         this.label= new JLabel(" Pièces trouvées: \n");

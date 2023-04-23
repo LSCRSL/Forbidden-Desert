@@ -104,7 +104,7 @@ public class Joueur {
     }
 
     //Méthodes
-    
+
     public boolean explorer() {
         Carte.Personnage pers = this.getPerso();
         Case cPos = this.getPos();

@@ -19,7 +19,7 @@ public class AfficheJoueurs extends JPanel {
     public AfficheJoueurs(models.Plateau plateau) {
         super();
         this.p=plateau;
-        this.setBounds(0,0,250,75*p.getJoueurs().size());
+        this.setBounds(0,0,250,70*p.getJoueurs().size());
         this.setBackground(new Color(	222,184,135));
         int nb = this.p.getJoueurs().size();
         this.joueurs = new JLabel[nb];

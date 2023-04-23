@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Case {
 
-    public enum Dir {HAUT,HAUT_DROIT, HAUT_GAUCHE, BAS,BAS_DROIT, BAS_GAUCHE, GAUCHE, DROITE}
+    public enum Dir {HAUT, BAS, GAUCHE, DROITE}
     public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE}
     public enum Piece {HELICE, BOITE_DE_VITESSE, CRISTAL_D_ENERGIE, SYSTEME_DE_NAVIGATION}
     //Attributs
