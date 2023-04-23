@@ -25,7 +25,12 @@ public class Joueur {
     public Joueur(int i, models.Plateau p, String nom, Carte.Personnage per){
         this.id=i;
         this.p=p;
-        this.niv_eau=4;
+        if (per == Carte.Personnage.PORTEUSE_D_EAU) {
+            this.niv_eau = 5;
+        }else {
+            this.niv_eau = 4;
+
+        }
         this.name=nom;
         this.perso=per;
         this.pos = p.getCase(this.p.getCrash()[0],this.p.getCrash()[1]);
