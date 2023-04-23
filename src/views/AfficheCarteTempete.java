@@ -1,7 +1,6 @@
 package views;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class AfficheCarteTempete extends JPanel{
     private models.Plateau p;
@@ -9,7 +8,7 @@ public class AfficheCarteTempete extends JPanel{
 
     public AfficheCarteTempete(models.Plateau plateau){
         super();
-        this.setBounds(0,0,200,40);
+        this.setBounds(0,0,250,40);
         this.p = plateau;
         this.label = new JLabel("Nombre de cartes à piocher: " + p.getNbCartesT());
         this.add(this.label);

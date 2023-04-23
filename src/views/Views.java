@@ -14,7 +14,6 @@ public class Views {
     private JButton donner_eau;
     private JButton action_spe;
 
-
     private AffichePlateau ap;
     private AfficheTour act;
     private AfficheTempete niv;
@@ -25,7 +24,7 @@ public class Views {
     private AfficheInfos info;
 
 
-    public Views(String nom,models.Plateau p) {
+    public Views(models.Plateau p) {
         this.fenetre = new JFrame("ForbiddenDesert");
         this.fenetre.setSize(700,700);
         this.fenetre.setLayout(null);
@@ -52,10 +51,6 @@ public class Views {
 
     public JFrame getFenetre() { return fenetre;}
 
-    public AffichePlateau getAp() {
-        return ap;
-    }
-
     public AfficheTempete getNiv() {return this.niv;}
 
     public AfficheSable getSab(){ return  this.sab;}
@@ -65,20 +60,6 @@ public class Views {
     public AffichePieces getPieces() { return this.pieces;}
 
     public AfficheJoueurs getJoueurs() { return this.joueurs;}
-
-    public JButton getFdt () { return this.fdt;}
-
-    public JButton getRamasser () { return this.ramasser;}
-
-    public JButton getCreuser () { return this.creuser;}
-
-    public JButton getExplorer () { return this.explorer;}
-
-    public JButton getDeplacer () { return this.deplacer;}
-
-    public JButton getDonner_eau() { return this.donner_eau;}
-
-    public JButton getAction_spe() {return action_spe;}
 
 
     public AfficheCarteTempete getCarteTempete(){ return this.carte;}

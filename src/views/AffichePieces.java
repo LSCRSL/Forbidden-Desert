@@ -19,11 +19,9 @@ public class AffichePieces extends JPanel {
     private JLabel piece3;
     private JLabel piece4;
 
-
-
     public AffichePieces(models.Plateau plateau){
         super();
-        this.setBounds(0,0,200,230);
+        this.setBounds(0,0,230,230);
         this.setBackground(new Color(	222,184,135));
         this.p=plateau;
         this.label= new JLabel(" Pièces trouvées: \n");
@@ -44,10 +42,8 @@ public class AffichePieces extends JPanel {
         this.add(this.piece2);
         this.add(this.piece3);
         this.add(this.piece4);
-
-
-
     }
+
     public void setLabels(Set<Case.Piece> cp){
         for (Case.Piece c : cp) {
             switch(c) {

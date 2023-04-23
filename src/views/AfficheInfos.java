@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class AfficheInfos extends JButton {
 
-
     public AfficheInfos(){
         super("Infos");
         this.setVerticalTextPosition(SwingConstants.CENTER);

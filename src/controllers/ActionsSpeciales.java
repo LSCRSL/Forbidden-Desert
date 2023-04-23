@@ -80,9 +80,7 @@ public class ActionsSpeciales extends JButton {
                             JOptionPane.QUESTION_MESSAGE,
                             null, choix, choix[0]);
                     Joueur j = joueurs.get(c);
-                    switch (j.getPerso()){
-
-                    }
+                    switch (j.getPerso()){}
                 }
                 if(joueur.getPerso() == Carte.Personnage.ALPINISTE && plateau.getAction() == 0){
                     int c = JOptionPane.showConfirmDialog(null,
@@ -116,15 +114,9 @@ public class ActionsSpeciales extends JButton {
                         j.setPos(cas);
                         cas.addJ(j);
                         cc.refresh();
-
                     }
-
                 }
-
             }
             });
-
     }
-
-
 }

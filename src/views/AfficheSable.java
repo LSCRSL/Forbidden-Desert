@@ -1,7 +1,5 @@
 package views;
 
-//import sun.rmi.runtime.NewThreadAction;
-
 import javax.swing.*;
 import java.awt.*;
 

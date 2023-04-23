@@ -10,6 +10,7 @@ public class Case {
     public enum Dir {HAUT, BAS, GAUCHE, DROITE}
     public enum TYPE {NORMALE, OEIL, CRASH, DECOLLAGE, OASIS, MIRAGE, TUNNEL, ENGRENAGE, INDICE}
     public enum Piece {HELICE, BOITE_DE_VITESSE, CRISTAL_D_ENERGIE, SYSTEME_DE_NAVIGATION}
+
     //Attributs
     private Set<Joueur> J;
     private Plateau plateau;
@@ -40,9 +41,7 @@ public class Case {
     public int getSable() { return sable; }
     public int getX() { return x; }
     public int getY() { return y; }
-
     public Plateau getPlateau() { return this.plateau;}
-
     public int[] getCoord() {
         return new int[]{this.getX(), this.getY()};
     }
@@ -51,7 +50,6 @@ public class Case {
         return type;
     }
     public boolean isExploree() { return exploree; }
-
     public Set<Joueur> getJ() { return J; }
 
     public String getDir(){
@@ -83,8 +81,6 @@ public class Case {
         return piece;
     }
 
-    public boolean hasPlayer() { return !this.getJ().isEmpty();}
-
     public String strPiece(){
         String res="";
         for (Piece p: this.piece) {
@@ -107,25 +103,14 @@ public class Case {
     public void ensabler() { this.sable++; }
     public void dessabler() { if (sable>=1){ this.sable--; this.getPlateau().setSable(this.getPlateau().getSablePlateau()-1); } }
     public void setType(TYPE t) { this.type = t; }
-
-    public void setCoord(int cX, int cY){
-        this.x=cX;
-        this.y=cY;
-    }
-
-    //public void setExploree(){ this.exploree=true;}
-
     public void setExploree(boolean exp){ this.exploree=exp;}
-
     public void setIndice(Piece pm, boolean isLigne){ this.indice=pm; this.indLigne=isLigne; }
-
     public void addPiece(Piece p){
         piece.add(p);
     }
     public void setPiece(Set<Piece> pm){
         this.piece=pm;
     }
-
     public void setSable(int quantite) {this.sable = quantite;}
 
     //Methode
@@ -154,7 +139,6 @@ public class Case {
         }catch (ArrayIndexOutOfBoundsException e) {}
         return this;
     }
-
 
     public boolean isVoisine(Case C){
         if (C.getType() == TYPE.OEIL){

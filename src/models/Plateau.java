@@ -2,8 +2,6 @@ package models;
 
 import controllers.ControleCase;
 
-import javax.management.RuntimeErrorException;
-import javax.swing.*;
 import java.util.*;
 
 public class Plateau {
@@ -68,7 +66,6 @@ public class Plateau {
                 this.setCase((new Case(rX, rY, this, Case.TYPE.CRASH)), rX, rY);
                 crash--;
                 this.setCrash(new int[]{rX, rY});
-
             }
         }
         while (oasis > 0) {
@@ -253,13 +250,9 @@ public class Plateau {
         this.oeil = oeil;
     }
 
-    public void setJoueurs(Set<Joueur> j){ this.joueurs = j;}
-
     public void setPaquets(ArrayList<Carte.Effet> cartes){
         this.paquets = new PaquetCartes(cartes);
         this.paquets.melanger(this.paquets.getPaquet());
-
-
     }
 
     public void setCrash(int[] cr) {
@@ -289,11 +282,6 @@ public class Plateau {
         this.joueurs.add(j);
         j.getPos().addJ(j);
     }
-
-    public void printJ(){
-        System.out.println(this.getJoueurs().toString());
-    }
-
 
     public void souffler(Case.Dir d, int f) {
         int[] tmp=getOeil();
@@ -467,20 +455,6 @@ public class Plateau {
         }
     }
 
-    public String getStrPiece(Case.Piece p){
-        switch(p){
-            case HELICE:
-                return "Helice";
-            case BOITE_DE_VITESSE:
-                return "Boite de vitesse";
-            case CRISTAL_D_ENERGIE:
-                return "Cristal d'énergie";
-            case SYSTEME_DE_NAVIGATION:
-                return "Système de navigation";
-        }
-        return "";
-    }
-
     public boolean isDefaite(){
         for (Joueur j: this.getJoueurs()){ //mort par soif
             if (j.getNiv_eau()<=-1){
@@ -518,7 +492,6 @@ public class Plateau {
         if(Y!= 4){
             voisines.add(this.getCase(X,Y+1));
         }
-
         return voisines;
     }
     public Map<Integer, Case> Porteuse(){
@@ -542,5 +515,4 @@ public class Plateau {
         }
         return false;
     }
-
 }

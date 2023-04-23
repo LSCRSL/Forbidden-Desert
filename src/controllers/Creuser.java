@@ -25,10 +25,7 @@ public class Creuser extends JButton {
                 p.setAction(1);
                 AfficheTour act =v.getAct();
                 int a = p.getJoueur_i(p.getId_joueur_actuel()).getNb_action();
-
             }
         });
-
-
     }
 }

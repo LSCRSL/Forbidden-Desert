@@ -54,8 +54,6 @@ public class PaquetCartes {
         this.paquet.addLast(c);
     }
 
-
-
     public Carte.Effet tirer(){
         if (this.paquet.size() == 0){
             melanger(this.defausse);
@@ -69,6 +67,4 @@ public class PaquetCartes {
             return c;
         }
     }
-
-
 }

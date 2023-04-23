@@ -13,7 +13,6 @@ public class AfficheJoueurs extends JPanel {
     private models.Plateau p;
     private JLabel[] joueurs;
     private JLabel[] gourde;
-    private Popup popup;
     //class pour afficher les joueurs et leur niveau de gourde
 
     public AfficheJoueurs(models.Plateau plateau) {
@@ -35,7 +34,6 @@ public class AfficheJoueurs extends JPanel {
             this.gourde[j.getId()] = caseg;
             this.add(this.joueurs[j.getId()]);
             this.add(this.gourde[j.getId()]);
-
         }
     }
 

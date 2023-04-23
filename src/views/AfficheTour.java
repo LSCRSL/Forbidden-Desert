@@ -5,7 +5,7 @@ import models.Joueur;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-//à combiner avec AfficheTourJoueurs
+
 public class AfficheTour extends JPanel{
         private models.Plateau p;
         private JLabel action;

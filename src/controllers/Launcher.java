@@ -1,15 +1,11 @@
 package controllers;
 
-//import javafx.scene.effect.SepiaTone;
 import models.Carte;
-import models.Joueur;
 import models.Plateau;
 import views.ChoixNbJoueurs;
 import views.Views;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Launcher {
     private ArrayList<String> names;
@@ -55,7 +51,7 @@ public class Launcher {
         plateau.setPaquets(cartes);
         plateau.getJoueur_i(0).setMon_tour(true);
 
-        Views vue = new Views("ForbiddenDesert",plateau);
+        Views vue = new Views(plateau);
         vue.affiche();
     }
 }

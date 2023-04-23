@@ -1,14 +1,11 @@
 package controllers;
 
-import models.Carte;
 import models.Case;
 import models.Plateau;
 import models.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class ControleCase extends IG.ZoneCliquable {
@@ -21,7 +18,7 @@ public class ControleCase extends IG.ZoneCliquable {
         this.p = plateau;
         int sable = c.getSable();
         if (c.isExploree()) {
-            this.changeTexte(Integer.toString(sable) + "*");
+            this.changeTexte(sable + "*");
         }
         if(c.getType()!= Case.TYPE.OEIL) {
             this.changeTexte(Integer.toString(sable));
@@ -33,7 +30,6 @@ public class ControleCase extends IG.ZoneCliquable {
     public Case getC() {
         return c;
     }
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -136,7 +132,7 @@ public class ControleCase extends IG.ZoneCliquable {
                 break;
         }
         Set<Joueur> pers = c.getJ();
-        Image img = new ImageIcon("resources/mumu.png").getImage();
+        Image img ;
         int nb = this.c.getJ().size();
         int k = 0;
         for (Joueur j : pers) {
@@ -150,9 +146,7 @@ public class ControleCase extends IG.ZoneCliquable {
             }
             k++;
         }
-
     }
-
 
     public void refresh() {
         int sable = this.c.getSable();
@@ -161,25 +155,24 @@ public class ControleCase extends IG.ZoneCliquable {
         }else{
             if (this.c.isExploree()) {
                 if (this.c.getType()== Case.TYPE.INDICE){
-                    this.changeTexte(this.c.strPiece()+Integer.toString(sable) +"* "+this.c.getIndice());
+                    this.changeTexte(this.c.strPiece()+sable +"* "+this.c.getIndice());
                 }else{
-                    this.changeTexte(this.c.strPiece()+Integer.toString(sable) + "* ");
+                    this.changeTexte(this.c.strPiece()+sable + "* ");
                 }
             } else {
-                this.changeTexte(this.c.strPiece()+Integer.toString(sable));
+                this.changeTexte(this.c.strPiece()+sable);
             }
         }
         this.repaint();
-
     }
 
     @Override
     public void clicGauche() {
         Set<Joueur> J = this.p.getJoueurs();
         for (Joueur j : J ) {
-
             if (j.isMon_tour()  && j.getNb_action() > 0) {
-                if (p.getAction() == 0 && (j.CaseVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
+                if (p.getAction() == 0 && (j.CaseVoisine(c) || (j.getPos().getType()==Case.TYPE.TUNNEL
+                        && c.getType()==Case.TYPE.TUNNEL && c.isExploree() && j.getPos().isExploree())) ) {
                     if (j.deplaceC(c)){
                         j.decremente_action();
                     }
@@ -220,10 +213,7 @@ public class ControleCase extends IG.ZoneCliquable {
     }
 
     @Override
-    public void clicDroit() {
-
-
-    }
+    public void clicDroit() {}
 
     @Override
     public void repaint() {

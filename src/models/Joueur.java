@@ -2,7 +2,6 @@ package models;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,12 +40,11 @@ public class Joueur {
             case EXPLORATEUR: img = new ImageIcon("resources/PionVert.png").getImage();break;
             case ALPINISTE: img = new ImageIcon("resources/PionRouge.png").getImage(); break;
             case ARCHEOLOGUE: img = new ImageIcon("resources/PionNoir.png").getImage(); break;
-            case METEOROLOGUE: img = new ImageIcon("resources/PionBlanc.png").getImage(); break;
             case NAVIGATRICE: img = new ImageIcon("resources/PionViolet.png").getImage(); break;
+            case METEOROLOGUE: img = new ImageIcon("resources/PionBlanc.png").getImage(); break;
             case PORTEUSE_D_EAU: img = new ImageIcon("resources/PionBleu.png").getImage(); break;
         }
         this.img = img;
-
     }
 
     //Getters
@@ -57,6 +55,7 @@ public class Joueur {
     public String getName(){
         return this.name;
     }
+
     public int getNiv_eau(){
         return this.niv_eau;
     }
@@ -75,12 +74,9 @@ public class Joueur {
         return img;
     }
 
-
     public Carte.Personnage getPerso() {
         return perso;
     }
-
-
 
     //Setters
     public void setNiv_eau(int niv_eau) {
@@ -104,7 +100,6 @@ public class Joueur {
     }
 
     //Méthodes
-
     public boolean explorer() {
         Carte.Personnage pers = this.getPerso();
         Case cPos = this.getPos();
@@ -135,17 +130,6 @@ public class Joueur {
         return false;
     }
 
-    public void deplacer(Case.Dir d){
-        models.Case c=this.getPos();
-        models.Case newC=c.voisine(d);
-        int[] ncc=newC.getCoord();
-        if (c.getCoord()!=ncc){
-            this.pos = p.getCase(ncc[0], ncc[1]);
-        }else{
-            throw new RuntimeException("Deplacement impossible.");
-        }
-    }
-
     public boolean CaseVoisine(Case c){
         if (this.getPos().isVoisine(c)){
             return true;
@@ -162,8 +146,8 @@ public class Joueur {
             }
             return false;
         }
-
     }
+
     public boolean deplaceC(Case c) {
         int[] ncc = c.getCoord();
         Carte.Personnage pers = this.getPerso();
@@ -197,7 +181,7 @@ public class Joueur {
             } else {
                 c.dessabler();
             }
-        }else {
+        } else {
             c.dessabler();
         }
     }
@@ -224,5 +208,4 @@ public class Joueur {
         }
         return new HashSet<>();
     }
-
 }

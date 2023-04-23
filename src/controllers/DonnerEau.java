@@ -52,12 +52,8 @@ public class DonnerEau extends JButton {
                     j.remplirGourde();
                     p.getJoueur_i(id).boire();
                     v.getJoueurs().setLabels();
-
                 }
             }
         });
-
     }
-
-
 }

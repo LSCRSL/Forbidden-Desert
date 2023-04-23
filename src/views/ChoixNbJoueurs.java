@@ -101,5 +101,4 @@ public class ChoixNbJoueurs extends JFrame {
             }
         });;
     }
-
 }

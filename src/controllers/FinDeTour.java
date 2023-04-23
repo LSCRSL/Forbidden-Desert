@@ -13,10 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FinDeTour extends JButton {
-
     private models.Plateau p;
     private views.Views v;
-
 
     public FinDeTour(models.Plateau plat, views.Views v) {
         super("Fin de tour");
@@ -34,7 +32,7 @@ public class FinDeTour extends JButton {
                     Carte.Effet effet = p.getPaquets().tirer();
                     switch(effet){
                         case LE_VENT_SOUFFLE:
-                            int f = 0;
+                            int f ;
                             int rdir = (int) Math.floor(Math.random() * 4);
                             int rfor = (int) Math.floor(Math.random() * 6);
                             if (rfor <= 2) {
@@ -62,9 +60,7 @@ public class FinDeTour extends JButton {
                                     j.boire();
                                 }
                             }break;
-
                     }
-
                     if (p.isDefaite()) {
                         affiche_fin(true);
                     }
@@ -78,10 +74,9 @@ public class FinDeTour extends JButton {
         });
 
     }
-    //NB : changer l'état de la case -> refresh change la couleur
-    public void refresh(){
 
-        p.affichePiece();//Ca beugue si je mets dans ControlCase... :/
+    public void refresh(){
+        p.affichePiece();
         for (int i=0; i<p.getTaille();i++){
             for (int j=0; j<p.getTaille();j++){
                 p.getCase(i,j).getCc().refresh();
@@ -96,8 +91,6 @@ public class FinDeTour extends JButton {
         AfficheJoueurs joueurs = this.v.getJoueurs();
         AfficheCarteTempete ct = this.v.getCarteTempete();
         ct.setLabel();
-
-        //tenter de faire ça pour le joueur qui joue
         for (Joueur j : this.p.getJoueurs()) {
             j.reset_action();
         }
@@ -159,10 +152,7 @@ public class FinDeTour extends JButton {
                 end.dispose();
                 v.getFenetre().setVisible(false);
                 v.getFenetre().dispose();
-
             }
         });
-
     }
-
 }
