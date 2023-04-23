@@ -506,10 +506,19 @@ public class Plateau {
         int Y = c.getY();
         Set<Case> voisines = new HashSet<>();
         voisines.add(c);
-        voisines.add(this.getCase(X+1,Y));
-        voisines.add(this.getCase(X,Y-1));
-        voisines.add(this.getCase(X,Y+1));
-        voisines.add(this.getCase(X-1,Y));
+        if (X !=0){
+            voisines.add(this.getCase(X-1,Y));
+        }
+        if (X!=4){
+            voisines.add(this.getCase(X+1,Y));
+        }
+        if(Y != 0){
+            voisines.add(this.getCase(X,Y-1));
+        }
+        if(Y!= 4){
+            voisines.add(this.getCase(X,Y+1));
+        }
+
         return voisines;
     }
     public Map<Integer, Case> Porteuse(){
