@@ -11,6 +11,8 @@ import views.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FinDeTour extends JButton {
     private models.Plateau p;
@@ -28,6 +30,7 @@ public class FinDeTour extends JButton {
             public void actionPerformed(ActionEvent e) {
                 AfficheCarteTempete carte= v.getCarteTempete();
                 int nbCartesT = p.getNbCartesT();
+                String cartesTirees="";
                 for (int i=0; i< nbCartesT; i++) {
                     Carte.Effet effet = p.getPaquets().tirer();
                     switch(effet){
@@ -44,17 +47,23 @@ public class FinDeTour extends JButton {
                             }
                             if (rdir == 0) {
                                 p.souffler(Case.Dir.HAUT, f);
+                                cartesTirees+="Le Vent souffle (H,"+f+"):";
                             } else if (rdir == 1) {
                                 p.souffler(Case.Dir.BAS, f);
+                                cartesTirees+="Le Vent souffle (B,"+f+"):";
                             } else if (rdir == 2) {
                                 p.souffler(Case.Dir.DROITE, f);
+                                cartesTirees+="Le Vent souffle (D,"+f+"):";
                             } else if (rdir == 3) {
                                 p.souffler(Case.Dir.GAUCHE, f);
+                                cartesTirees+="Le Vent souffle (G,"+f+"):";
                             } break;
                         case LA_TEMPETE_SE_DECHAINE:
                             p.dechainer();
+                            cartesTirees+="La Tempête se déchaine:";
                             break;
                         case VAGUE_DE_CHALEUR:
+                            cartesTirees+="Vague de Chaleur:";
                             for (Joueur j : p.getJoueurs()) {
                                 if (j.getPos().getType()!=Case.TYPE.TUNNEL || (j.getPos().getType()== Case.TYPE.TUNNEL && !j.getPos().isExploree())) {
                                     j.boire();
@@ -68,6 +77,7 @@ public class FinDeTour extends JButton {
                         affiche_fin(false);
                     }
                 }
+                carte.setCartes(cartesTirees);
                 p.setAction(-1);
                 refresh();
             }

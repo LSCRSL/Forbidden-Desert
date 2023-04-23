@@ -113,7 +113,7 @@ public class Views {
         this.pieces.setLocation(50,this.fenetre.getHeight() - this.fenetre.getHeight()/2);
         this.fenetre.add(this.pieces);
 
-        this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2,this.fenetre.getHeight()-this.fenetre.getHeight()/7);
+        this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2 - this.carte.getWidth()/4,this.fenetre.getHeight()-this.fenetre.getHeight()/7 - this.carte.getHeight()/4);
         this.fenetre.add(this.carte);
 
         this.info.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3 + 150);

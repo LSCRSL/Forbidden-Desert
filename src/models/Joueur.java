@@ -163,7 +163,7 @@ public class Joueur {
             c.addJ(this);
             return true;
         }
-        if (this.getPos().getCoord() != ncc && this.getPos().isNavigateur() && c.getSable() <=1){
+        if (this.getPos().getCoord() != ncc && this.getPos().isAlpiniste() && c.getSable() <=1){
             this.pos.remJ(this);
             this.pos = c;
             c.addJ(this);

@@ -155,7 +155,7 @@ public class Case {
         }
     }
 
-    public boolean isNavigateur(){
+    public boolean isAlpiniste(){
         Set<Joueur> J = this.getJ();
         for (Joueur j : J){
             if (j.getPerso() == Carte.Personnage.ALPINISTE){
