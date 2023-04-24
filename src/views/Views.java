@@ -32,10 +32,10 @@ public class Views {
         this.ap = new AffichePlateau(p,this);
 
         this.fdt = new FinDeTour(this.ap.getPlateau(),this);
-        this.explorer = new Explorer(this.ap.getPlateau(),this);
-        this.creuser = new Creuser(this.ap.getPlateau(),this);
-        this.ramasser = new Ramasser(this.ap.getPlateau(),this);
-        this.deplacer = new SeDeplacer(this.ap.getPlateau(),this);
+        this.explorer = new Explorer(this.ap.getPlateau());
+        this.creuser = new Creuser(this.ap.getPlateau());
+        this.ramasser = new Ramasser(this.ap.getPlateau());
+        this.deplacer = new SeDeplacer(this.ap.getPlateau());
         this.donner_eau = new DonnerEau(this.ap.getPlateau(),this);
         this.action_spe = new ActionsSpeciales(this.ap.getPlateau(),this);
 
@@ -113,7 +113,7 @@ public class Views {
         this.pieces.setLocation(50,this.fenetre.getHeight() - this.fenetre.getHeight()/2);
         this.fenetre.add(this.pieces);
 
-        this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2 - this.carte.getWidth()/4,this.fenetre.getHeight()-this.fenetre.getHeight()/7 - this.carte.getHeight()/4);
+        this.carte.setLocation(this.fenetre.getWidth() - this.fenetre.getWidth()/9*2 - this.carte.getWidth()/8,this.fenetre.getHeight()-this.fenetre.getHeight()/7 - this.carte.getHeight()/4);
         this.fenetre.add(this.carte);
 
         this.info.setLocation(30,this.fenetre.getHeight() - this.fenetre.getHeight()/3 + 150);
