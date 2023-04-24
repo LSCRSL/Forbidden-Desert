@@ -28,16 +28,16 @@ public class DonnerEau extends JButton {
                 Map<Integer, Case> map = p.Porteuse();
                 int id = map.keySet().stream().iterator().next();
                 Set<Case> cases = p.Voisines(map.get(id));
-                ArrayList<Joueur> voisins = new ArrayList<Joueur>();
-                if (voisins.size() != 0) {
-                    for (Case c : cases) {
-                        Set<Joueur> J = c.getJ();
-                        for (Joueur j : J) {
-                            if (j.getPerso() != Carte.Personnage.PORTEUSE_D_EAU && j.getNiv_eau() < 5)
-                                voisins.add(j);
-                        }
+                ArrayList<Joueur> voisins = new ArrayList<>();
+                for (Case c : cases) {
+                    Set<Joueur> J = c.getJ();
+                    for (Joueur j : J) {
+                        if (j.getPerso() != Carte.Personnage.PORTEUSE_D_EAU && j.getNiv_eau() < 5)
+                            voisins.add(j);
                     }
-                    int taille = voisins.size();
+                }
+                int taille = voisins.size();
+                if( taille > 0) {
                     Object[] choix = new Object[taille];
                     for (int i = 0; i < taille; i++) {
                         choix[i] = voisins.get(i).getName();
@@ -49,10 +49,11 @@ public class DonnerEau extends JButton {
                             JOptionPane.QUESTION_MESSAGE,
                             null, choix, choix[0]);
                     Joueur j = voisins.get(c);
-                    j.remplirGourde();
+                    j.setNiv_eau((j.getNiv_eau() + 1));
                     p.getJoueur_i(id).boire();
                     v.getJoueurs().setLabels();
                 }
+
             }
         });
     }
